@@ -1,6 +1,8 @@
+import LoginForm from './partials/LoginForm.jsx';
+
 const Login = () => {
   return (
-    <p>This is the login page...</p>
+    <LoginForm/>
   )
 };
 
