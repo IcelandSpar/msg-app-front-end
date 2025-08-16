@@ -1,5 +1,8 @@
 import { io } from 'socket.io-client';
 
-const URL = 'http://localhost:3000';
+const URL = import.meta.env.VITE_FETCH_BASE_URL;
+ 
 
-export const socket = io(URL);
+export const socket = io(URL, {
+  autoConnect: false
+});

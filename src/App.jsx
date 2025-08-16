@@ -27,10 +27,21 @@ function App() {
       console.log(msg)
     })
 
-    fetch(`http://localhost:3000`, {method: 'GET'})
+    const token = localStorage.getItem('msgAppToken');
+
+    if(token) {
+    fetch(`http://localhost:3000`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    })
     .then((res) => res.json())
     .then((res) => console.log(res))
     .catch((err) => console.error(err))
+    }
+
+
   }, []);
 
   return (

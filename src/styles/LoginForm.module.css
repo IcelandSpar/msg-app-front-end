@@ -1,0 +1,23 @@
+.loginFieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 1rem;
+
+}
+
+.labelAndInputCont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.labelAndInputCont input, .labelAndInputCont textarea {
+  width: 100%;
+}
+
+button {
+  align-self: flex-end;
+}
