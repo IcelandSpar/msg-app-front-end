@@ -27,10 +27,10 @@ function App() {
       console.log(msg)
     })
 
-    const token = localStorage.getItem('msgAppToken');
+    const token = sessionStorage.getItem('msgAppToken');
 
     if(token) {
-    fetch(`http://localhost:3000`, {
+    fetch(`${import.meta.env.VITE_FETCH_BASE_URL}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`

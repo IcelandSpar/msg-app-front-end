@@ -2,8 +2,10 @@ import RegisterForm from "./partials/RegisterForm";
 
 const Register = () => {
   return (
-    <RegisterForm/>
-  )
+    <main>
+      <RegisterForm />
+    </main>
+  );
 };
 
 export default Register;

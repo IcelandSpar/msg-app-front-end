@@ -26,9 +26,9 @@ const LoginForm = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.token) {
-          localStorage.setItem("msgAppToken", res.token);
+          sessionStorage.setItem("msgAppToken", res.token);
           socket.connect();
-          navigate("/");
+          navigate("/channel/myhome");
         } else if (res.message) {
           setLoginErr(res.message);
         }

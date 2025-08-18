@@ -1,9 +1,11 @@
-import LoginForm from './partials/LoginForm.jsx';
+import LoginForm from "./partials/LoginForm.jsx";
 
 const Login = () => {
   return (
-    <LoginForm/>
-  )
+    <main>
+      <LoginForm />
+    </main>
+  );
 };
 
 export default Login;
