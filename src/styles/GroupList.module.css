@@ -1,0 +1,10 @@
+.groupLiCont {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.groupImg {
+  object-fit: contain;
+  border: 1px solid white;
+}

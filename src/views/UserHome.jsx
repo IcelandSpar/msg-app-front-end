@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import CreateGroupModal from './partials/CreateGroupModal';
+import GroupList from './partials/GroupList.jsx';
+import CreateGroupModal from './partials/CreateGroupModal.jsx';
 
 import styles from '../styles/UserHome.module.css';
 
@@ -19,6 +20,7 @@ const UserHome = () => {
   return (
     <main>
       {!isCreateGroupModalOpen ? null : <CreateGroupModal handleCreateGroupModal={handleCreateGroupModal}/>}
+      <GroupList/>
       <button onClick={handleCreateGroupModal}>Create Group</button>
     </main>
   )
