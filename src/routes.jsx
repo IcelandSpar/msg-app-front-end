@@ -2,6 +2,8 @@ import App from './App.jsx';
 import Login from './views/Login.jsx';
 import Register from './views/Register.jsx';
 import UserHome from './views/UserHome.jsx';
+import GroupChatMain from './views/GroupChatMain.jsx';
+
 
 const routes = [
   {
@@ -19,6 +21,10 @@ const routes = [
   {
     path: '/channel/myhome',
     element:<UserHome/>
+  },
+  {
+    path: '/channel/group/:groupId',
+    element: <GroupChatMain/>
   }
 
 ];

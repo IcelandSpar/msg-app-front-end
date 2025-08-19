@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import styles from '../../styles/GroupList.module.css';
 
 const GroupList = () => {
   const [ groups, setGroups ] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleClickOnGroupLi = (e, groupId) => {
+    e.preventDefault();
+    navigate(`/channel/group/${groupId}`);
+  };
 
   useEffect(() => {
     const token = sessionStorage.getItem('msgAppToken');
@@ -26,7 +34,7 @@ const GroupList = () => {
         <ul>
           {groups.Group.map((groupInfo, indx) => {
             return (
-              <li key={groupInfo.id} className={styles.groupLiCont}>
+              <li key={groupInfo.id} onClick={(e) => handleClickOnGroupLi(e, groupInfo.id)} className={styles.groupLiCont}>
                 <img className={styles.groupImg} width={'25px'} height={'25px'} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${groupInfo.groupImgPath}`} alt={`${groupInfo.groupName} Group Chat Image`} />
                 <h3>{groupInfo.groupName}</h3>
               </li>
