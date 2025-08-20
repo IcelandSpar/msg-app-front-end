@@ -1,74 +1,31 @@
-import { socket } from './socket';
-import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { socket } from "./socket";
+import { useState, useEffect, useContext } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router";
+
+import UserContext from "./UserContext.jsx";
+import routes from "./routes.jsx";
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [ profile, setProfile ] = useState(null);
+  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
 
-  const btnHandler = (e) => {
-    e.preventDefault();
-    socket.emit('button press');
-  
-  }
+  const router = createBrowserRouter(routes);
+
 
   useEffect(() => {
 
-
-    socket.on('connection', (msg) => {
-      console.log(msg)
-    })
-
-    socket.on('button press', (msg) => {
-      console.log(msg)
-    });
-
-    socket.on('user left', (msg) => {
-      console.log(msg)
-    })
-
-    const token = sessionStorage.getItem('msgAppToken');
-
-    if(token) {
-    fetch(`${import.meta.env.VITE_FETCH_BASE_URL}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-    })
-    .then((res) => res.json())
-    .then((res) => console.log(res))
-    .catch((err) => console.error(err))
-    }
 
 
   }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={btnHandler}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <UserContext.Provider value={{profile, setProfile, isLoggedIn, setIsLoggedIn}}>
+        <RouterProvider router={router} />
+      </UserContext.Provider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

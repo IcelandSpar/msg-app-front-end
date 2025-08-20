@@ -1,7 +1,7 @@
 import { socket } from "../../socket";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import { useNavigate } from "react-router";
-
+import UserContext from "../../UserContext";
 import styles from '../../styles/LoginForm.module.css';
 
 const LoginForm = () => {
@@ -11,6 +11,8 @@ const LoginForm = () => {
   const passwordRef = useRef(null);
 
   const navigate = useNavigate();
+
+  const user = useContext(UserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,6 +40,7 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      {console.log(user)}
       {!loginErr ? null : (
         <div>
           <h3>Please Fix:</h3>
