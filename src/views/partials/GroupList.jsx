@@ -32,11 +32,11 @@ const GroupList = () => {
     <section>
       {!groups ? null : (
         <ul>
-          {groups.Group.map((groupInfo, indx) => {
+          {groups.map((groupInfo, indx) => {
             return (
-              <li key={groupInfo.id} onClick={(e) => handleClickOnGroupLi(e, groupInfo.id)} className={styles.groupLiCont}>
-                <img className={styles.groupImg} width={'25px'} height={'25px'} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${groupInfo.groupImgPath}`} alt={`${groupInfo.groupName} Group Chat Image`} />
-                <h3>{groupInfo.groupName}</h3>
+              <li key={groupInfo.group.id} onClick={(e) => handleClickOnGroupLi(e, groupInfo.group.id)} className={styles.groupLiCont}>
+                <img className={styles.groupImg} width={'25px'} height={'25px'} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${groupInfo.group.groupImgPath}`} alt={`${groupInfo.groupName} Group Chat Image`} />
+                <h3>{groupInfo.group.groupName}</h3>
               </li>
             )
           })}
