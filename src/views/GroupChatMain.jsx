@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { socket } from "../socket.js";
 
 import MsgForm from "./partials/MsgForm.jsx";
 import GroupChatMessages from "./partials/GroupChatMessages";
+import UserContext from "../UserContext.jsx";
 
 const GroupChatMain = () => {
   const [chatMsgs, setChatMsgs] = useState([]);
 
   const { groupId } = useParams();
+
+  const { profile } = useContext(UserContext);
 
   useEffect(() => {
     try {
@@ -35,15 +38,15 @@ const GroupChatMain = () => {
       });
 
       socket.emit("joinRoom", {
-        profileName: "john doe",
+        profileName: profile.profileName,
         groupId: groupId,
       });
       socket.on("joinRoomMsg", (msg) => console.log(msg));
 
       socket.on("received message", (msgInfo) => {
-        console.log('testing')
         if(msgInfo.groupId == groupId) {
-          setChatMsgs((chatMsgs) => [...chatMsgs, { messageContent: msgInfo.message }])
+          console.log('msg info',msgInfo)
+          setChatMsgs((chatMsgs) => [...chatMsgs, { profileName: msgInfo.profileName, messageContent: msgInfo.message }])
 
         }
       });

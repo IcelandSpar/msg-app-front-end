@@ -6,10 +6,12 @@ const GroupChatMessages = ({chatMsgs}) => {
 
   return (
     <ul>
-      {chatMsgs.map((item, indx) => {
+      {chatMsgs.map((msg, indx) => {
         return (
           <li key={indx}>
-            <p>{item.messageContent}</p>
+            {console.log(msg)}
+            <h4>{msg.profileName}</h4>
+            <p>{msg.messageContent}</p>
           </li>
         )
       })}

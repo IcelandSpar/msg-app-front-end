@@ -30,6 +30,7 @@ const LoginForm = () => {
         if (res.token) {
           sessionStorage.setItem("msgAppToken", res.token);
           socket.connect();
+
           navigate("/channel/myhome");
         } else if (res.message) {
           setLoginErr(res.message);
@@ -40,7 +41,6 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      {console.log(user)}
       {!loginErr ? null : (
         <div>
           <h3>Please Fix:</h3>
