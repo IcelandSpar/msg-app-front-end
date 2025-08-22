@@ -28,7 +28,7 @@ const GroupChatMain = () => {
         }
       )
         .then((res) => res.json())
-        .then((res) => console.log(res))
+        .then((res) => setChatMsgs(res))
         .catch((err) => console.error(err));
 
       socket.connect();
@@ -46,7 +46,7 @@ const GroupChatMain = () => {
       socket.on("received message", (msgInfo) => {
         if(msgInfo.groupId == groupId) {
           console.log('msg info',msgInfo)
-          setChatMsgs((chatMsgs) => [...chatMsgs, { profileName: msgInfo.profileName, messageContent: msgInfo.message }])
+          setChatMsgs((chatMsgs) => [...chatMsgs, { profileName: msgInfo.profileName, messageContent: msgInfo.message, imgPath: msgInfo.imgPath }])
 
         }
       });
@@ -58,8 +58,6 @@ const GroupChatMain = () => {
   return (
     <main>
       {!chatMsgs ? null : <GroupChatMessages chatMsgs={chatMsgs}/>}
-      
-      
       <MsgForm setChatMsgs={setChatMsgs} />
     </main>
   );
