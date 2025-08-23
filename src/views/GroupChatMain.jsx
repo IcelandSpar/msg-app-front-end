@@ -13,6 +13,7 @@ const GroupChatMain = () => {
 
   const { profile } = useContext(UserContext);
 
+
   useEffect(() => {
     try {
       const token = sessionStorage.getItem("msgAppToken");
@@ -50,6 +51,7 @@ const GroupChatMain = () => {
 
         }
       });
+
     } catch (err) {
       console.error(err)
     }
@@ -58,7 +60,7 @@ const GroupChatMain = () => {
   return (
     <main>
       {!chatMsgs ? null : <GroupChatMessages chatMsgs={chatMsgs}/>}
-      <MsgForm setChatMsgs={setChatMsgs} />
+      <MsgForm setChatMsgs={setChatMsgs}/>
     </main>
   );
 };
