@@ -1,13 +1,10 @@
 .msgForm {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   max-width: 1000px;
   width: 100%;
-  position: sticky;
   bottom: 0;
-  right: 0;
-  background-color: black;
+  position: fixed;
 }
 
 .inputAndBtnCont {
@@ -15,4 +12,8 @@
   justify-content: center;
   gap: 1rem;
   align-items: center;
+}
+
+.msgLabelHidden {
+  display: none;
 }

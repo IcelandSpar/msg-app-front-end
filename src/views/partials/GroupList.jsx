@@ -22,7 +22,6 @@ const GroupList = () => {
     })
     .then((res) => res.json())
     .then((res) => {
-      console.log(res);
       setGroups(res);
     })
     .catch((err) => console.error(err))

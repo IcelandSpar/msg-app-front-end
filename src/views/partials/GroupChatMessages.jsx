@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router";
+import { formatDistance } from "date-fns";
 
 import styles from '../../styles/GroupChatMessages.module.css';
 
-const GroupChatMessages = ({ chatMsgs }) => {
+const GroupChatMessages = ({ chatMsgs, endOfMsg }) => {
+
+
   return (
     <ul className={styles.chatMsgsUl}>
       {chatMsgs.map((msg, indx) => {
@@ -22,11 +25,13 @@ const GroupChatMessages = ({ chatMsgs }) => {
                 width={"25px"}
               />
               <h4>{msg.profileName || msg.messageAuthor.profileName}</h4>
+              <p>{formatDistance((msg.createdAt), new Date(), { addSuffix: true })}</p>
             </div>
             <p className={styles.chatMsgContent}>{msg.messageContent}</p>
           </li>
         );
       })}
+      <li ref={endOfMsg}></li>
     </ul>
   );
 };

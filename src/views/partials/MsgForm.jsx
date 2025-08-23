@@ -6,7 +6,7 @@ import UserContext from "../../UserContext";
 
 import styles from "../../styles/MsgForm.module.css";
 
-const MsgForm = ({ setChatMsgs }) => {
+const MsgForm = ({ setChatMsgs, endOfMsg }) => {
   const [typingUserObj, setTypingUserObj] = useState({
     typingUser: null,
     isUserTyping: false,
@@ -49,18 +49,28 @@ const MsgForm = ({ setChatMsgs }) => {
             profileName: profile.profileName,
             messageContent: messageInput.current.value,
             imgPath: profile.profileImgFilePath,
+            createdAt: new Date(),
           },
         ]);
 
         socket.emit("send message", {
           groupId: groupId,
-          message: messageInput.current.value,
+          messageContent: messageInput.current.value,
           profileName: profile.profileName,
           imgPath: profile.profileImgFilePath,
+          createdAt: new Date(),
         });
       })
       .catch((err) => console.error(err))
-      .finally(() => (messageInput.current.value = ""));
+      .finally(() => {
+      });
+
+      setTimeout(() => {
+      endOfMsg.current?.scrollIntoView({ behavior: 'smooth' });
+      messageInput.current.value = "";
+
+      }, 1000)
+
   };
 
 
@@ -96,12 +106,13 @@ const MsgForm = ({ setChatMsgs }) => {
       )}
       <div className={styles.inputAndBtnCont}>
         <div>
-          <label htmlFor="message">Message: </label>
+          <label className={styles.msgLabelHidden} htmlFor="message">Message: </label>
           <textarea
             onChange={handleKeyUp}
             ref={messageInput}
             name="message"
             id="message"
+            placeholder="Type a message!"
           ></textarea>
         </div>
         <button type="submit">Send</button>
