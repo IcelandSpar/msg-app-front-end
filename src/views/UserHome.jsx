@@ -21,7 +21,7 @@ const UserHome = () => {
 
   return (
     <main>
-      {profile ? <Navbar/> : null}
+      <Navbar/> 
       {!isCreateGroupModalOpen ? null : <CreateGroupModal handleCreateGroupModal={handleCreateGroupModal}/>}
       <GroupList/>
       <button onClick={handleCreateGroupModal}>Create Group</button>

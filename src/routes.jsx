@@ -1,5 +1,6 @@
 import App from '../src/App.jsx';
 import Login from './views/Login.jsx';
+import Logout from './views/Logout.jsx';
 import Register from './views/Register.jsx';
 import UserHome from './views/UserHome.jsx';
 import DefaultHome from './views/DefaultHome.jsx';
@@ -18,6 +19,10 @@ const routes = [
   {
     path: '/register',
     element: <Register/>
+  },
+  {
+    path: '/logout',
+    element: <Logout/>
   },
   {
     path: '/channel/myhome',

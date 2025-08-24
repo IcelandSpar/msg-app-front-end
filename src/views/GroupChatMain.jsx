@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { socket } from "../socket.js";
 
 import MsgForm from "./partials/MsgForm.jsx";
+import Navbar from './partials/Navbar.jsx';
 import GroupChatMessages from "./partials/GroupChatMessages";
 import UserContext from "../UserContext.jsx";
 
@@ -91,10 +92,13 @@ const GroupChatMain = () => {
   }, [groupId]);
 
   return (
+    <>
+    <Navbar/>
     <main className={styles.groupChatMainCont}>
       {!chatMsgs ? null : <GroupChatMessages endOfMsg={endOfMsg} chatMsgs={chatMsgs} />}
       <MsgForm endOfMsg={endOfMsg} setChatMsgs={setChatMsgs} />
     </main>
+  </>
   );
 };
 

@@ -12,35 +12,6 @@ function App() {
 
   const router = createBrowserRouter(routes);
 
-  useEffect(() => {
-    try {
-      const token = sessionStorage.getItem("msgAppToken");
-      if (token) {
-        fetch(
-          `${import.meta.env.VITE_FETCH_BASE_URL}/profile/get-user-profile`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            method: "GET",
-          }
-        )
-          .then((res) => res.json())
-          .then((res) => {
-            if(res.profile) {
-              setProfile(res.profile);
-              setIsLoggedIn(true);
-            } else {
-              setIsLoggedIn(false);
-            }
-
-          });
-      }
-    } catch (err) {
-      console.error(err);
-      setIsLoggedIn(false);
-    }
-  }, []);
 
   return (
     <>
