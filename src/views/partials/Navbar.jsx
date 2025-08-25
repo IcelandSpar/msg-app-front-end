@@ -8,6 +8,16 @@ const Navbar = () => {
 
   const { profile, isLoggedIn, setProfile, setIsLoggedIn } = useContext(UserContext);
 
+  const handleFriendCodeBtn = async (e, text) => {
+    e.preventDefault();
+    const type = "text/plain";
+    const clipboardItemData = {
+      [type]: text,
+    };
+    const clipboardItem = new ClipboardItem(clipboardItemData);
+    await navigator.clipboard.write([clipboardItem]);
+  }
+
     useEffect(() => {
     try {
       const token = sessionStorage.getItem("msgAppToken");
@@ -60,8 +70,10 @@ const Navbar = () => {
       
       </div>
       {!profile ? null : (
-        <div className={styles.profileCont}>Welcome {profile.profileName}</div>
-
+        <div>
+          <div className={styles.profileCont}>Welcome {profile.profileName}</div>
+          <button onClick={(e) => handleFriendCodeBtn(e, profile.friendCode)}>Friend Code: {profile.friendCode}</button>
+        </div>  
       )}
       </nav>
     </header>

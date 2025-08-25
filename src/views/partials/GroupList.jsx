@@ -30,7 +30,7 @@ const GroupList = () => {
   return (
     <section>
       {!groups ? null : (
-        <ul>
+        <ul className={styles.groupUlCont}>
           {groups.map((groupInfo, indx) => {
             return (
               <li key={groupInfo.group.id} onClick={(e) => handleClickOnGroupLi(e, groupInfo.group.id)} className={styles.groupLiCont}>
