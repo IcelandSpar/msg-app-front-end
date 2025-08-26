@@ -1,0 +1,10 @@
+.notifDropdownCont {
+  position: absolute;
+  top: 35%;
+  left: -50%;
+  background-color: white;
+  border: 1px solid black;
+  width: 200px;
+  height: 300px;
+  color: black;
+}

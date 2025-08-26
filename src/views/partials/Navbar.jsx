@@ -1,11 +1,14 @@
 
-import { useEffect, useContext } from 'react';
-import UserContext from '../../UserContext';
-import styles from '../../styles/Navbar.module.css';
+import { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router';
+import UserContext from '../../UserContext';
+
+import NotificationDropdown from './NotificationDropdown.jsx';
+
+import styles from '../../styles/Navbar.module.css';
 
 const Navbar = () => {
-
+  const [ isNotifOpen, setIsNotifOpen ] = useState(false);
   const { profile, isLoggedIn, setProfile, setIsLoggedIn } = useContext(UserContext);
 
   const handleFriendCodeBtn = async (e, text) => {
@@ -16,6 +19,12 @@ const Navbar = () => {
     };
     const clipboardItem = new ClipboardItem(clipboardItemData);
     await navigator.clipboard.write([clipboardItem]);
+  };
+
+  const handleNotificationDropdownBtn = (e) => {
+    e.preventDefault();
+    setIsNotifOpen((prev) => !prev);
+    
   }
 
     useEffect(() => {
@@ -70,10 +79,18 @@ const Navbar = () => {
       
       </div>
       {!profile ? null : (
-        <div>
-          <div className={styles.profileCont}>Welcome {profile.profileName}</div>
-          <button onClick={(e) => handleFriendCodeBtn(e, profile.friendCode)}>Friend Code: {profile.friendCode}</button>
-        </div>  
+        <div className={styles.notifAndProfileCont}>
+          {!profile ? null : (
+            <div className={styles.notificationCont}>
+              {isNotifOpen ? <NotificationDropdown/> : null}
+              <button onClick={handleNotificationDropdownBtn}>Notifications</button>
+            </div>
+          ) }
+          <div>
+            <div className={styles.profileCont}>Welcome {profile.profileName}</div>
+            <button onClick={(e) => handleFriendCodeBtn(e, profile.friendCode)}>Friend Code: {profile.friendCode}</button>
+          </div>
+        </div>
       )}
       </nav>
     </header>

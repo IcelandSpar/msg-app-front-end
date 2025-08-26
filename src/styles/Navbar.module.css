@@ -3,6 +3,18 @@
   justify-content: space-between;
 }
 
+.notifAndProfileCont {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.notificationCont {
+  position: relative;
+};
+
+
+
 .linksCont {
   display: flex;
   gap: 1rem;
