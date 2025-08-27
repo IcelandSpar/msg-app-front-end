@@ -8,6 +8,34 @@ const NotificationDropdown = () => {
 
   const { profile } = useContext(UserContext);
 
+  const handleUserFriendReqOptionBtns = (e, isAccepted, notificationId) => {
+    e.preventDefault();
+
+    const token = sessionStorage.getItem("msgAppToken");
+
+    if (token) {
+
+
+
+      fetch(
+        `${
+          import.meta.env.VITE_FETCH_BASE_URL
+        }/friends/update-receiver-friend-req/${profile.id}/${notificationId}?isFriendReqAccepted=${isAccepted}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          method: 'PUT',
+        }
+      )
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => console.error(err));
+    }
+  };
+
   useEffect(() => {
     const token = sessionStorage.getItem("msgAppToken");
     if (token && profile) {
@@ -46,8 +74,22 @@ const NotificationDropdown = () => {
                         {notif.Sender.profileName} sent you a friend request
                       </p>
                       <div className={styles.acceptDenyBtnsCont}>
-                        <button type="button">Accept</button>
-                        <button type="button">Deny</button>
+                        <button
+                          onClick={(e) =>
+                            handleUserFriendReqOptionBtns(e, true, notif.id)
+                          }
+                          type="button"
+                        >
+                          Accept
+                        </button>
+                        <button
+                          onClick={(e) =>
+                            handleUserFriendReqOptionBtns(e, false, notif.id)
+                          }
+                          type="button"
+                        >
+                          Deny
+                        </button>
                       </div>
                     </li>
                   );
