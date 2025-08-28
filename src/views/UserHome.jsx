@@ -4,6 +4,8 @@ import Navbar from './partials/Navbar.jsx';
 import GroupList from './partials/GroupList.jsx';
 import CreateGroupModal from './partials/CreateGroupModal.jsx';
 import AddFriendModal from './partials/AddFriendModal.jsx';
+import FriendList from './partials/FriendList.jsx';
+
 
 import styles from '../styles/UserHome.module.css';
 
@@ -33,6 +35,7 @@ const UserHome = () => {
       {!isCreateGroupModalOpen ? null : <CreateGroupModal handleCreateGroupModal={handleCreateGroupModal}/>}
       <button onClick={handleAddFriendBtn}>Add a friend</button>
       <GroupList/>
+      {profile ? <FriendList profile={profile}/> : null}
       <button onClick={handleCreateGroupModal}>Create Group</button>
     </main>
   )
