@@ -35,7 +35,9 @@ const UserHome = () => {
       {!isCreateGroupModalOpen ? null : <CreateGroupModal handleCreateGroupModal={handleCreateGroupModal}/>}
       <button onClick={handleAddFriendBtn}>Add a friend</button>
       <GroupList/>
+      <aside className={styles.friendListCont}>
       {profile ? <FriendList profile={profile}/> : null}
+      </aside>
       <button onClick={handleCreateGroupModal}>Create Group</button>
     </main>
   )

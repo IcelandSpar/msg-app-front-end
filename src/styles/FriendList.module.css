@@ -1,0 +1,21 @@
+.friendListUlCont {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  padding-left: 0;
+}
+
+.friendListLiCont {
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .5rem 1rem;
+  border-radius: 15px;
+}
+
+.friendProfileImg {
+  border-radius: 50%;
+  border: 1px solid black;
+}

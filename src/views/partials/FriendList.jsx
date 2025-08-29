@@ -1,5 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 
+import styles from '../../styles/FriendList.module.css';
+
 const FriendList = ({ profile }) => {
   const [ friendList, setFriendList ] = useState(null);
 
@@ -17,7 +19,7 @@ const FriendList = ({ profile }) => {
     })
     .then((res) => res.json())
     .then((res) => {
-      console.log(res)
+      setFriendList(res);
     })
     }
 
@@ -25,7 +27,20 @@ const FriendList = ({ profile }) => {
   }, [profile.id]);
   
   return (<>
-    <p>Hello world</p>
+  <h4 className={styles.friendListHeading}>Friend List</h4>
+  {friendList == null ? null : (
+    <ul className={styles.friendListUlCont}>
+      {friendList.map((friend, indx) => {
+        return (
+          <li key={friend.id} className={styles.friendListLiCont}>
+            <img className={styles.friendProfileImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${profile.id == friend.friendOne.id ? `${friend.friendTwo.profileImgFilePath}` : `${friend.friendOne.profileImgFilePath}`}`} alt={`${profile.id == friend.friendOne.id ? `${friend.friendTwo.profileName}` : `${friend.friendOne.profileName}`}'s profile picture`} width={'25px'} height={'25px'}/>
+            <p>{profile.id == friend.friendOne.id ? `${friend.friendTwo.profileName}` : `${friend.friendOne.profileName}`}</p>
+          </li>
+        )
+      })}
+    </ul>
+  )}
+
   </>);
 };
 
