@@ -14,25 +14,24 @@ const NotificationDropdown = () => {
     const token = sessionStorage.getItem("msgAppToken");
 
     if (token) {
-
-
-
       fetch(
         `${
           import.meta.env.VITE_FETCH_BASE_URL
-        }/friends/update-receiver-friend-req/${profile.id}/${notificationId}?isFriendReqAccepted=${isAccepted}`,
+        }/friends/update-receiver-friend-req/${
+          profile.id
+        }/${notificationId}?isFriendReqAccepted=${isAccepted}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          method: 'PUT',
+          method: "PUT",
         }
       )
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res)
-      })
-      .catch((err) => console.error(err));
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.error(err));
     }
   };
 
@@ -71,25 +70,38 @@ const NotificationDropdown = () => {
                   return (
                     <li key={notif.id}>
                       <p>
-                        {notif.Sender.profileName} sent you a friend request
+                        {notif.status == "PENDING"
+                          ? `${notif.Sender.profileName} sent you a friend request!`
+                          : null}
+                        {notif.status == "ACCEPTED"
+                          ? `${notif.Sender.profileName} accepted your friend request!`
+                          : null}
                       </p>
                       <div className={styles.acceptDenyBtnsCont}>
-                        <button
-                          onClick={(e) =>
-                            handleUserFriendReqOptionBtns(e, true, notif.id)
-                          }
-                          type="button"
-                        >
-                          Accept
-                        </button>
-                        <button
-                          onClick={(e) =>
-                            handleUserFriendReqOptionBtns(e, false, notif.id)
-                          }
-                          type="button"
-                        >
-                          Deny
-                        </button>
+                        {notif.status == "PENDING" ? (
+                          <>
+                            <button
+                              onClick={(e) =>
+                                handleUserFriendReqOptionBtns(e, true, notif.id)
+                              }
+                              type="button"
+                            >
+                              Accept
+                            </button>
+                            <button
+                              onClick={(e) =>
+                                handleUserFriendReqOptionBtns(
+                                  e,
+                                  false,
+                                  notif.id
+                                )
+                              }
+                              type="button"
+                            >
+                              Deny
+                            </button>
+                          </>
+                        ) : null}
                       </div>
                     </li>
                   );
