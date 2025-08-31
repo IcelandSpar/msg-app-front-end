@@ -23,8 +23,13 @@ const Navbar = () => {
 
   const handleNotificationDropdownBtn = (e) => {
     e.preventDefault();
-    setIsNotifOpen((prev) => !prev);
+    setIsNotifOpen(true);
     
+  }
+
+  const handleNotifDropdownBtnLeave = (e) => {
+    e.preventDefault();
+    setIsNotifOpen(false);
   }
 
     useEffect(() => {
@@ -82,8 +87,8 @@ const Navbar = () => {
         <div className={styles.notifAndProfileCont}>
           {!profile ? null : (
             <div className={styles.notificationCont}>
-              {isNotifOpen ? <NotificationDropdown/> : null}
-              <button onClick={handleNotificationDropdownBtn}>Notifications</button>
+              {isNotifOpen ? <NotificationDropdown handleNotifDropdownBtnLeave={handleNotifDropdownBtnLeave}/> : null}
+              <button onMouseEnter={handleNotificationDropdownBtn}>Notifications</button>
             </div>
           ) }
           <div>

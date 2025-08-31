@@ -3,10 +3,29 @@ import UserContext from "../../UserContext";
 
 import styles from "../../styles/NotificationDropdown.module.css";
 
-const NotificationDropdown = () => {
+const NotificationDropdown = ({ handleNotifDropdownBtnLeave }) => {
   const [notifications, setNotifications] = useState(null);
 
   const { profile } = useContext(UserContext);
+
+  const handleDismissBtn = (e, notifId) => {
+    e.preventDefault();
+    const token = sessionStorage.getItem("msgAppToken");
+    if (token) {
+      fetch(
+        `${import.meta.env.VITE_FETCH_BASE_URL}/friends/delete-friend-req/${notifId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          method: "DELETE",
+        }
+      )
+      .then((res) => res.json())
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err));
+    }
+  };
 
   const handleUserFriendReqOptionBtns = (e, isAccepted, notificationId) => {
     e.preventDefault();
@@ -58,7 +77,10 @@ const NotificationDropdown = () => {
   }, []);
 
   return (
-    <div className={styles.notifDropdownCont}>
+    <div
+      onMouseLeave={handleNotifDropdownBtnLeave}
+      className={styles.notifDropdownCont}
+    >
       {notifications == null ? null : (
         <>
           {notifications.length <= 0 ? (
@@ -69,14 +91,20 @@ const NotificationDropdown = () => {
                 {notifications.map((notif, indx) => {
                   return (
                     <li key={notif.id}>
-                      <p>
-                        {notif.status == "PENDING"
-                          ? `${notif.Sender.profileName} sent you a friend request!`
-                          : null}
-                        {notif.status == "ACCEPTED"
-                          ? `${notif.Sender.profileName} accepted your friend request!`
-                          : null}
-                      </p>
+                      <div>
+                        {notif.status == "PENDING" ? (
+                          <p>
+                            {notif.Sender.profileName} sent you a friend
+                            request!
+                          </p>
+                        ) : null}
+                        {notif.status == "ACCEPTED" ? (
+                          <p>
+                            {notif.Sender.profileName} accepted your friend
+                            request!
+                          </p>
+                        ) : null}
+                      </div>
                       <div className={styles.acceptDenyBtnsCont}>
                         {notif.status == "PENDING" ? (
                           <>
@@ -101,6 +129,13 @@ const NotificationDropdown = () => {
                               Deny
                             </button>
                           </>
+                        ) : null}
+                        {notif.status == "ACCEPTED" ? (
+                          <button
+                            onClick={(e) => handleDismissBtn(e, notif.id)}
+                          >
+                            Dismiss
+                          </button>
                         ) : null}
                       </div>
                     </li>
