@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import Navbar from './partials/Navbar.jsx';
+import UserProfileInfo from './partials/UserProfileInfo.jsx';
 
 const ProfilePage = () => {
+  const [ profile, setProfile ] = useState(null);
 
   const { profileIdViewing } = useParams();
 
@@ -17,7 +19,9 @@ const ProfilePage = () => {
         method: 'GET',
       })
       .then((res) => res.json())
-      .then((res) => console.log(res))
+      .then((res) => {
+        setProfile(res);
+      })
       .catch((err) => console.error(err));
     }
   }, []);
@@ -25,7 +29,7 @@ const ProfilePage = () => {
   return (
     <>
     <Navbar/>
-    
+    {profile == null ? null : <UserProfileInfo profile={profile}/>}
     </>
   )
 };

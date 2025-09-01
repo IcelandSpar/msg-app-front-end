@@ -1,0 +1,9 @@
+.imgAndProfileName {
+  display: flex;
+  align-items: baseline;
+}
+
+.profileImg {
+  border: 1px solid black;
+  border-radius: 50%;
+}
