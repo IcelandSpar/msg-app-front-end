@@ -1,10 +1,17 @@
 import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router";
 
 import styles from '../../styles/FriendList.module.css';
 
 const FriendList = ({ profile }) => {
   const [ friendList, setFriendList ] = useState(null);
 
+  const navigate = useNavigate();
+
+  const handleClickOnUserProfile = (e, profileId) => {
+    e.preventDefault();
+    navigate(`/profile/${profileId}`);
+  }
 
   useEffect(() => {
 
@@ -33,7 +40,7 @@ const FriendList = ({ profile }) => {
       {friendList.map((friend, indx) => {
         return (
           <li key={friend.id} className={styles.friendListLiCont}>
-            <img className={styles.friendProfileImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${profile.id == friend.friendOne.id ? `${friend.friendTwo.profileImgFilePath}` : `${friend.friendOne.profileImgFilePath}`}`} alt={`${profile.id == friend.friendOne.id ? `${friend.friendTwo.profileName}` : `${friend.friendOne.profileName}`}'s profile picture`} width={'25px'} height={'25px'}/>
+            <img onClick={(e) => handleClickOnUserProfile(e, profile.id == friend.friendOne.id ? `${friend.friendTwo.id}` : `${friend.friendOne.id}`)} className={styles.friendProfileImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${profile.id == friend.friendOne.id ? `${friend.friendTwo.profileImgFilePath}` : `${friend.friendOne.profileImgFilePath}`}`} alt={`${profile.id == friend.friendOne.id ? `${friend.friendTwo.profileName}` : `${friend.friendOne.profileName}`}'s profile picture`} width={'25px'} height={'25px'}/>
             <p>{profile.id == friend.friendOne.id ? `${friend.friendTwo.profileName}` : `${friend.friendOne.profileName}`}</p>
           </li>
         )
