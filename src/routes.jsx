@@ -3,6 +3,7 @@ import Login from './views/Login.jsx';
 import Logout from './views/Logout.jsx';
 import Register from './views/Register.jsx';
 import UserHome from './views/UserHome.jsx';
+import MyProfile from './views/MyProfile.jsx';
 import ProfilePage from './views/ProfilePage.jsx';
 import DefaultHome from './views/DefaultHome.jsx';
 import GroupChatMain from './views/GroupChatMain.jsx';
@@ -32,6 +33,10 @@ const routes = [
   {
     path: '/channel/group/:groupId',
     element: <GroupChatMain/>
+  },
+  {
+    path: '/profile/myprofile',
+    element: <MyProfile/>,
   },
   {
     path: '/profile/:profileIdViewing',

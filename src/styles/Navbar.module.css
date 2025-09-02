@@ -19,3 +19,14 @@
   display: flex;
   gap: 1rem;
 }
+
+.profileCont {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.profileImg {
+  border-radius: 50%;
+  border: 1px solid black;
+}

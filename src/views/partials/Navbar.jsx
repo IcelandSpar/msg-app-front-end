@@ -1,6 +1,6 @@
 
 import { useEffect, useContext, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import UserContext from '../../UserContext';
 
 import NotificationDropdown from './NotificationDropdown.jsx';
@@ -10,6 +10,8 @@ import styles from '../../styles/Navbar.module.css';
 const Navbar = () => {
   const [ isNotifOpen, setIsNotifOpen ] = useState(false);
   const { profile, isLoggedIn, setProfile, setIsLoggedIn } = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const handleFriendCodeBtn = async (e, text) => {
     e.preventDefault();
@@ -21,16 +23,20 @@ const Navbar = () => {
     await navigator.clipboard.write([clipboardItem]);
   };
 
+  const handleClickOnProfile = (e) => {
+    navigate('/profile/myprofile');
+  };
+
   const handleNotificationDropdownBtn = (e) => {
     e.preventDefault();
     setIsNotifOpen(true);
     
-  }
+  };
 
   const handleNotifDropdownBtnLeave = (e) => {
     e.preventDefault();
     setIsNotifOpen(false);
-  }
+  };
 
     useEffect(() => {
     try {
@@ -92,7 +98,10 @@ const Navbar = () => {
             </div>
           ) }
           <div>
-            <div className={styles.profileCont}>Welcome {profile.profileName}</div>
+            <div className={styles.profileCont}>
+              <img onClick={handleClickOnProfile} className={styles.profileImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${profile.profileImgFilePath}`} alt={`Your profile picture`} width={`30px`} height={`30px`}/>
+              <p>{profile.profileName}</p>
+            </div>
             <button onClick={(e) => handleFriendCodeBtn(e, profile.friendCode)}>Friend Code: {profile.friendCode}</button>
           </div>
         </div>
