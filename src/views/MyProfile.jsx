@@ -8,6 +8,8 @@ import UpdateProfileForm from "./partials/UpdateProfileForm.jsx";
 
 const MyProfile = () => {
   const [userProfile, setUserProfile] = useState(null);
+  const [ selectedFile, setSelectedFile ] = useState(null);
+
   const bioInput = useRef(null);
   const profileNameInput = useRef(null);
 
@@ -23,6 +25,12 @@ const MyProfile = () => {
     setUserProfile({ ...userProfile, bio: e.target.value });
   };
 
+  
+  const handleFileChange = (e) => {
+    e.preventDefault();
+    setSelectedFile(e.target.files[0]);
+  }
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
@@ -34,6 +42,7 @@ const MyProfile = () => {
       formData.append('profileId', profile.id);
       formData.append('profileName', profileNameInput.current.value);
       formData.append('bio', bioInput.current.value);
+      formData.append('profilePicture', selectedFile);
 
       fetch(
         `${import.meta.env.VITE_FETCH_BASE_URL}/profile/update-profile-info`,
@@ -42,7 +51,7 @@ const MyProfile = () => {
             Authorization: `Bearer ${token}`,
           },
           method: 'PUT',
-          body: new URLSearchParams(formData),
+          body: formData,
         }
       )
       .then((res) => res.json())
@@ -82,6 +91,7 @@ const MyProfile = () => {
             bioInput={bioInput}
             handleProfileNameChange={handleProfileNameChange}
             handleChangeBioInfo={handleChangeBioInfo}
+            handleFileChange={handleFileChange}
           />
         )}
       </main>
