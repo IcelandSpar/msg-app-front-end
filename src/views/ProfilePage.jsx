@@ -1,37 +1,99 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useContext, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router";
 
-import Navbar from './partials/Navbar.jsx';
-import UserProfileInfo from './partials/UserProfileInfo.jsx';
+import Navbar from "./partials/Navbar.jsx";
+import UserProfileInfo from "./partials/UserProfileInfo.jsx";
+import UserContext from "../UserContext.jsx";
 
 const ProfilePage = () => {
-  const [ profile, setProfile ] = useState(null);
+  const [profileBeingViewed, setProfileBeingViewed] = useState(null);
+  const [isFriend, setIsFriend] = useState(false);
 
   const { profileIdViewing } = useParams();
+  const { profile } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  const handleUnfriendBtn = (e) => {
+    e.preventDefault();
+
+    const token = sessionStorage.getItem('msgAppToken');
+    if (profile && profileIdViewing && token) {
+      fetch(
+        `${
+          import.meta.env.VITE_FETCH_BASE_URL
+        }/friends/delete-friend-and-friend-requests/${
+          profile.id
+        }/${profileIdViewing}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          method: 'DELETE'
+        }
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          if(res.success == true) {
+            navigate('/channel/myhome');
+          }
+        })
+        .catch((err) => console.error(err));
+    }
+  };
 
   useEffect(() => {
-    const token = sessionStorage.getItem('msgAppToken');
-    if(token) {
-      fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/profile/get-profile/${profileIdViewing}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        method: 'GET',
-      })
-      .then((res) => res.json())
-      .then((res) => {
-        setProfile(res);
-      })
-      .catch((err) => console.error(err));
+    const token = sessionStorage.getItem("msgAppToken");
+    if (token) {
+      fetch(
+        `${
+          import.meta.env.VITE_FETCH_BASE_URL
+        }/profile/get-profile/${profileIdViewing}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          method: "GET",
+        }
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          setProfileBeingViewed(res);
+        })
+        .catch((err) => console.error(err));
+
+      console.log("fetching");
+      if (profile) {
+        fetch(
+          `${import.meta.env.VITE_FETCH_BASE_URL}/friends/check-if-friend/${
+            profile.id
+          }/${profileIdViewing}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            method: "GET",
+          }
+        )
+          .then((res) => res.json())
+          .then((res) => setIsFriend(res))
+          .catch((err) => console.error(err));
+      }
     }
-  }, []);
+  }, [profile]);
 
   return (
     <>
-    <Navbar/>
-    {profile == null ? null : <UserProfileInfo profile={profile}/>}
+      <Navbar />
+      {profileBeingViewed == null ? null : (
+        <UserProfileInfo profile={profileBeingViewed} />
+      )}
+      {!isFriend ? null : (
+        <button onClick={handleUnfriendBtn} type="button">
+          Unfriend
+        </button>
+      )}
     </>
-  )
+  );
 };
 
 export default ProfilePage;
