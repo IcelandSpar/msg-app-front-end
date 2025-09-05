@@ -10,6 +10,8 @@ const NotificationDropdown = ({ handleNotifDropdownBtnLeave }) => {
 
   const handleDismissBtn = (e, notifId) => {
     e.preventDefault();
+
+
     const token = sessionStorage.getItem("msgAppToken");
     if (token) {
       fetch(
@@ -22,7 +24,11 @@ const NotificationDropdown = ({ handleNotifDropdownBtnLeave }) => {
         }
       )
       .then((res) => res.json())
-      .then((res) => console.log(res))
+      .then((res) => {
+        if(res.success) {
+          setNotifications((prev) => prev.filter((item) => item.id != notifId))
+        }
+      })
       .catch((err) => console.error(err));
     }
   };
@@ -69,7 +75,6 @@ const NotificationDropdown = ({ handleNotifDropdownBtnLeave }) => {
       )
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
           setNotifications(res);
         })
         .catch((err) => console.error(err));
