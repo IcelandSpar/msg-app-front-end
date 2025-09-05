@@ -1,10 +1,17 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { formatDistance } from "date-fns";
 
 import styles from '../../styles/GroupChatMessages.module.css';
 
 const GroupChatMessages = ({ chatMsgs, endOfMsg }) => {
+
+  const navigate = useNavigate();
+
+    const handleClickOnUserProfile = (e, profileId) => {
+    e.preventDefault();
+    navigate(`/profile/${profileId}`);
+  }
 
 
   return (
@@ -14,6 +21,7 @@ const GroupChatMessages = ({ chatMsgs, endOfMsg }) => {
           <li className={styles.chatMsgsLi} key={indx}>
             <div className={styles.profileImgAndNameCont}>
               <img
+              onClick={(e) => handleClickOnUserProfile(e, msg.authorId)}
               className={styles.chatProfileImg}
                 src={`${import.meta.env.VITE_FETCH_BASE_URL}/${
                   msg.imgPath || msg.messageAuthor.profileImgFilePath

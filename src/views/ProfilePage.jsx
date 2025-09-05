@@ -14,6 +14,29 @@ const ProfilePage = () => {
 
   const navigate = useNavigate();
 
+
+  const handleSendFriendReqBtn = (e) => {
+    e.preventDefault();
+
+    const token = sessionStorage.getItem('msgAppToken');
+    const formData = new FormData;
+
+    formData.append('friendCode', profileBeingViewed.friendCode);
+    formData.append('profileIdRequesting', profile.id);
+
+    fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/friends/send-friend-req`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      method: 'POST',
+      body: new URLSearchParams(formData)
+    })
+    .then((res) => res.json())
+    .then((res) => console.log(res))
+    .catch((err) => console.error(err))
+
+  };
+
   const handleUnfriendBtn = (e) => {
     e.preventDefault();
 
@@ -87,7 +110,9 @@ const ProfilePage = () => {
       {profileBeingViewed == null ? null : (
         <UserProfileInfo profile={profileBeingViewed} />
       )}
-      {!isFriend ? null : (
+      {!isFriend ? (
+        <button onClick={(e) => handleSendFriendReqBtn(e, profileBeingViewed)} type="button">Send Friend Request</button>
+      ) : (
         <button onClick={handleUnfriendBtn} type="button">
           Unfriend
         </button>
