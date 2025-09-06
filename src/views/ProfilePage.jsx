@@ -5,14 +5,22 @@ import Navbar from "./partials/Navbar.jsx";
 import UserProfileInfo from "./partials/UserProfileInfo.jsx";
 import UserContext from "../UserContext.jsx";
 
+import styles from '../styles/ProfilePage.module.css';
+
 const ProfilePage = () => {
   const [profileBeingViewed, setProfileBeingViewed] = useState(null);
   const [isFriend, setIsFriend] = useState(false);
+  const [ isReqModalOpen, setIsReqModalOpen ] = useState(null);
 
   const { profileIdViewing } = useParams();
   const { profile } = useContext(UserContext);
 
   const navigate = useNavigate();
+
+  const handleCloseReqModalBtn = (e) => {
+    e.preventDefault();
+    setIsReqModalOpen(null);
+  }
 
 
   const handleSendFriendReqBtn = (e) => {
@@ -32,7 +40,12 @@ const ProfilePage = () => {
       body: new URLSearchParams(formData)
     })
     .then((res) => res.json())
-    .then((res) => console.log(res))
+    .then((res) => {
+      if(res.success == true && res.message) {
+        setIsReqModalOpen(res);
+      }
+      console.log(res)
+    })
     .catch((err) => console.error(err))
 
   };
@@ -107,6 +120,14 @@ const ProfilePage = () => {
   return (
     <>
       <Navbar />
+      {isReqModalOpen == null ? null : (
+        <div className={styles.reqModalBackground}>
+          <div className={styles.reqModal}>
+          <p>{isReqModalOpen.message}</p>
+          <button onClick={handleCloseReqModalBtn} type="button">Close</button>
+          </div>
+        </div>
+      )}
       {profileBeingViewed == null ? null : (
         <UserProfileInfo profile={profileBeingViewed} />
       )}
