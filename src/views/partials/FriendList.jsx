@@ -3,8 +3,7 @@ import { useNavigate } from "react-router";
 
 import styles from '../../styles/FriendList.module.css';
 
-const FriendList = ({ profile }) => {
-  const [ friendList, setFriendList ] = useState(null);
+const FriendList = ({ profile, friendList, setFriendList }) => {
 
   const navigate = useNavigate();
 
@@ -35,6 +34,7 @@ const FriendList = ({ profile }) => {
   
   return (<>
   <h4 className={styles.friendListHeading}>Friend List</h4>
+
   {friendList == null ? null : (
     <ul className={styles.friendListUlCont}>
       {friendList.map((friend, indx) => {

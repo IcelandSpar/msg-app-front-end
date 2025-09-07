@@ -15,6 +15,8 @@ const UserHome = () => {
   const [ isCreateGroupModalOpen, setIsCreateGroupModalOpen ] = useState(false);
   const [ isAddFriendModalOpen, setIsAddFriendModalOpen ] = useState(false);
   const [ isReqResModalOpen, setIsReqResModalOpen ] = useState(null);
+  const [ friendList, setFriendList ] = useState(null);
+
   const { profile, isLoggedIn } = useContext(UserContext);
 
 
@@ -63,7 +65,7 @@ const UserHome = () => {
 
   return (
     <main>
-      <Navbar/> 
+      <Navbar setFriendList={setFriendList}/> 
       {isReqResModalOpen == null ? null : (
         <FriendRequestResultModal reqObj={isReqResModalOpen} closeBtnHandler={handleCloseFriendReqModal}/>
       )}
@@ -72,7 +74,7 @@ const UserHome = () => {
       <button onClick={handleAddFriendBtn}>Add a friend</button>
       <GroupList/>
       <aside className={styles.friendListCont}>
-      {profile ? <FriendList profile={profile}/> : null}
+      {profile ? <FriendList profile={profile} friendList={friendList} setFriendList={setFriendList}/> : null}
       </aside>
       <button onClick={handleCreateGroupModal}>Create Group</button>
     </main>

@@ -7,7 +7,7 @@ import NotificationDropdown from './NotificationDropdown.jsx';
 
 import styles from '../../styles/Navbar.module.css';
 
-const Navbar = () => {
+const Navbar = ({setFriendList}) => {
   const [ isNotifOpen, setIsNotifOpen ] = useState(false);
   const { profile, isLoggedIn, setProfile, setIsLoggedIn } = useContext(UserContext);
 
@@ -93,7 +93,7 @@ const Navbar = () => {
         <div className={styles.notifAndProfileCont}>
           {!profile ? null : (
             <div className={styles.notificationCont}>
-              {isNotifOpen ? <NotificationDropdown handleNotifDropdownBtnLeave={handleNotifDropdownBtnLeave}/> : null}
+              {isNotifOpen ? <NotificationDropdown handleNotifDropdownBtnLeave={handleNotifDropdownBtnLeave} setFriendList={setFriendList}/> : null}
               <button onMouseEnter={handleNotificationDropdownBtn}>Notifications</button>
             </div>
           ) }

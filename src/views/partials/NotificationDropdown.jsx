@@ -3,7 +3,7 @@ import UserContext from "../../UserContext";
 
 import styles from "../../styles/NotificationDropdown.module.css";
 
-const NotificationDropdown = ({ handleNotifDropdownBtnLeave }) => {
+const NotificationDropdown = ({ handleNotifDropdownBtnLeave, setFriendList }) => {
   const [notifications, setNotifications] = useState(null);
 
   const { profile } = useContext(UserContext);
@@ -54,7 +54,9 @@ const NotificationDropdown = ({ handleNotifDropdownBtnLeave }) => {
       )
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
+          if(isAccepted) {
+            setFriendList(res.profileFriendList)
+          }
         })
         .catch((err) => console.error(err));
     }
