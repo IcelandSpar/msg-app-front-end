@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router";
 
 import Navbar from "./partials/Navbar.jsx";
 import UserProfileInfo from "./partials/UserProfileInfo.jsx";
+import FriendRequestResultModal from "./partials/FriendRequestResultModal.jsx";
+
 import UserContext from "../UserContext.jsx";
 
 import styles from '../styles/ProfilePage.module.css';
@@ -121,12 +123,7 @@ const ProfilePage = () => {
     <>
       <Navbar />
       {isReqModalOpen == null ? null : (
-        <div className={styles.reqModalBackground}>
-          <div className={styles.reqModal}>
-          <p>{isReqModalOpen.message}</p>
-          <button onClick={handleCloseReqModalBtn} type="button">Close</button>
-          </div>
-        </div>
+        <FriendRequestResultModal reqObj={isReqModalOpen} closeBtnHandler={handleCloseReqModalBtn}/>
       )}
       {profileBeingViewed == null ? null : (
         <UserProfileInfo profile={profileBeingViewed} />
