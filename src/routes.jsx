@@ -7,6 +7,7 @@ import MyProfile from './views/MyProfile.jsx';
 import ProfilePage from './views/ProfilePage.jsx';
 import DefaultHome from './views/DefaultHome.jsx';
 import GroupChatMain from './views/GroupChatMain.jsx';
+import DirectMessagePage from './views/DirectMessagePage.jsx';
 
 
 const routes = [
@@ -33,6 +34,10 @@ const routes = [
   {
     path: '/channel/group/:groupId',
     element: <GroupChatMain/>
+  },
+  {
+    path: '/channel/direct-message/:directMessageGroupId',
+    element: <DirectMessagePage/>
   },
   {
     path: '/profile/myprofile',
