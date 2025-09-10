@@ -7,9 +7,34 @@ const FriendList = ({ profile, friendList, setFriendList }) => {
 
   const navigate = useNavigate();
 
-  const handleNavigateToDirectMessage = (e) => {
+  const handleNavigateToDirectMessage = (e, friendOneId, friendTwoId) => {
     e.preventDefault();
-    navigate(`/channel/direct-message/1234`);
+
+    const token = sessionStorage.getItem('msgAppToken');
+
+    if(token) {
+    fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/friends/get-direct-message-group/${friendOneId}/${friendTwoId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      method: 'GET',
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      if(res) {
+        navigate(`/channel/direct-message/${res.directMessageGroup.id}`);
+      }
+    }).catch((err) => {
+      if(err) {
+        console.error(err);
+      }
+    })
+    }
+
+
+
+
+
   }
 
   const handleClickOnUserProfile = (e, profileId) => {
