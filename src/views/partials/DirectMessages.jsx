@@ -1,15 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import styles from '../../styles/DirectMessages.module.css'; 
 
-const DirectMessages = () => {
-
-  useEffect(() => {
-
-  }, []);
-
-
+const DirectMessages = ({directMessages}) => {
   return (
-    <p>Messages</p>
+    <div>
+        <ul className={styles.directMessageUl}>
+          {directMessages.map((msg, indx) => {
+            return (<li key={msg.id} >
+              <p className={styles.profileName}>{msg.author.profileName}</p>
+              <p>{msg.messageContent}</p>
+            </li>)
+          })}
+        </ul>
+    </div>
   )
 };
 
