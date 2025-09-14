@@ -1,5 +1,16 @@
 .directMessageUl {
+  list-style-type: none;
+}
 
+.msgProfileCont {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.msgProfilePicture {
+  border: 1px solid black;
+  border-radius: 50%;
 }
 
 .profileName {

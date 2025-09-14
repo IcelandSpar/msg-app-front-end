@@ -7,12 +7,12 @@ import FriendRequestResultModal from "./partials/FriendRequestResultModal.jsx";
 
 import UserContext from "../UserContext.jsx";
 
-import styles from '../styles/ProfilePage.module.css';
+import styles from "../styles/ProfilePage.module.css";
 
 const ProfilePage = () => {
   const [profileBeingViewed, setProfileBeingViewed] = useState(null);
   const [isFriend, setIsFriend] = useState(false);
-  const [ isReqModalOpen, setIsReqModalOpen ] = useState(null);
+  const [isReqModalOpen, setIsReqModalOpen] = useState(null);
 
   const { profileIdViewing } = useParams();
   const { profile } = useContext(UserContext);
@@ -22,57 +22,56 @@ const ProfilePage = () => {
   const handleCloseReqModalBtn = (e) => {
     e.preventDefault();
     setIsReqModalOpen(null);
-  }
-
+  };
 
   const handleSendFriendReqBtn = (e) => {
     e.preventDefault();
 
-    const token = sessionStorage.getItem('msgAppToken');
-    const formData = new FormData;
+    const token = sessionStorage.getItem("msgAppToken");
+    const formData = new FormData();
 
-    formData.append('friendCode', profileBeingViewed.friendCode);
-    formData.append('profileIdRequesting', profile.id);
+    formData.append("friendCode", profileBeingViewed.friendCode);
+    formData.append("profileIdRequesting", profile.id);
 
     fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/friends/send-friend-req`, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
-      method: 'POST',
-      body: new URLSearchParams(formData)
+      method: "POST",
+      body: new URLSearchParams(formData),
     })
-    .then((res) => res.json())
-    .then((res) => {
-      if(res.success == true && res.message) {
-        setIsReqModalOpen(res);
-      }
-      console.log(res)
-    })
-    .catch((err) => console.error(err))
-
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.success == true && res.message) {
+          setIsReqModalOpen(res);
+        }
+        console.log(res);
+      })
+      .catch((err) => console.error(err));
   };
 
   const handleUnfriendBtn = (e) => {
     e.preventDefault();
 
-    const token = sessionStorage.getItem('msgAppToken');
+    const token = sessionStorage.getItem("msgAppToken");
     if (profile && profileIdViewing && token) {
       fetch(
         `${
           import.meta.env.VITE_FETCH_BASE_URL
         }/friends/delete-friend-and-friend-requests/${
           profile.id
-        }/${profileIdViewing}`, {
+        }/${profileIdViewing}`,
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          method: 'DELETE'
+          method: "DELETE",
         }
       )
         .then((res) => res.json())
         .then((res) => {
-          if(res.success == true) {
-            navigate('/channel/myhome');
+          if (res.success == true) {
+            navigate("/channel/myhome");
           }
         })
         .catch((err) => console.error(err));
@@ -117,23 +116,41 @@ const ProfilePage = () => {
           .catch((err) => console.error(err));
       }
     }
-  }, [profile]);
+  }, [profile, profileIdViewing]);
 
   return (
     <>
       <Navbar />
       {isReqModalOpen == null ? null : (
-        <FriendRequestResultModal reqObj={isReqModalOpen} closeBtnHandler={handleCloseReqModalBtn}/>
+        <FriendRequestResultModal
+          reqObj={isReqModalOpen}
+          closeBtnHandler={handleCloseReqModalBtn}
+        />
       )}
       {profileBeingViewed == null ? null : (
         <UserProfileInfo profile={profileBeingViewed} />
       )}
-      {!isFriend ? (
-        <button onClick={(e) => handleSendFriendReqBtn(e, profileBeingViewed)} type="button">Send Friend Request</button>
-      ) : (
-        <button onClick={handleUnfriendBtn} type="button">
-          Unfriend
-        </button>
+      {!profile ? null : (
+        <>
+          {profile.id == profileIdViewing ? (
+            null
+          ) : (
+            <>
+              {!isFriend ? (
+                <button
+                  onClick={(e) => handleSendFriendReqBtn(e, profileBeingViewed)}
+                  type="button"
+                >
+                  Send Friend Request
+                </button>
+              ) : (
+                <button onClick={handleUnfriendBtn} type="button">
+                  Unfriend
+                </button>
+              )}
+            </>
+          )}
+        </>
       )}
     </>
   );

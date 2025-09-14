@@ -25,7 +25,9 @@ const DirectMessageForm = () => {
         method: 'POST',
         body: new URLSearchParams(formData),
       }).then((res) => res.json())
-      .then((res) => console.log(res))
+      .then((res) => {
+        res.success ? messageInput.current.value = '' : null;
+      })
       .catch((err) => console.error(err));
     }
   }
@@ -36,7 +38,7 @@ const DirectMessageForm = () => {
         <label className={styles.messageLabel} htmlFor="message">
           Message:
         </label>
-        <textarea ref={messageInput} name="message" id="message"></textarea>
+        <textarea placeholder="Type a message!" ref={messageInput} name="message" id="message"></textarea>
       </div>
       <div>
         <button type="submit">Send</button>
