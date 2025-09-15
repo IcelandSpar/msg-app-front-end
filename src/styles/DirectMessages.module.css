@@ -1,6 +1,13 @@
+.messagesCont {
+  max-height: 100%;
+}
+
 .directMessageUl {
   list-style-type: none;
+  overflow-y: scroll;
+
 }
+
 
 .msgProfileCont {
   display: flex;

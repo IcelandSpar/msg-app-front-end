@@ -2,8 +2,9 @@ import { useRef, useContext } from "react";
 import { useParams } from "react-router";
 import UserContext from '../../UserContext.jsx';
 import styles from "../../styles/DirectMessageForm.module.css";
+import { socket } from "../../socket.js";
 
-const DirectMessageForm = () => {
+const DirectMessageForm = ({ endOfMsg, setDirectMessages }) => {
   const messageInput = useRef(null);
 
   const { profile } = useContext(UserContext);
@@ -26,10 +27,40 @@ const DirectMessageForm = () => {
         body: new URLSearchParams(formData),
       }).then((res) => res.json())
       .then((res) => {
-        res.success ? messageInput.current.value = '' : null;
+
+        if(res.success) {
+                  setDirectMessages((chatMsgs) => [
+          ...chatMsgs,
+          {
+            messageContent: messageInput.current.value,
+            createdAt: new Date(),
+            author: {
+              profileImgFilePath: profile.profileImgFilePath,
+              profileName: profile.profileName,
+
+            }
+          },
+        ]);
+
+        socket.emit("send message", {
+          groupId: directMessageGroupId,
+          messageContent: messageInput.current.value,
+          profileName: profile.profileName,
+          imgPath: profile.profileImgFilePath,
+          createdAt: new Date(),
+        });
+
+        }
+
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err))
+
     }
+  };
+
+  const handleUserTypingTextarea = (e) => {
+    e.preventDefault();
+    socket.emit()
   }
 
   return (
@@ -38,7 +69,8 @@ const DirectMessageForm = () => {
         <label className={styles.messageLabel} htmlFor="message">
           Message:
         </label>
-        <textarea placeholder="Type a message!" ref={messageInput} name="message" id="message"></textarea>
+        {console.log(profile)}
+        <textarea onKeyUp={handleUserTypingTextarea} placeholder="Type a message!" ref={messageInput} name="message" id="message"></textarea>
       </div>
       <div>
         <button type="submit">Send</button>
