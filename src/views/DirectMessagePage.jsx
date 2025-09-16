@@ -53,12 +53,20 @@ const DirectMessagePage = () => {
             });
 
                  socket.on("received message", (msgInfo) => {
-                  console.log(msgInfo)
-
+                  setDirectMessages((prev) => [
+                    ...prev,
+                    {
+                      messageContent: msgInfo.messageContent,
+                      createdAt: new Date(),
+                      author: {
+                        profileImgFilePath: msgInfo.imgPath,
+                        profileName: msgInfo.profileName
+                      },
+                    }
+                  ]);
         
       });
           }
-          console.log(res.directMessages)
           setDirectMessages(res.directMessages);
         })
         .catch((err) => console.error(err));
