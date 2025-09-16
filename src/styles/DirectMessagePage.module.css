@@ -1,12 +1,15 @@
 .directMessagePage {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+
 }
 
 .directMessageMain {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+
+}
+
+.messageFormCont {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 

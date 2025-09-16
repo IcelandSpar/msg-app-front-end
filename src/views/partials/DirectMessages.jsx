@@ -19,7 +19,6 @@ const DirectMessages = ({directMessages, endOfMsg}) => {
         endOfMsg.current?.scrollIntoView({ behavior: 'smooth' });
         clearTimeout(scrollDownTimeout);
       }, 1000)
-      console.log('end of msg')
   }, [endOfMsg]);
 
   return (

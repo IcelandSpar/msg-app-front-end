@@ -1,11 +1,19 @@
 .messageFormCont {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
+
 
 }
 
+.userTypingAndTextareaCont {
+  display: flex;
+  flex-direction: column;
+}
 
 .messageLabel {
   display: none;
+}
+
+.textareaAndBtnCont {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
 }

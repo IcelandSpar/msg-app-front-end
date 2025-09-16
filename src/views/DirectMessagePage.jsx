@@ -9,7 +9,7 @@ import DirectMessageForm from "./partials/DirectMessageForm.jsx";
 import UserContext from "../UserContext.jsx";
 import MsgForm from "./partials/MsgForm.jsx";
 
-import styles from '../styles/DirectMessagePage.module.css';
+import styles from "../styles/DirectMessagePage.module.css";
 
 const DirectMessagePage = () => {
   const [directMessages, setDirectMessages] = useState(null);
@@ -52,20 +52,21 @@ const DirectMessagePage = () => {
               console.log(msg);
             });
 
-                 socket.on("received message", (msgInfo) => {
-                  setDirectMessages((prev) => [
-                    ...prev,
-                    {
-                      messageContent: msgInfo.messageContent,
-                      createdAt: new Date(),
-                      author: {
-                        profileImgFilePath: msgInfo.imgPath,
-                        profileName: msgInfo.profileName
-                      },
-                    }
-                  ]);
-        
-      });
+            socket.on("received message", (msgInfo) => {
+              if (msgInfo.groupId == directMessageGroupId) {
+                setDirectMessages((prev) => [
+                  ...prev,
+                  {
+                    messageContent: msgInfo.messageContent,
+                    createdAt: new Date(),
+                    author: {
+                      profileImgFilePath: msgInfo.imgPath,
+                      profileName: msgInfo.profileName,
+                    },
+                  },
+                ]);
+              }
+            });
           }
           setDirectMessages(res.directMessages);
         })
@@ -86,7 +87,10 @@ const DirectMessagePage = () => {
           </div>
         ) : null}
         <div className={styles.messageFormCont}>
-          <DirectMessageForm endOfMsg={endOfMsg} setDirectMessages={setDirectMessages}/>
+          <DirectMessageForm
+            endOfMsg={endOfMsg}
+            setDirectMessages={setDirectMessages}
+          />
         </div>
       </main>
     </div>
