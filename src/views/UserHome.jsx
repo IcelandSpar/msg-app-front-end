@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router';
 import UserContext from '../UserContext.jsx';
 
 import Navbar from './partials/Navbar.jsx';
@@ -13,6 +14,7 @@ import FriendRequestResultModal from './partials/FriendRequestResultModal.jsx';
 import styles from '../styles/UserHome.module.css';
 
 const UserHome = () => {
+  const [ groups, setGroups ] = useState(null);
   const [ isCreateGroupModalOpen, setIsCreateGroupModalOpen ] = useState(false);
   const [ isAddFriendModalOpen, setIsAddFriendModalOpen ] = useState(false);
   const [ isReqResModalOpen, setIsReqResModalOpen ] = useState(null);
@@ -20,6 +22,13 @@ const UserHome = () => {
   const [ friendList, setFriendList ] = useState(null);
 
   const { profile, isLoggedIn } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  const handleClickOnGroupLi = (e, groupId) => {
+    e.preventDefault();
+    navigate(`/channel/group/${groupId}`);
+  };
 
 
   const handleCloseFriendReqModal = (e) => {
@@ -67,8 +76,19 @@ const UserHome = () => {
     }
 
   useEffect(() => {
-
-  }, [])
+    const token = sessionStorage.getItem('msgAppToken');
+    fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/get-member-groups`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      method: 'GET',
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      setGroups(res);
+    })
+    .catch((err) => console.error(err))
+  }, []);
 
   return (
     <main>
@@ -83,7 +103,7 @@ const UserHome = () => {
         <button type='button' onClick={handleAddFriendBtn}>Add a friend</button>
         <button type='button' onClick={handleSearchGroupModal}>Search Groups</button>
       </div>
-      <GroupList/>
+      <GroupList groups={groups} handleClickOnGroupLi={handleClickOnGroupLi}/>
       <aside className={styles.friendListCont}>
       {profile ? <FriendList profile={profile} friendList={friendList} setFriendList={setFriendList}/> : null}
       </aside>

@@ -2,30 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styles from '../../styles/GroupList.module.css';
 
-const GroupList = () => {
-  const [ groups, setGroups ] = useState(null);
-
-  const navigate = useNavigate();
-
-  const handleClickOnGroupLi = (e, groupId) => {
-    e.preventDefault();
-    navigate(`/channel/group/${groupId}`);
-  };
-
-  useEffect(() => {
-    const token = sessionStorage.getItem('msgAppToken');
-    fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/get-member-groups`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      method: 'GET',
-    })
-    .then((res) => res.json())
-    .then((res) => {
-      setGroups(res);
-    })
-    .catch((err) => console.error(err))
-  }, []);
+const GroupList = ({groups, handleClickOnGroupLi}) => {
 
   return (
     <section>
