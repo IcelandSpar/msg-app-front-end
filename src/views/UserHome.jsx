@@ -6,6 +6,7 @@ import GroupList from './partials/GroupList.jsx';
 import FriendList from './partials/FriendList.jsx';
 import AddFriendModal from './partials/AddFriendModal.jsx';
 import CreateGroupModal from './partials/CreateGroupModal.jsx';
+import SearchGroupModal from './partials/SearchGroupModal.jsx';
 import FriendRequestResultModal from './partials/FriendRequestResultModal.jsx';
 
 
@@ -15,6 +16,7 @@ const UserHome = () => {
   const [ isCreateGroupModalOpen, setIsCreateGroupModalOpen ] = useState(false);
   const [ isAddFriendModalOpen, setIsAddFriendModalOpen ] = useState(false);
   const [ isReqResModalOpen, setIsReqResModalOpen ] = useState(null);
+  const [ isGroupSearchModalOpen, setIsGroupSearchModalOpen ] = useState(false);
   const [ friendList, setFriendList ] = useState(null);
 
   const { profile, isLoggedIn } = useContext(UserContext);
@@ -35,6 +37,11 @@ const UserHome = () => {
     e.preventDefault();
     setIsAddFriendModalOpen((prev) => !prev);
   };
+
+  const handleSearchGroupModal = (e) => {
+    e.preventDefault();
+    setIsGroupSearchModalOpen((prev) => !prev);
+  }
 
     const handleFriendReqSubmit = (e, friendCodeInput) => {
       e.preventDefault();
@@ -71,7 +78,11 @@ const UserHome = () => {
       )}
       {!isAddFriendModalOpen ? null : <AddFriendModal handleFriendReqSubmit={handleFriendReqSubmit}/>}
       {!isCreateGroupModalOpen ? null : <CreateGroupModal handleCreateGroupModal={handleCreateGroupModal}/>}
-      <button onClick={handleAddFriendBtn}>Add a friend</button>
+      {!isGroupSearchModalOpen ? null : <SearchGroupModal handleSearchGroupModal={handleSearchGroupModal}/>}
+      <div className={styles.addFriendSearchGroupBtnsCont}>
+        <button type='button' onClick={handleAddFriendBtn}>Add a friend</button>
+        <button type='button' onClick={handleSearchGroupModal}>Search Groups</button>
+      </div>
       <GroupList/>
       <aside className={styles.friendListCont}>
       {profile ? <FriendList profile={profile} friendList={friendList} setFriendList={setFriendList}/> : null}
