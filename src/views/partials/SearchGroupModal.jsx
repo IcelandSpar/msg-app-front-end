@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import UserContext from '../../UserContext.jsx';
 
 import GroupList from "./GroupList.jsx";
 
@@ -10,15 +11,17 @@ const SearchGroupModal = ({ handleSearchGroupModal }) => {
 
   const groupNameInput = useRef(null);
 
+  const { profile } = useContext(UserContext);
+
   const handleSearchBtn = (e) => {
     e.preventDefault();
     const token = sessionStorage.getItem("msgAppToken");
 
-    if (token && groupNameInput.current.value != "") {
+    if (token && groupNameInput.current.value != "" && profile.id) {
       fetch(
         `${
           import.meta.env.VITE_FETCH_BASE_URL
-        }/group-actions/get-searched-groups/${groupNameInput.current.value}`,
+        }/group-actions/get-searched-groups/${groupNameInput.current.value}/${profile.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
