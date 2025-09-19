@@ -6,6 +6,8 @@ import styles from "../../styles/SearchGroupModal.module.css";
 
 const SearchGroupModal = ({ handleSearchGroupModal }) => {
   const [groups, setGroups] = useState(null);
+  const [ groupToJoin, setGroupToJoin ] = useState(null);
+
   const groupNameInput = useRef(null);
 
   const handleSearchBtn = (e) => {
@@ -32,12 +34,45 @@ const SearchGroupModal = ({ handleSearchGroupModal }) => {
     }
   };
 
-  const handleClickOnGroupLi = (e) => {
+  const handleClickOnGroupLi = (e, groupId) => {
     e.preventDefault();
+    const token = sessionStorage.getItem("msgAppToken");
+    if (token) {
+      fetch(
+        `${
+          import.meta.env.VITE_FETCH_BASE_URL
+        }/group-actions/get-group-info/${groupId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((res) => res.json(res))
+        .then((res) => setGroupToJoin(res))
+        .catch((err) => console.error(err));
+    }
   };
+
+  const handleCloseModals = (e) => {
+    e.preventDefault();
+    setGroupToJoin(null);
+    handleSearchGroupModal(e)
+  }
 
   return (
     <div className={styles.modalBackground}>
+      {!groupToJoin ? null : (
+        <div className={styles.joinGroupModalBackground}>
+          <div className={styles.joinGroupModalCont}>
+            <p>Would you like to join {groupToJoin.groupName}?</p>
+            <div className={styles.joinOrNotBtnCont}>
+              <button onClick={handleCloseModals} type="button">Nevermind</button>
+              <button type="button">Join</button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className={styles.searchGroupModalCont}>
         <form onSubmit={handleSearchBtn}>
           <div className={styles.searchInputButtonCont}>
@@ -54,7 +89,7 @@ const SearchGroupModal = ({ handleSearchGroupModal }) => {
               Search
             </button>
           </div>
-          <button type="button">
+          <button onClick={handleSearchGroupModal} type="button">
             Exit
           </button>
         </form>
