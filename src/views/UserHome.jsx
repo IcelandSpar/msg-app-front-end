@@ -14,7 +14,7 @@ import FriendRequestResultModal from './partials/FriendRequestResultModal.jsx';
 import styles from '../styles/UserHome.module.css';
 
 const UserHome = () => {
-  const [ groups, setGroups ] = useState(null);
+  const [ memberGroups, setMemberGroups ] = useState(null);
   const [ isCreateGroupModalOpen, setIsCreateGroupModalOpen ] = useState(false);
   const [ isAddFriendModalOpen, setIsAddFriendModalOpen ] = useState(false);
   const [ isReqResModalOpen, setIsReqResModalOpen ] = useState(null);
@@ -85,7 +85,7 @@ const UserHome = () => {
     })
     .then((res) => res.json())
     .then((res) => {
-      setGroups(res);
+      setMemberGroups(res);
     })
     .catch((err) => console.error(err))
   }, []);
@@ -98,12 +98,12 @@ const UserHome = () => {
       )}
       {!isAddFriendModalOpen ? null : <AddFriendModal handleFriendReqSubmit={handleFriendReqSubmit}/>}
       {!isCreateGroupModalOpen ? null : <CreateGroupModal handleCreateGroupModal={handleCreateGroupModal}/>}
-      {!isGroupSearchModalOpen ? null : <SearchGroupModal handleSearchGroupModal={handleSearchGroupModal}/>}
+      {!isGroupSearchModalOpen ? null : <SearchGroupModal setMemberGroups={setMemberGroups} handleSearchGroupModal={handleSearchGroupModal}/>}
       <div className={styles.addFriendSearchGroupBtnsCont}>
         <button type='button' onClick={handleAddFriendBtn}>Add a friend</button>
         <button type='button' onClick={handleSearchGroupModal}>Search Groups</button>
       </div>
-      <GroupList groups={groups} handleClickOnGroupLi={handleClickOnGroupLi}/>
+      <GroupList groups={memberGroups} handleClickOnGroupLi={handleClickOnGroupLi}/>
       <aside className={styles.friendListCont}>
       {profile ? <FriendList profile={profile} friendList={friendList} setFriendList={setFriendList}/> : null}
       </aside>

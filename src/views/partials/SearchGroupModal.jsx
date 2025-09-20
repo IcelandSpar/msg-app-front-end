@@ -5,7 +5,7 @@ import GroupList from "./GroupList.jsx";
 
 import styles from "../../styles/SearchGroupModal.module.css";
 
-const SearchGroupModal = ({ handleSearchGroupModal }) => {
+const SearchGroupModal = ({ handleSearchGroupModal, setMemberGroups }) => {
   const [groups, setGroups] = useState(null);
   const [ groupToJoin, setGroupToJoin ] = useState(null);
 
@@ -63,6 +63,29 @@ const SearchGroupModal = ({ handleSearchGroupModal }) => {
     handleSearchGroupModal(e)
   }
 
+  const handleJoinBtn = (e, groupToJoin) => {
+    e.preventDefault();
+    const token = sessionStorage.getItem('msgAppToken');
+    if(token && groupToJoin && profile) {
+      fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/join-group/${groupToJoin.id}/${profile.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        method: 'POST',
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        setMemberGroups(res.updatedMemberGroups);
+        handleCloseModals(e);
+      })
+      .catch((err) => console.error(err))
+
+
+    }
+
+
+  }
+
   return (
     <div className={styles.modalBackground}>
       {!groupToJoin ? null : (
@@ -71,7 +94,7 @@ const SearchGroupModal = ({ handleSearchGroupModal }) => {
             <p>Would you like to join {groupToJoin.groupName}?</p>
             <div className={styles.joinOrNotBtnCont}>
               <button onClick={handleCloseModals} type="button">Nevermind</button>
-              <button type="button">Join</button>
+              <button onClick={(e) => handleJoinBtn(e, groupToJoin)} type="button">Join</button>
             </div>
           </div>
         </div>
