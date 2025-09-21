@@ -44,7 +44,7 @@ const UpdateProfileForm = ({
         </div>
       </fieldset>
 
-      <button type="submit">Update Profile</button>
+      <button type="submit">Save</button>
     </form>
   );
 };

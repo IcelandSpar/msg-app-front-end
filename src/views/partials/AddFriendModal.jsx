@@ -4,7 +4,7 @@ import UserContext from '../../UserContext';
 
 import styles from '../../styles/AddFriendModal.module.css';
 
-const AddFriendModal = ({handleFriendReqSubmit}) => {
+const AddFriendModal = ({handleFriendReqSubmit, handleCloseFriendModal}) => {
   const friendCodeInput = useRef(null);
 
   const { profile } = useContext(UserContext);
@@ -25,6 +25,7 @@ const AddFriendModal = ({handleFriendReqSubmit}) => {
             </div>
           </fieldset>
           <button type='submit'>Send Request</button>
+          <button onClick={handleCloseFriendModal} type='button'>Exit</button>
         </form>
       </div>
     </div>

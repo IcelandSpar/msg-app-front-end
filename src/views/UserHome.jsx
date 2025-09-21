@@ -52,6 +52,11 @@ const UserHome = () => {
     setIsGroupSearchModalOpen((prev) => !prev);
   }
 
+  const handleCloseFriendModal = (e) => {
+    e.preventDefault();
+    setIsAddFriendModalOpen(false);
+  }
+
     const handleFriendReqSubmit = (e, friendCodeInput) => {
       e.preventDefault();
   
@@ -96,18 +101,19 @@ const UserHome = () => {
       {isReqResModalOpen == null ? null : (
         <FriendRequestResultModal reqObj={isReqResModalOpen} closeBtnHandler={handleCloseFriendReqModal}/>
       )}
-      {!isAddFriendModalOpen ? null : <AddFriendModal handleFriendReqSubmit={handleFriendReqSubmit}/>}
+      {!isAddFriendModalOpen ? null : <AddFriendModal handleFriendReqSubmit={handleFriendReqSubmit} handleCloseFriendModal={handleCloseFriendModal}/>}
       {!isCreateGroupModalOpen ? null : <CreateGroupModal handleCreateGroupModal={handleCreateGroupModal}/>}
       {!isGroupSearchModalOpen ? null : <SearchGroupModal setMemberGroups={setMemberGroups} handleSearchGroupModal={handleSearchGroupModal}/>}
       <div className={styles.addFriendSearchGroupBtnsCont}>
         <button type='button' onClick={handleAddFriendBtn}>Add a friend</button>
         <button type='button' onClick={handleSearchGroupModal}>Search Groups</button>
+        <button onClick={handleCreateGroupModal}>Create Group</button>
+
       </div>
       <GroupList groups={memberGroups} handleClickOnGroupLi={handleClickOnGroupLi}/>
       <aside className={styles.friendListCont}>
       {profile ? <FriendList profile={profile} friendList={friendList} setFriendList={setFriendList}/> : null}
       </aside>
-      <button onClick={handleCreateGroupModal}>Create Group</button>
     </main>
   )
 };
