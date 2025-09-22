@@ -83,6 +83,11 @@ const DirectMessageForm = ({ endOfMsg, setDirectMessages }) => {
         }, 1000);
       }
     });
+
+    return () => {
+      socket.off("send message");
+      socket.off("user typing");
+    }
   }, []);
 
   return (

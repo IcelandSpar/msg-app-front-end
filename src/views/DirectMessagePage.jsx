@@ -19,8 +19,39 @@ const DirectMessagePage = () => {
 
   const { profile } = useContext(UserContext);
 
+
+
   useEffect(() => {
     const token = sessionStorage.getItem("msgAppToken");
+
+      if (profile && directMessageGroupId) {
+      socket.emit("joinRoom", {
+        profileName: profile.profileName,
+        groupId: directMessageGroupId,
+      });
+      socket.on("joinRoomMsg", (msg) => {
+        console.log(msg);
+      });
+
+      socket.on("received message", (msgInfo) => {
+        if (msgInfo.groupId == directMessageGroupId) {
+          setDirectMessages((prev) => [
+            ...prev,
+            {
+              messageContent: msgInfo.messageContent,
+              createdAt: new Date(),
+              author: {
+                profileImgFilePath: msgInfo.imgPath,
+                profileName: msgInfo.profileName,
+              },
+            },
+          ]);
+        }
+      });
+      socket.on("connected", (msg) => {
+        console.log(msg);
+      });
+    }
 
     if ((token, directMessageGroupId)) {
       fetch(
@@ -39,38 +70,16 @@ const DirectMessagePage = () => {
           console.log("testing socket");
           if (res.success) {
             socket.connect();
-
-            socket.on("connected", (msg) => {
-              console.log(msg);
-            });
-
-            socket.emit("joinRoom", {
-              profileName: profile.profileName,
-              groupId: directMessageGroupId,
-            });
-            socket.on("joinRoomMsg", (msg) => {
-              console.log(msg);
-            });
-
-            socket.on("received message", (msgInfo) => {
-              if (msgInfo.groupId == directMessageGroupId) {
-                setDirectMessages((prev) => [
-                  ...prev,
-                  {
-                    messageContent: msgInfo.messageContent,
-                    createdAt: new Date(),
-                    author: {
-                      profileImgFilePath: msgInfo.imgPath,
-                      profileName: msgInfo.profileName,
-                    },
-                  },
-                ]);
-              }
-            });
           }
           setDirectMessages(res.directMessages);
         })
         .catch((err) => console.error(err));
+    }
+
+    return () => {
+      socket.off("joinRoomMsg");
+      socket.off("received message");
+      socket.off("connected");
     }
   }, [directMessageGroupId, profile]);
 

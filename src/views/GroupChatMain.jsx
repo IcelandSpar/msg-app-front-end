@@ -18,9 +18,6 @@ const GroupChatMain = () => {
 
   const { profile } = useContext(UserContext);
 
-
-
-
   const fetchChatMsgs = (token) => {
     fetch(
       `${
@@ -88,6 +85,9 @@ const GroupChatMain = () => {
 
     return () => {
       clearInterval(pollChatInterval);
+      socket.off("received message");
+      socket.off("joinRoomMsg");
+      socket.off("connected");
     };
   }, [groupId]);
 

@@ -93,7 +93,9 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
 
     });
 
-
+    return () => {
+      socket.off("user typing");
+    }
 
   }, []);
 
