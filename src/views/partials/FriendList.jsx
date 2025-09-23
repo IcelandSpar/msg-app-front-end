@@ -22,6 +22,7 @@ const FriendList = ({ profile, friendList, setFriendList }) => {
     .then((res) => res.json())
     .then((res) => {
       if(res) {
+        console.log(res)
         navigate(`/channel/direct-message/${res.directMessageGroup.id}`);
       }
     }).catch((err) => {
@@ -71,7 +72,7 @@ const FriendList = ({ profile, friendList, setFriendList }) => {
         return (
           <li key={friend.id} className={styles.friendListLiCont}>
             <img onClick={(e) => handleClickOnUserProfile(e, profile.id == friend.friendOne.id ? `${friend.friendTwo.id}` : `${friend.friendOne.id}`)} className={styles.friendProfileImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${profile.id == friend.friendOne.id ? `${friend.friendTwo.profileImgFilePath}` : `${friend.friendOne.profileImgFilePath}`}`} alt={`${profile.id == friend.friendOne.id ? `${friend.friendTwo.profileName}` : `${friend.friendOne.profileName}`}'s profile picture`} width={'25px'} height={'25px'}/>
-            <p onClick={handleNavigateToDirectMessage}>{profile.id == friend.friendOne.id ? `${friend.friendTwo.profileName}` : `${friend.friendOne.profileName}`}</p>
+            <p onClick={(e) => handleNavigateToDirectMessage(e, friend.friendOne.id, friend.friendTwo.id)}>{profile.id == friend.friendOne.id ? `${friend.friendTwo.profileName}` : `${friend.friendOne.profileName}`}</p>
           </li>
         )
       })}
