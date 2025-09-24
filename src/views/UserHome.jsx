@@ -2,6 +2,8 @@ import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router';
 import UserContext from '../UserContext.jsx';
 
+import { socket } from '../socket.js';
+
 import Navbar from './partials/Navbar.jsx';
 import GroupList from './partials/GroupList.jsx';
 import FriendList from './partials/FriendList.jsx';
@@ -65,7 +67,7 @@ const UserHome = () => {
   
       formData.append('friendCode', friendCodeInput.current.value);
       formData.append('profileIdRequesting', profile.id);
-  
+
       fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/friends/send-friend-req`, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -81,6 +83,10 @@ const UserHome = () => {
     }
 
   useEffect(() => {
+          if(profile) {
+        socket.connect();
+      }
+      console.log('the test')
     const token = sessionStorage.getItem('msgAppToken');
     fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/get-member-groups`, {
       headers: {
@@ -93,7 +99,11 @@ const UserHome = () => {
       setMemberGroups(res);
     })
     .catch((err) => console.error(err))
-  }, []);
+
+    return () => {
+      socket.disconnect();
+    }
+  }, [profile]);
 
   return (
     <main>

@@ -82,14 +82,16 @@ const GroupChatMain = () => {
       console.error(err);
     }
 
+    console.log('group chat render test')
 
     return () => {
       clearInterval(pollChatInterval);
       socket.off("received message");
       socket.off("joinRoomMsg");
       socket.off("connected");
+      socket.disconnect();
     };
-  }, [groupId]);
+  }, [groupId, profile]);
 
   return (
     <>

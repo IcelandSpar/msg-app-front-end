@@ -54,7 +54,13 @@ const DirectMessageForm = ({ endOfMsg, setDirectMessages }) => {
             });
           }
         })
-        .catch((err) => console.error(err));
+        .catch((err) => console.error(err))
+        .finally(() => {
+          setTimeout(() => {
+            messageInput.current.value = '';
+
+          }, 1000)
+        });
     }
   };
 
@@ -84,11 +90,13 @@ const DirectMessageForm = ({ endOfMsg, setDirectMessages }) => {
       }
     });
 
+    console.log('DM render test')
+
     return () => {
       socket.off("send message");
       socket.off("user typing");
     }
-  }, []);
+  }, [directMessageGroupId]);
 
   return (
     <form

@@ -29,7 +29,7 @@ const LoginForm = () => {
       .then((res) => {
         if (res.token) {
           sessionStorage.setItem("msgAppToken", res.token);
-          socket.connect();
+          // socket.connect();
 
           navigate("/channel/myhome");
         } else if (res.message) {

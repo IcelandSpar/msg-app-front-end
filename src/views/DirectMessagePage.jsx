@@ -25,6 +25,8 @@ const DirectMessagePage = () => {
     const token = sessionStorage.getItem("msgAppToken");
 
       if (profile && directMessageGroupId) {
+
+      socket.connect();
       socket.emit("joinRoom", {
         profileName: profile.profileName,
         groupId: directMessageGroupId,
@@ -68,9 +70,9 @@ const DirectMessagePage = () => {
         .then((res) => res.json())
         .then((res) => {
           console.log("testing socket");
-          if (res.success) {
-            socket.connect();
-          }
+          // if (res.success) {
+          //   socket.connect();
+          // }
           setDirectMessages(res.directMessages);
         })
         .catch((err) => console.error(err));
@@ -80,6 +82,7 @@ const DirectMessagePage = () => {
       socket.off("joinRoomMsg");
       socket.off("received message");
       socket.off("connected");
+      socket.disconnect();
     }
   }, [directMessageGroupId, profile]);
 
