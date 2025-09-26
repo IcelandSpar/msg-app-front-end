@@ -54,13 +54,10 @@ const ProfilePage = () => {
     e.preventDefault();
 
     const token = sessionStorage.getItem("msgAppToken");
-    if (profile && profileIdViewing && token) {
+    if (profile.id && profileIdViewing && token) {
+
       fetch(
-        `${
-          import.meta.env.VITE_FETCH_BASE_URL
-        }/friends/delete-friend-and-friend-requests/${
-          profile.id
-        }/${profileIdViewing}`,
+        `${import.meta.env.VITE_FETCH_BASE_URL}/friends/delete-friend-and-friend-requests/${profile.id}/${profileIdViewing}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -98,7 +95,6 @@ const ProfilePage = () => {
         })
         .catch((err) => console.error(err));
 
-      console.log("fetching");
       if (profile) {
         fetch(
           `${import.meta.env.VITE_FETCH_BASE_URL}/friends/check-if-friend/${
@@ -132,9 +128,7 @@ const ProfilePage = () => {
       )}
       {!profile ? null : (
         <>
-          {profile.id == profileIdViewing ? (
-            null
-          ) : (
+          {profile.id == profileIdViewing ? null : (
             <>
               {!isFriend ? (
                 <button

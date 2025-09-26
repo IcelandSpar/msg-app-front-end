@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import UserContext from "../../UserContext";
 
 import styles from "../../styles/NotificationDropdown.module.css";
+import { is } from "date-fns/locale";
 
 const NotificationDropdown = ({ handleNotifDropdownBtnLeave, setFriendList }) => {
   const [notifications, setNotifications] = useState(null);
@@ -55,7 +56,8 @@ const NotificationDropdown = ({ handleNotifDropdownBtnLeave, setFriendList }) =>
         .then((res) => res.json())
         .then((res) => {
           if(isAccepted) {
-            setFriendList(res.profileFriendList)
+            setFriendList(res.profileFriendList);
+            setNotifications(res.updatedFriendRequests);
           }
         })
         .catch((err) => console.error(err));
@@ -63,6 +65,7 @@ const NotificationDropdown = ({ handleNotifDropdownBtnLeave, setFriendList }) =>
   };
 
   useEffect(() => {
+    console.log('hello')
     const token = sessionStorage.getItem("msgAppToken");
     if (token && profile) {
       fetch(
@@ -81,7 +84,7 @@ const NotificationDropdown = ({ handleNotifDropdownBtnLeave, setFriendList }) =>
         })
         .catch((err) => console.error(err));
     }
-  }, []);
+  }, [profile]);
 
   return (
     <div
