@@ -4,7 +4,10 @@ import UserContext from "../../UserContext";
 import styles from "../../styles/NotificationDropdown.module.css";
 import { is } from "date-fns/locale";
 
-const NotificationDropdown = ({ handleNotifDropdownBtnLeave, setFriendList }) => {
+const NotificationDropdown = ({
+  handleNotifDropdownBtnLeave,
+  setFriendList,
+}) => {
   const [notifications, setNotifications] = useState(null);
 
   const { profile } = useContext(UserContext);
@@ -12,25 +15,28 @@ const NotificationDropdown = ({ handleNotifDropdownBtnLeave, setFriendList }) =>
   const handleDismissBtn = (e, notifId) => {
     e.preventDefault();
 
-
     const token = sessionStorage.getItem("msgAppToken");
     if (token) {
       fetch(
-        `${import.meta.env.VITE_FETCH_BASE_URL}/friends/delete-friend-req/${notifId}`,
+        `${
+          import.meta.env.VITE_FETCH_BASE_URL
+        }/friends/delete-friend-req/${notifId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
           method: "DELETE",
         }
       )
-      .then((res) => res.json())
-      .then((res) => {
-        if(res.success) {
-          setNotifications((prev) => prev.filter((item) => item.id != notifId))
-        }
-      })
-      .catch((err) => console.error(err));
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.success) {
+            setNotifications((prev) =>
+              prev.filter((item) => item.id != notifId)
+            );
+          }
+        })
+        .catch((err) => console.error(err));
     }
   };
 
@@ -55,7 +61,7 @@ const NotificationDropdown = ({ handleNotifDropdownBtnLeave, setFriendList }) =>
       )
         .then((res) => res.json())
         .then((res) => {
-          if(isAccepted) {
+          if (isAccepted) {
             setFriendList(res.profileFriendList);
             setNotifications(res.updatedFriendRequests);
           }
@@ -65,7 +71,6 @@ const NotificationDropdown = ({ handleNotifDropdownBtnLeave, setFriendList }) =>
   };
 
   useEffect(() => {
-    console.log('hello')
     const token = sessionStorage.getItem("msgAppToken");
     if (token && profile) {
       fetch(
@@ -99,57 +104,45 @@ const NotificationDropdown = ({ handleNotifDropdownBtnLeave, setFriendList }) =>
             <>
               <ul>
                 {notifications.map((notif, indx) => {
-                  return (
-                    <li key={notif.id}>
-                      <div>
-                        {notif.status == "PENDING" ? (
-                          <p>
-                            {notif.Sender.profileName} sent you a friend
-                            request!
-                          </p>
-                        ) : null}
-                        {notif.status == "ACCEPTED" ? (
-                          <p>
-                            {notif.Sender.profileName} accepted your friend
-                            request!
-                          </p>
-                        ) : null}
-                      </div>
-                      <div className={styles.acceptDenyBtnsCont}>
-                        {notif.status == "PENDING" ? (
-                          <>
-                            <button
-                              onClick={(e) =>
-                                handleUserFriendReqOptionBtns(e, true, notif.id)
-                              }
-                              type="button"
-                            >
-                              Accept
-                            </button>
-                            <button
-                              onClick={(e) =>
-                                handleUserFriendReqOptionBtns(
-                                  e,
-                                  false,
-                                  notif.id
-                                )
-                              }
-                              type="button"
-                            >
-                              Deny
-                            </button>
-                          </>
-                        ) : null}
-                        {notif.status == "ACCEPTED" ? (
-                          <button
-                            onClick={(e) => handleDismissBtn(e, notif.id)}
-                          >
-                            Dismiss
-                          </button>
-                        ) : null}
-                      </div>
-                    </li>
-                  );
+                  if (
+                    notif.status == "ACCEPTED" && profile.id != notif.ReceiverId
+                  ) {
+                    return (
+                      <li key={notif.id}>
+                        <p>
+                          {notif.Receiver.profileName} accepted your friend
+                          request!
+                        </p>
+                        <button onClick={(e) => handleDismissBtn(e, notif.id)}>
+                          Dismiss
+                        </button>
+                      </li>
+                    );
+                  } else if (notif.status == "PENDING" && notif.ReceiverId == profile.id) {
+                    return (
+                      <li key={notif.id}>
+                        <p>
+                          {notif.Sender.profileName} sent you a friend request!
+                        </p>
+                        <button
+                          onClick={(e) =>
+                            handleUserFriendReqOptionBtns(e, true, notif.id)
+                          }
+                          type="button"
+                        >
+                          Accept
+                        </button>
+                        <button
+                          onClick={(e) =>
+                            handleUserFriendReqOptionBtns(e, false, notif.id)
+                          }
+                          type="button"
+                        >
+                          Deny
+                        </button>
+                      </li>
+                    );
+                  }
                 })}
               </ul>
             </>
