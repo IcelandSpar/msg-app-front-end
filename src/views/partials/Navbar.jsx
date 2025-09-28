@@ -6,6 +6,9 @@ import UserContext from '../../UserContext';
 import NotificationDropdown from './NotificationDropdown.jsx';
 
 import styles from '../../styles/Navbar.module.css';
+import meetMeIcon from '../../assets/meetme.png';
+import contentCopyIcon from '../../assets/content_copy_icon.svg';
+import notificationIcon from '../../assets/notification_icon.svg';
 
 const Navbar = ({setFriendList}) => {
   const [ isNotifOpen, setIsNotifOpen ] = useState(false);
@@ -70,22 +73,22 @@ const Navbar = ({setFriendList}) => {
 
 
   return (
-    <header>
+    <header className={styles.header}>
       <nav className={styles.navbar}>
       <div className={styles.linksCont}>
-        <Link to={'/'}>Home</Link>
+        <Link to={'/'}><img src={meetMeIcon} alt='Home' width={'30px'} height={'30px'}/></Link>
         {profile ? null : (
-          <>
+          <div className={styles.loginRegisterCont}>
         <Link to={'/login'}>Login</Link>
         <Link to={'/register'}>Register</Link>
-          </>
+          </div>
         )}
 
         {!profile ? null : (
-        <>
+        <div className={styles.myHomeLogoutCont}>
         <Link to={'/channel/myhome'}>My Home</Link>
         <Link to={'/logout'}>Logout</Link>
-        </>
+        </div>
         )}
       
       </div>
@@ -94,7 +97,7 @@ const Navbar = ({setFriendList}) => {
           {!profile ? null : (
             <div className={styles.notificationCont}>
               {isNotifOpen ? <NotificationDropdown handleNotifDropdownBtnLeave={handleNotifDropdownBtnLeave} setFriendList={setFriendList}/> : null}
-              <button onMouseEnter={handleNotificationDropdownBtn}>Notifications</button>
+              <button className={styles.notifBtn} onMouseEnter={handleNotificationDropdownBtn}><img src={notificationIcon} alt='Notifications'/></button>
             </div>
           ) }
           <div>
@@ -102,7 +105,7 @@ const Navbar = ({setFriendList}) => {
               <img onClick={handleClickOnProfile} className={styles.profileImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${profile.profileImgFilePath}`} alt={`Your profile picture`} width={`30px`} height={`30px`}/>
               <p>{profile.profileName}</p>
             </div>
-            <button onClick={(e) => handleFriendCodeBtn(e, profile.friendCode)}>Friend Code: {profile.friendCode}</button>
+            <button className={styles.copyFriendCodeBtn} onClick={(e) => handleFriendCodeBtn(e, profile.friendCode)}>Friend Code: {profile.friendCode} <img src={contentCopyIcon} alt="copy" /></button>
           </div>
         </div>
       )}

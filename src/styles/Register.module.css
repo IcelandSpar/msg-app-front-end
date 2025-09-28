@@ -1,0 +1,10 @@
+.registerPage {
+  width: 100%;
+}
+
+.registerMainCont {
+  background-color: #19183B;
+  height: 100vh;
+  max-width: 500px;
+  margin: 0 auto;
+}
