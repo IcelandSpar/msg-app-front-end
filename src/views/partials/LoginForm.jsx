@@ -40,15 +40,15 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={styles.loginForm}>
+      <fieldset className={styles.loginFieldset}>
+        <legend>Login</legend>
       {!loginErr ? null : (
-        <div>
+        <div className={styles.formSubmitErrCont}>
           <h3>Please Fix:</h3>
           <p>{loginErr}</p>
         </div>
       )}
-      <fieldset className={styles.loginFieldset}>
-        <legend>Login</legend>
         <div className={styles.labelAndInputCont}>
           <label htmlFor="username">Username</label>
           <input
@@ -62,9 +62,10 @@ const LoginForm = () => {
           <label htmlFor="password">Password</label>
           <input type="password" id="password" name="password" ref={passwordRef} />
         </div>
+      <div className={styles.btnCont}>
+        <button className={styles.loginFormBtn} type="submit">Submit</button>
+      </div>
       </fieldset>
-
-      <button type="submit">Submit</button>
     </form>
   );
 };

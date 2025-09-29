@@ -56,6 +56,7 @@
 }
 
 .profileImg {
+  background-color: black;
   border-radius: 50%;
   border: 1px solid black;
   cursor: pointer;
@@ -70,8 +71,10 @@
   cursor: pointer;
   border: 1px solid #708993;
   border-radius: 7px;
+  transition: border .2s ease-out;
 }
 
 .copyFriendCodeBtn:hover {
-  border: 1px solid #E7F2EF;
+  border: 1px solid #b4bbb9;
+  transition: border .2s ease-out;
 }
