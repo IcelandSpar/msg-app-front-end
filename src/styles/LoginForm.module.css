@@ -27,12 +27,17 @@
 }
 
 
+
 .labelAndInputCont {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   gap: 1rem;
+}
+
+.formLabels {
+  font-size: 1.5rem;
 }
 
 .labelAndInputCont input, .labelAndInputCont textarea {
@@ -42,6 +47,13 @@
   font-family: "Recursive", sans-serif;
   font-size: 1.3rem;
   background-color: white;
+  padding: .5rem 1rem;
+}
+
+.noAccLinkCont {
+  text-align: center;
+  font-size: .9rem;
+  text-underline-offset: 3px;
 }
 
 .btnCont {

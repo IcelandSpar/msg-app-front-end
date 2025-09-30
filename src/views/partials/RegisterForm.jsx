@@ -42,6 +42,8 @@ const RegisterForm = () => {
       console.log(res)
       if(res.message) {
         setRegisterErr(res.message);
+        scrollTo({top: 0, behavior: 'smooth'});
+
         return res
       } else if(res.success) {
         navigate('/login')
@@ -54,30 +56,31 @@ const RegisterForm = () => {
 
 
   return (
-    <form onSubmit={handleSubmit} encType='multipart/form-data' action={`${import.meta.env.VITE_FETCH_BASE_URL}/register`}>
+    <form className={styles.registerFormCont} onSubmit={handleSubmit} encType='multipart/form-data' action={`${import.meta.env.VITE_FETCH_BASE_URL}/register`}>
       {!registerErr ? null : (
-        <div>
-          <h3>Please fix:</h3>
-          <p>{registerErr}</p>
+        <div className={styles.errorCont}>
+          <h3 className={styles.errorHeading}>Please fix:</h3>
+          <p className={styles.errorMsg}>{registerErr}</p>
         </div>
       )}
       <fieldset className={styles.registerFieldset}>
-        <legend>Profile Info</legend>
+        <legend className={styles.registerLegends}>Profile Info</legend>
         <div className={styles.labelAndInputCont}>
           <label htmlFor="profileName">Profile Name:</label>
           <input ref={profileNameInput} type="text" id='profileName' name='profileName'/>
         </div>
         <div className={styles.labelAndInputCont}>
           <label htmlFor="bio">Bio:</label>
-          <textarea ref={bioInput} type="text" id='bio' name='bio'></textarea>
+          <textarea ref={bioInput} type="text" id='bio' name='bio' rows={4}></textarea>
         </div>
         <div className={styles.labelAndInputCont}>
-          <label htmlFor="profileImg">Profile Picture:</label>
-          <input onChange={handleFileChange} ref={profilePictureInput} type="file" name="profileImg" id="profileImg" />
+          <label className={styles.registerFileLabel} htmlFor="profileImg">Profile Picture:</label>
+          <button className={styles.chooseAFileBtn}>Choose a File</button>
+          <input className={styles.registerFileInput} onChange={handleFileChange} ref={profilePictureInput} type="file" name="profileImg" id="profileImg" />
         </div>
       </fieldset>
       <fieldset className={styles.registerFieldset}>
-        <legend>Credentials</legend>
+        <legend className={styles.registerLegends}>Credentials</legend>
         <div className={styles.labelAndInputCont}>
           <label htmlFor="username">Username:</label>
           <input type="text" id="username" name="username" ref={usernameInput}/>
@@ -87,7 +90,9 @@ const RegisterForm = () => {
           <input type="password" id="password" name="password" ref={passwordRef}/>
         </div>
       </fieldset>
-      <button type="submit">Submit</button>
+      <div className={styles.createProfileBtnCont}>
+      <button className={styles.createProfileBtn} type="submit">Create Profile</button>
+      </div>
     </form>
   );
 };

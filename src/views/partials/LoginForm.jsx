@@ -1,8 +1,8 @@
 import { socket } from "../../socket";
-import { useRef, useState, useContext } from "react";
-import { useNavigate } from "react-router";
+import { useRef, useState, useContext, useEffect } from "react";
+import { useNavigate, Link } from "react-router";
 import UserContext from "../../UserContext";
-import styles from '../../styles/LoginForm.module.css';
+import styles from "../../styles/LoginForm.module.css";
 
 const LoginForm = () => {
   const [loginErr, setLoginErr] = useState(null);
@@ -43,14 +43,14 @@ const LoginForm = () => {
     <form onSubmit={handleSubmit} className={styles.loginForm}>
       <fieldset className={styles.loginFieldset}>
         <legend>Login</legend>
-      {!loginErr ? null : (
-        <div className={styles.formSubmitErrCont}>
-          <h3>Please Fix:</h3>
-          <p>{loginErr}</p>
-        </div>
-      )}
+        {!loginErr ? null : (
+          <div className={styles.formSubmitErrCont}>
+            <h3>Please Fix:</h3>
+            <p>{loginErr}</p>
+          </div>
+        )}
         <div className={styles.labelAndInputCont}>
-          <label htmlFor="username">Username</label>
+          <label className={styles.formLabels} htmlFor="username">Username</label>
           <input
             type="text"
             id="username"
@@ -59,12 +59,22 @@ const LoginForm = () => {
           />
         </div>
         <div className={styles.labelAndInputCont}>
-          <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="password" ref={passwordRef} />
+          <label className={styles.formLabels} htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            ref={passwordRef}
+          />
         </div>
-      <div className={styles.btnCont}>
-        <button className={styles.loginFormBtn} type="submit">Submit</button>
-      </div>
+        <div className={styles.noAccLinkCont}>
+          <Link to={'/register'}>Don't have an account?</Link>
+        </div>
+        <div className={styles.btnCont}>
+          <button className={styles.loginFormBtn} type="submit">
+            Submit
+          </button>
+        </div>
       </fieldset>
     </form>
   );
