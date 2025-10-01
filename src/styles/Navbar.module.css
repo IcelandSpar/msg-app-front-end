@@ -33,6 +33,12 @@
   font-size: 1.3rem;
 }
 
+.linkIconCont {
+  display: flex;
+  gap: .2rem;
+  align-items: center;
+}
+
 .loginRegisterCont {
   display: flex;
   gap: 1rem;

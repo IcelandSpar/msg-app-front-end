@@ -67,11 +67,10 @@
   font-family: "Recursive", sans-serif;
   width: 100%;
   background-color: #A1C2BD;
-  border-radius: 15px;
-  font-size: 1.5rem;
+  border-radius: 30px;
+  font-size: 2rem;
   cursor: pointer;
-  font-weight: 700;
-  border: none;
+  border: 3px solid #A1C2BD;
   transition: .3s background-color;
 }
 

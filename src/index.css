@@ -74,7 +74,7 @@ button:focus-visible {
   color: white;
 }
 
-body {
-  background-color: #19183B;
+body, html, :root {
   font-family: "Recursive", sans-serif;
 }
+
