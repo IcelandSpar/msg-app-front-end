@@ -6,6 +6,8 @@ import Navbar from "./partials/Navbar.jsx";
 import UserProfileInfo from "./partials/UserProfileInfo.jsx";
 import UpdateProfileForm from "./partials/UpdateProfileForm.jsx";
 
+import styles from '../styles/MyProfile.module.css';
+
 const MyProfile = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [ selectedFile, setSelectedFile ] = useState(null);
@@ -79,23 +81,27 @@ const MyProfile = () => {
   }, []);
 
   return (
-    <>
+    <div className={styles.myProfilePage}>
       <Navbar />
-      <main>
-        {userProfile == null ? null : <UserProfileInfo profile={userProfile} />}
+      <main className={styles.myProfileMain}>
+        {userProfile == null ? null : <div>
+          <UserProfileInfo profile={userProfile} />
+        </div>}
         {userProfile == null ? null : (
-          <UpdateProfileForm
-            userProfile={userProfile}
-            handleFormSubmit={handleFormSubmit}
-            profileNameInput={profileNameInput}
-            bioInput={bioInput}
-            handleProfileNameChange={handleProfileNameChange}
-            handleChangeBioInfo={handleChangeBioInfo}
-            handleFileChange={handleFileChange}
-          />
+          <div>
+            <UpdateProfileForm
+              userProfile={userProfile}
+              handleFormSubmit={handleFormSubmit}
+              profileNameInput={profileNameInput}
+              bioInput={bioInput}
+              handleProfileNameChange={handleProfileNameChange}
+              handleChangeBioInfo={handleChangeBioInfo}
+              handleFileChange={handleFileChange}
+            />
+          </div>
         )}
       </main>
-    </>
+    </div>
   );
 };
 

@@ -75,7 +75,6 @@ const RegisterForm = () => {
         </div>
         <div className={styles.labelAndInputCont}>
           <label className={styles.registerFileLabel} htmlFor="profileImg">Profile Picture:</label>
-          <button className={styles.chooseAFileBtn}>Choose a File</button>
           <input className={styles.registerFileInput} onChange={handleFileChange} ref={profilePictureInput} type="file" name="profileImg" id="profileImg" />
         </div>
       </fieldset>

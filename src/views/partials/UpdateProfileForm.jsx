@@ -13,12 +13,13 @@ const UpdateProfileForm = ({
 }) => {
 
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form className={styles.updateProfileForm} onSubmit={handleFormSubmit}>
       <fieldset className={styles.updateProfileFieldset}>
         <legend>Update Your profile!</legend>
         <div className={styles.labelInputCont}>
           <label htmlFor="profileName">Profile Name (Your visible name)</label>
           <input
+            className={styles.profileNameInput}
             onChange={handleProfileNameChange}
             ref={profileNameInput}
             type="text"
@@ -30,6 +31,7 @@ const UpdateProfileForm = ({
         <div className={styles.labelInputCont}>
           <label htmlFor="bio">Bio:</label>
           <textarea
+            className={styles.bioTextarea}
             ref={bioInput}
             onChange={handleChangeBioInfo}
             type="text"
@@ -44,7 +46,7 @@ const UpdateProfileForm = ({
         </div>
       </fieldset>
 
-      <button type="submit">Save</button>
+      <button className={styles.saveProfileBtn} type="submit">Save</button>
     </form>
   );
 };

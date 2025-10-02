@@ -115,8 +115,9 @@ const ProfilePage = () => {
   }, [profile, profileIdViewing]);
 
   return (
-    <>
+    <div>
       <Navbar />
+      <main>
       {isReqModalOpen == null ? null : (
         <FriendRequestResultModal
           reqObj={isReqModalOpen}
@@ -146,7 +147,9 @@ const ProfilePage = () => {
           )}
         </>
       )}
-    </>
+      </main>
+
+    </div>
   );
 };
 
