@@ -78,3 +78,9 @@ body, html, :root {
   font-family: "Recursive", sans-serif;
 }
 
+html {
+    height: 100%;
+  background-image: linear-gradient(#212121, #000000);
+}
+
+

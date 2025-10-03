@@ -45,6 +45,10 @@
   gap: 1rem;
 }
 
+.labelAndInputCont label {
+  font-size: 1.3rem;
+}
+
 .labelAndInputCont input, .labelAndInputCont textarea {
   font-family: "Recursive", sans-serif;
   width: 100%;
@@ -78,7 +82,6 @@
   cursor: pointer;
   background-color: #A1C2BD;
   transition: .3s background-color;
-  border: none;
   border: 4px solid #A1C2BD;
 
 }
