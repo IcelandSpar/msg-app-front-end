@@ -11,6 +11,40 @@
   z-index: 300;
 }
 
+.copiedToClipCont {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  padding: .5rem 1rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+  animation: .7s floatIn forwards;
+  border-radius: 7px;
+  border: 3px solid #A1C2BD;
+  transition: 3s top ease-out;
+}
+
+.copiedToClipCont p, .copiedToClipCont button {
+  color: black;
+}
+
+.copiedToClipCont button {
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  font-family: "Recursive", sans-serif;
+  font-size: .9rem;
+}
+
+.closingAnim {
+  animation: .7s floatOut forwards ease-out;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -85,4 +119,32 @@
 .copyFriendCodeBtn:hover {
   border: 2px solid #b4bbb9;
   transition: border .2s ease-out;
+}
+
+@keyframes floatIn {
+  from {
+    top: -100%;
+    opacity: 0;
+  }
+
+  to {
+    top: 10%;
+    opacity: 1;
+  }
+}
+
+@keyframes floatOut {
+  from {
+    top: 10%;
+  }
+
+  50% {
+    top: 30%;
+    opacity: 1;
+  }
+
+  to {
+    top: -120%;
+    opacity: 0;
+  }
 }

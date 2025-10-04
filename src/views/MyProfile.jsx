@@ -83,10 +83,11 @@ const MyProfile = () => {
   return (
     <div className={styles.myProfilePage}>
       <Navbar />
-      <main className={styles.myProfileMain}>
         {userProfile == null ? null : <div>
           <UserProfileInfo profile={userProfile} />
         </div>}
+      <main className={styles.myProfileMain}>
+
         {userProfile == null ? null : (
           <div>
             <UpdateProfileForm

@@ -15,19 +15,57 @@ import notificationIcon from "../../assets/notification_icon.svg";
 
 const Navbar = ({ setFriendList }) => {
   const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const [ isCopiedToClipOpen, setIsCopiedToClipOpen ] = useState(false);
+  const [ toggleCloseAnim, setToggleCloseAnim ] = useState(false);
   const { profile, isLoggedIn, setProfile, setIsLoggedIn } =
     useContext(UserContext);
 
   const navigate = useNavigate();
 
+    let toggleTimeout = null;
+    let closeTimeout = null;
+    let closeDismissBtnTimeout = null;
+
   const handleFriendCodeBtn = async (e, text) => {
+
+
     e.preventDefault();
+    clearTimeout(closeDismissBtnTimeout);
+    clearTimeout(closeTimeout);
+    clearTimeout(toggleTimeout);
     const type = "text/plain";
     const clipboardItemData = {
       [type]: text,
     };
     const clipboardItem = new ClipboardItem(clipboardItemData);
     await navigator.clipboard.write([clipboardItem]);
+    setIsCopiedToClipOpen(true);
+
+    toggleTimeout = setTimeout(() => {
+    setToggleCloseAnim(true);
+
+    }, 2500);
+
+    closeTimeout = setTimeout(() => {
+      setIsCopiedToClipOpen(false);
+      setToggleCloseAnim(false);
+    }, 4000);
+
+
+  };
+
+
+  const handleDismissCopyToClipNotif = (e) => {
+    e.preventDefault();
+    clearTimeout(closeDismissBtnTimeout);
+    clearTimeout(closeTimeout);
+    clearTimeout(toggleTimeout);
+    setToggleCloseAnim(true);
+
+    closeDismissBtnTimeout =  setTimeout(() => {
+      setIsCopiedToClipOpen(false);
+    }, 2000);
+
   };
 
   const handleClickOnProfile = (e) => {
@@ -75,6 +113,12 @@ const Navbar = ({ setFriendList }) => {
 
   return (
     <header className={styles.header}>
+      {!isCopiedToClipOpen ? null : (
+        <div className={`${styles.copiedToClipCont} ${toggleCloseAnim ? styles.closingAnim : ''}`}>
+          <p>Copied to clipboard!</p>
+          <button onClick={handleDismissCopyToClipNotif} type="button">X</button>
+        </div>
+      )}
       <nav className={styles.navbar}>
         <div className={styles.linksCont}>
           <Link to={"/"}>
