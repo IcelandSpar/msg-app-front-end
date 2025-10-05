@@ -1,0 +1,59 @@
+.friendOrUnfriendBtnCon {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 500px;
+  margin: 1rem auto;
+}
+
+.unfriendBtn,
+.sendFriendReqBtn {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-family: "Recursive", sans-serif;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  background-color: #a1c2bd;
+  cursor: pointer;
+  border: 3px solid #a1c2bd;
+  transition: 0.3s background-color ease-out, 0.3s border ease-out;
+}
+
+.unfriendBtn p,
+.sendFriendReqBtn p {
+  transition: 0.3s color ease-out;
+}
+
+.unfriendBtn:hover p,
+.sendFriendReqBtn:hover p {
+  color: black;
+}
+
+.addFriendIcon {
+  transition: .3s filter ease-out;
+}
+
+.unfriendBtn {
+  transition: .3s filter ease-out;
+
+}
+
+.sendFriendReqBtn:hover .addFriendIcon {
+  filter: brightness(0%);
+}
+
+.unfriendBtn:hover .unfriendIcon {
+  filter: brightness(0%);
+
+}
+
+.unfriendBtn:hover {
+  background-color: red;
+  border: 3px solid #080808;
+}
+
+.sendFriendReqBtn:hover {
+  background-color: white;
+  border: 3px solid #a1c2bd;
+}

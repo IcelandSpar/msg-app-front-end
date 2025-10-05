@@ -8,6 +8,8 @@ import FriendRequestResultModal from "./partials/FriendRequestResultModal.jsx";
 import UserContext from "../UserContext.jsx";
 
 import styles from "../styles/ProfilePage.module.css";
+import addFriendIcon from "../assets/add_friend_icon.svg";
+import unfriendIcon from "../assets/unfriend_icon.svg";
 
 const ProfilePage = () => {
   const [profileBeingViewed, setProfileBeingViewed] = useState(null);
@@ -130,20 +132,23 @@ const ProfilePage = () => {
       {!profile ? null : (
         <>
           {profile.id == profileIdViewing ? null : (
-            <>
+            <div className={styles.friendOrUnfriendBtnCon}>
               {!isFriend ? (
                 <button
+                className={styles.sendFriendReqBtn}
                   onClick={(e) => handleSendFriendReqBtn(e, profileBeingViewed)}
                   type="button"
                 >
-                  Send Friend Request
+                  <p>Add friend</p>
+                  <img className={styles.addFriendIcon} src={addFriendIcon} alt="Send Friend Request" width={'25px'} height={'25px'}/>
                 </button>
               ) : (
-                <button onClick={handleUnfriendBtn} type="button">
-                  Unfriend
+                <button  className={styles.unfriendBtn} onClick={handleUnfriendBtn} type="button">
+                  <p>Unfriend</p>
+                  <img className={styles.unfriendIcon} src={unfriendIcon} alt="Unfriend" width={'25px'} height={'25px'} />
                 </button>
               )}
-            </>
+            </div>
           )}
         </>
       )}
