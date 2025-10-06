@@ -64,7 +64,7 @@ const FriendList = ({ profile, friendList, setFriendList }) => {
   }, [profile.id]);
   
   return (<>
-  <h4 className={styles.friendListHeading}>Friend List</h4>
+  <h4 className={styles.friendListHeading}>Friends:</h4>
 
   {friendList == null ? null : (
     <ul className={styles.friendListUlCont}>

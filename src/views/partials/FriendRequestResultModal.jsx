@@ -2,10 +2,10 @@ import styles from '../../styles/FriendRequestResultModal.module.css';
 
 const FriendRequestResultModal = ({reqObj, closeBtnHandler}) => {
   return (
-        <div className={styles.reqModalBackground}>
+        <div onClick={closeBtnHandler} className={styles.reqModalBackground}>
           <div className={styles.reqModal}>
+          <button className={styles.closeModalBtn} onClick={closeBtnHandler} type="button">X</button>
           <p>{reqObj.message}</p>
-          <button onClick={closeBtnHandler} type="button">Close</button>
           </div>
         </div>
   )

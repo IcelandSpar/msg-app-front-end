@@ -6,6 +6,7 @@ const GroupList = ({groups, handleClickOnGroupLi}) => {
 
   return (
     <section>
+      <h3>Groups</h3>
       {!groups ? null : (
         <ul className={styles.groupUlCont}>
           {groups.map((groupInfo, indx) => {
