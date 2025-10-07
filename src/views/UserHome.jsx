@@ -14,6 +14,9 @@ import FriendRequestResultModal from './partials/FriendRequestResultModal.jsx';
 
 
 import styles from '../styles/UserHome.module.css';
+import addFriendIcon from "../assets/add_friend_icon.svg";
+import groupSearchIcon from "../assets/group_search_icon.svg";
+import createGroupIcon from "../assets/create_group_icon.svg";
 
 const UserHome = () => {
   const [ memberGroups, setMemberGroups ] = useState(null);
@@ -130,15 +133,23 @@ const UserHome = () => {
             handleSearchGroupModal={handleSearchGroupModal}
           />
         )}
+        {!isLoggedIn ? null : (
         <div className={styles.addFriendSearchGroupBtnsCont}>
-          <button type="button" onClick={handleAddFriendBtn}>
-            Add a friend
+          <button className={styles.addFriendBtn} type="button" onClick={handleAddFriendBtn}>
+            <img className={styles.addFriendIcon} src={addFriendIcon} alt="search for a friend" />
+            <p className={styles.addFriendPara}>Add friend</p>
           </button>
-          <button type="button" onClick={handleSearchGroupModal}>
-            Search Groups
+          <button className={styles.groupSearchBtn} type="button" onClick={handleSearchGroupModal}>
+            <img className={styles.groupSearchImg} src={groupSearchIcon} alt="Search for Groups" />
+            <p className={styles.groupSearchPara}>Search Groups</p>
           </button>
-          <button onClick={handleCreateGroupModal}>Create Group</button>
+          <button className={styles.createGroupBtn} onClick={handleCreateGroupModal}>
+            <img className={styles.createGroupIcon} src={createGroupIcon} alt="Create a group" />
+            <p className={styles.createGroupPara}>Create Group</p>
+          </button>
         </div>
+        ) }
+
         <GroupList
           groups={memberGroups}
           handleClickOnGroupLi={handleClickOnGroupLi}
