@@ -1,7 +1,7 @@
 .userHomeMain {
   width: 100%;
-  background-image: linear-gradient(to right, #212121, #000000);
-  height: 100vh;
+  /* background-image: linear-gradient(to right, #212121, #000000);
+  height: 100vh; */
 }
 
 .friendListCont {
@@ -35,7 +35,7 @@
 .addFriendBtn:hover,
 .groupSearchBtn:hover,
 .createGroupBtn:hover {
-  background-color: white;
+  background-color: rgb(235, 235, 235);
 }
 
 .createGroupBtn:hover img,
