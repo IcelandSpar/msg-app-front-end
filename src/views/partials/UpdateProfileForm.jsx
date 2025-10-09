@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 import styles from "../../styles/UpdateProfileForm.module.css";
+import saveIcon from "../../assets/save_icon.svg";
+
 
 const UpdateProfileForm = ({
   userProfile,
@@ -46,7 +48,10 @@ const UpdateProfileForm = ({
           <input className={styles.profilePicFileInput} onChange={handleFileChange} type="file" id="profilePicture" name="profilePicture" />
         </div>
       </fieldset>
-      <button className={styles.saveProfileBtn} type="submit">Save</button>
+      <button className={styles.saveProfileBtn} type="submit">
+        <p className={styles.saveBtnPara}>Save</p>
+        <img className={styles.saveBtnIcon} src={saveIcon} alt="Save profile Info" width="30px"height={"30px"}/>
+      </button>
     </form>
   );
 };

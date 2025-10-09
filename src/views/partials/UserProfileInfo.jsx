@@ -13,7 +13,7 @@ const UserProfileInfo = ({profile}) => {
         <h1>{profile.profileName}</h1>
       </div>
       <div className={styles.bioAndJoinCont}>
-        <p>{profile.bio}</p>
+        <p className={styles.profileBio}>{profile.bio}</p>
         <p className={styles.joinDatePara}>Joined: {format(profile.joined, 'MMM-d-yyyy')}</p>
       </div>
     </section>

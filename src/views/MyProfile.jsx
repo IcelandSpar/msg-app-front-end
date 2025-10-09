@@ -11,6 +11,7 @@ import styles from '../styles/MyProfile.module.css';
 const MyProfile = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [ selectedFile, setSelectedFile ] = useState(null);
+  const [ isProfileUpdateModalOpen, setIsProfileUpdateModalOpen ] = useState(false);
 
   const bioInput = useRef(null);
   const profileNameInput = useRef(null);
@@ -32,6 +33,11 @@ const MyProfile = () => {
     e.preventDefault();
     setSelectedFile(e.target.files[0]);
   }
+
+  const closeUpdatedModal = (e) => {
+    e.preventDefault();
+    setIsProfileUpdateModalOpen(false);
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -57,7 +63,11 @@ const MyProfile = () => {
         }
       )
       .then((res) => res.json())
-      .then((res) => console.log(res))
+      .then((res) => {
+        if(res.success) {
+          setIsProfileUpdateModalOpen(true);
+        }
+      })
       .catch((err) => console.error(err));
     }
   };
@@ -87,7 +97,14 @@ const MyProfile = () => {
           <UserProfileInfo profile={userProfile} />
         </div>}
       <main className={styles.myProfileMain}>
-
+          {!isProfileUpdateModalOpen ? false : (
+            <div onClick={closeUpdatedModal} className={styles.updateProfileModalBackground}>
+              <div className={styles.updateProfileModalCont}>
+                <button className={styles.exitUpdateModal} onClick={closeUpdatedModal} type="button">X</button>
+                <p>Your profile was updated!</p>
+              </div>
+            </div>
+          )}
         {userProfile == null ? null : (
           <div>
             <UpdateProfileForm

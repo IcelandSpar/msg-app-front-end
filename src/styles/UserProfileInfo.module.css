@@ -32,6 +32,11 @@
   gap: 1rem;
 }
 
+.profileBio {
+  line-height: 1.5rem;
+  white-space: pre-line;
+}
+
 .joinDatePara {
   align-self: flex-end;
 }
