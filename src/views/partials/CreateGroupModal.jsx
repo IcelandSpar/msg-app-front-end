@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import styles from "../../styles/CreateGroupModal.module.css";
+import createGroupIcon from "../../assets/create_group_icon.svg";
 
 const CreateGroupModal = ({ handleCreateGroupModal }) => {
   const groupNameInput = useRef(null);
@@ -30,15 +31,18 @@ const CreateGroupModal = ({ handleCreateGroupModal }) => {
 
   return (
     <div className={styles.modalBackground}>
-      <div className={styles.modal}>
+      <div className={styles.createGroupModal}>
+        <button className={styles.createGroupCloseBtn} onClick={handleCreateGroupModal}>X</button>
+
         <form
           onSubmit={handleCreateGroupSubmit}
           className={styles.createGroupModalForm}
           encType='multipart/form-data'
         >
           <div className={styles.modalLabelInputCont}>
-            <label htmlFor="groupName">Group Chat Name</label>
+            <label className={styles.formLabels} htmlFor="groupName">Group Chat Name</label>
             <input
+            className={styles.groupNameInput}
               ref={groupNameInput}
               type="text"
               id="groupName"
@@ -46,12 +50,14 @@ const CreateGroupModal = ({ handleCreateGroupModal }) => {
             />
           </div>
           <div className={styles.modalLabelInputCont}>
-            <label htmlFor="groupImg">Group Picture</label>
+            <label className={styles.formLabels} htmlFor="groupImg">Group Picture</label>
             <input onChange={handleFileChange} type="file" name="groupImg" id="groupImg" />
           </div>
           <div className={styles.btnsCont}>
-            <button onClick={handleCreateGroupModal}>Close</button>
-            <button>Create Group Chat</button>
+            <button className={styles.createGroupBtn}>
+              <p className={styles.createGroupBtnPara}>Create Group Chat</p>
+              <img className={styles.createGroupBtnIcon} src={createGroupIcon} alt="create group" />
+            </button>
           </div>
         </form>
       </div>
