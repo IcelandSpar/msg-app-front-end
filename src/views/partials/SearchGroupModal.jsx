@@ -4,6 +4,7 @@ import UserContext from '../../UserContext.jsx';
 import GroupList from "./GroupList.jsx";
 
 import styles from "../../styles/SearchGroupModal.module.css";
+import groupSearchIcon from "../../assets/group_search_icon.svg";
 
 const SearchGroupModal = ({ handleSearchGroupModal, setMemberGroups }) => {
   const [groups, setGroups] = useState(null);
@@ -100,10 +101,13 @@ const SearchGroupModal = ({ handleSearchGroupModal, setMemberGroups }) => {
         </div>
       )}
       <div className={styles.searchGroupModalCont}>
+          <button className={styles.searchGroupModalExitBtn} onClick={handleSearchGroupModal} type="button">
+            X
+          </button>
         <form onSubmit={handleSearchBtn}>
           <div className={styles.searchInputButtonCont}>
-            <div>
-              <label htmlFor="groupNameSearch">Search groups by name:</label>
+            <div className={styles.groupSearchLabelAndInputCont}>
+              <label htmlFor="groupNameSearch">Search groups by name</label>
               <input
                 ref={groupNameInput}
                 type="text"
@@ -111,19 +115,20 @@ const SearchGroupModal = ({ handleSearchGroupModal, setMemberGroups }) => {
                 name="groupNameSearch"
               />
             </div>
-            <button onClick={handleSearchBtn} type="button">
-              Search
-            </button>
           </div>
-          <button onClick={handleSearchGroupModal} type="button">
-            Exit
-          </button>
+            <button className={styles.groupSearchBtn} onClick={handleSearchBtn} type="button">
+              <p>Search</p>
+              <img src={groupSearchIcon} alt="search groups" />
+            </button>
         </form>
+
         {!groups ? null : (
-          <GroupList
-            groups={groups}
-            handleClickOnGroupLi={handleClickOnGroupLi}
-          />
+          <div className={styles.groupListSearchResCont}>
+            <GroupList
+              groups={groups}
+              handleClickOnGroupLi={handleClickOnGroupLi}
+            />
+          </div>
         )}
       </div>
     </div>
