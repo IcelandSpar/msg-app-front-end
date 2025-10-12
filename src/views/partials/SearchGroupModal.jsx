@@ -92,10 +92,14 @@ const SearchGroupModal = ({ handleSearchGroupModal, setMemberGroups }) => {
       {!groupToJoin ? null : (
         <div className={styles.joinGroupModalBackground}>
           <div className={styles.joinGroupModalCont}>
-            <p>Would you like to join {groupToJoin.groupName}?</p>
+            <div className={styles.groupImgAndParaCont}>
+              <img className={styles.groupImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${groupToJoin.groupImgPath}`} alt="group image" width={'50px'} height={'50px'}/>
+              <p className={styles.joinPara}>Would you like to join</p>
+              <p className={styles.joinPara}>{groupToJoin.groupName}?</p>
+            </div>
             <div className={styles.joinOrNotBtnCont}>
-              <button onClick={handleCloseModals} type="button">Nevermind</button>
-              <button onClick={(e) => handleJoinBtn(e, groupToJoin)} type="button">Join</button>
+              <button className={styles.noJoinBtn} onClick={handleCloseModals} type="button">Nevermind</button>
+              <button className={styles.joinBtn} onClick={(e) => handleJoinBtn(e, groupToJoin)} type="button">Join</button>
             </div>
           </div>
         </div>
