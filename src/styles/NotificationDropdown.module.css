@@ -1,10 +1,65 @@
 .notifDropdownCont {
   position: absolute;
-  top: 100%;
-  left: -50%;
+  top: 0;
+  left: -400%;
   background-color: #A1C2BD;
-  border: 1px solid black;
+  border: 3px solid #19183B;
   width: 200px;
-  height: 300px;
+  height: 40vh;
   color: black;
+  padding: 1rem .5rem;
+  border-radius: 15px;
+  overflow-y: auto;
+  animation: .3s openNotifCont ease-out;
+  scrollbar-color: black #4e5f66;
+
+}
+
+.notifUl {
+  list-style-type: none;
+  padding: 0;
+}
+
+.notifUl li {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  border-bottom: 1px solid #19183B;
+  padding: .5rem;
+}
+
+.friendReqBtnCont {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.notifFriendAcceptBtn, .notifFriendDenyBtn {
+  padding: .5rem .5rem;
+  border-radius: 7px;
+  cursor: pointer;
+  font-family: "Recursive", sans-serif;
+  border: 2px solid #4e5f66;
+}
+
+.notifFriendDenyBtn {
+  background-color: #d1dbd9;
+  color: black;
+}
+
+
+.notifFriendAcceptBtn {
+  background-color: #19183B;
+  color: white;
+}
+
+@keyframes openNotifCont {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

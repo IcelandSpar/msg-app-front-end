@@ -102,7 +102,7 @@ const NotificationDropdown = ({
             <p>No notifications at this moment...</p>
           ) : (
             <>
-              <ul>
+              <ul className={styles.notifUl}>
                 {notifications.map((notif, indx) => {
                   if (
                     notif.status == "ACCEPTED" && profile.id != notif.ReceiverId
@@ -124,22 +124,26 @@ const NotificationDropdown = ({
                         <p>
                           {notif.Sender.profileName} sent you a friend request!
                         </p>
-                        <button
-                          onClick={(e) =>
-                            handleUserFriendReqOptionBtns(e, true, notif.id)
-                          }
-                          type="button"
-                        >
-                          Accept
-                        </button>
-                        <button
-                          onClick={(e) =>
-                            handleUserFriendReqOptionBtns(e, false, notif.id)
-                          }
-                          type="button"
-                        >
-                          Deny
-                        </button>
+                        <div className={styles.friendReqBtnCont}>
+                          <button
+                            className={styles.notifFriendDenyBtn}
+                            onClick={(e) =>
+                              handleUserFriendReqOptionBtns(e, false, notif.id)
+                            }
+                            type="button"
+                          >
+                            Deny
+                          </button>
+                          <button
+                          className={styles.notifFriendAcceptBtn}
+                            onClick={(e) =>
+                              handleUserFriendReqOptionBtns(e, true, notif.id)
+                            }
+                            type="button"
+                          >
+                            Accept
+                          </button>
+                        </div>
                       </li>
                     );
                   }
