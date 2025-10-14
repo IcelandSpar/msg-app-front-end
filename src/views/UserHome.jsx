@@ -1,30 +1,29 @@
-import { useEffect, useState, useContext } from 'react';
-import { useNavigate } from 'react-router';
-import UserContext from '../UserContext.jsx';
+import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router";
+import UserContext from "../UserContext.jsx";
 
-import { socket } from '../socket.js';
+import { socket } from "../socket.js";
 
-import Navbar from './partials/Navbar.jsx';
-import GroupList from './partials/GroupList.jsx';
-import FriendList from './partials/FriendList.jsx';
-import AddFriendModal from './partials/AddFriendModal.jsx';
-import CreateGroupModal from './partials/CreateGroupModal.jsx';
-import SearchGroupModal from './partials/SearchGroupModal.jsx';
-import FriendRequestResultModal from './partials/FriendRequestResultModal.jsx';
+import Navbar from "./partials/Navbar.jsx";
+import GroupList from "./partials/GroupList.jsx";
+import FriendList from "./partials/FriendList.jsx";
+import AddFriendModal from "./partials/AddFriendModal.jsx";
+import CreateGroupModal from "./partials/CreateGroupModal.jsx";
+import SearchGroupModal from "./partials/SearchGroupModal.jsx";
+import FriendRequestResultModal from "./partials/FriendRequestResultModal.jsx";
 
-
-import styles from '../styles/UserHome.module.css';
+import styles from "../styles/UserHome.module.css";
 import addFriendIcon from "../assets/add_friend_icon.svg";
 import groupSearchIcon from "../assets/group_search_icon.svg";
 import createGroupIcon from "../assets/create_group_icon.svg";
 
 const UserHome = () => {
-  const [ memberGroups, setMemberGroups ] = useState(null);
-  const [ isCreateGroupModalOpen, setIsCreateGroupModalOpen ] = useState(false);
-  const [ isAddFriendModalOpen, setIsAddFriendModalOpen ] = useState(false);
-  const [ isReqResModalOpen, setIsReqResModalOpen ] = useState(null);
-  const [ isGroupSearchModalOpen, setIsGroupSearchModalOpen ] = useState(false);
-  const [ friendList, setFriendList ] = useState(null);
+  const [memberGroups, setMemberGroups] = useState(null);
+  const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
+  const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
+  const [isReqResModalOpen, setIsReqResModalOpen] = useState(null);
+  const [isGroupSearchModalOpen, setIsGroupSearchModalOpen] = useState(false);
+  const [friendList, setFriendList] = useState(null);
 
   const { profile, isLoggedIn } = useContext(UserContext);
 
@@ -34,7 +33,6 @@ const UserHome = () => {
     e.preventDefault();
     navigate(`/channel/group/${groupId}`);
   };
-
 
   const handleCloseFriendReqModal = (e) => {
     e.preventDefault();
@@ -55,57 +53,60 @@ const UserHome = () => {
   const handleSearchGroupModal = (e) => {
     e.preventDefault();
     setIsGroupSearchModalOpen((prev) => !prev);
-  }
+  };
 
   const handleCloseFriendModal = (e) => {
     e.preventDefault();
     setIsAddFriendModalOpen(false);
-  }
+  };
 
-    const handleFriendReqSubmit = (e, friendCodeInput) => {
-      e.preventDefault();
-  
-      const token = sessionStorage.getItem('msgAppToken');
-      const formData = new FormData;
-  
-      formData.append('friendCode', friendCodeInput.current.value);
-      formData.append('profileIdRequesting', profile.id);
+  const handleFriendReqSubmit = (e, friendCodeInput) => {
+    e.preventDefault();
 
-      fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/friends/send-friend-req`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        method: 'POST',
-        body: new URLSearchParams(formData)
-      })
+    const token = sessionStorage.getItem("msgAppToken");
+    const formData = new FormData();
+
+    formData.append("friendCode", friendCodeInput.current.value);
+    formData.append("profileIdRequesting", profile.id);
+
+    fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/friends/send-friend-req`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      method: "POST",
+      body: new URLSearchParams(formData),
+    })
       .then((res) => res.json())
       .then((res) => {
         setIsReqResModalOpen(res);
       })
-      .catch((err) => console.error(err))
-    }
+      .catch((err) => console.error(err));
+  };
 
   useEffect(() => {
-          if(profile) {
-        socket.connect();
+    if (profile) {
+      socket.connect();
+    }
+    console.log("the test");
+    const token = sessionStorage.getItem("msgAppToken");
+    fetch(
+      `${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/get-member-groups`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        method: "GET",
       }
-      console.log('the test')
-    const token = sessionStorage.getItem('msgAppToken');
-    fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/get-member-groups`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      method: 'GET',
-    })
-    .then((res) => res.json())
-    .then((res) => {
-      setMemberGroups(res);
-    })
-    .catch((err) => console.error(err))
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        setMemberGroups(res);
+      })
+      .catch((err) => console.error(err));
 
     return () => {
       socket.disconnect();
-    }
+    };
   }, [profile]);
 
   return (
@@ -134,35 +135,61 @@ const UserHome = () => {
           />
         )}
         {!isLoggedIn ? null : (
-        <div className={styles.addFriendSearchGroupBtnsCont}>
-          <button className={styles.addFriendBtn} type="button" onClick={handleAddFriendBtn}>
-            <img className={styles.addFriendIcon} src={addFriendIcon} alt="search for a friend" />
-            <p className={styles.addFriendPara}>Add friend</p>
-          </button>
-          <button className={styles.groupSearchBtn} type="button" onClick={handleSearchGroupModal}>
-            <img className={styles.groupSearchImg} src={groupSearchIcon} alt="Search for Groups" />
-            <p className={styles.groupSearchPara}>Search Groups</p>
-          </button>
-          <button className={styles.createGroupBtn} onClick={handleCreateGroupModal}>
-            <img className={styles.createGroupIcon} src={createGroupIcon} alt="Create a group" />
-            <p className={styles.createGroupPara}>Create Group</p>
-          </button>
-        </div>
-        ) }
-
-        <GroupList
-          groups={memberGroups}
-          handleClickOnGroupLi={handleClickOnGroupLi}
-        />
-        <aside className={styles.friendListCont}>
-          {profile ? (
-            <FriendList
-              profile={profile}
-              friendList={friendList}
-              setFriendList={setFriendList}
+          <div className={styles.addFriendSearchGroupBtnsCont}>
+            <button
+              className={styles.addFriendBtn}
+              type="button"
+              onClick={handleAddFriendBtn}
+            >
+              <img
+                className={styles.addFriendIcon}
+                src={addFriendIcon}
+                alt="search for a friend"
+              />
+              <p className={styles.addFriendPara}>Add friend</p>
+            </button>
+            <button
+              className={styles.groupSearchBtn}
+              type="button"
+              onClick={handleSearchGroupModal}
+            >
+              <img
+                className={styles.groupSearchImg}
+                src={groupSearchIcon}
+                alt="Search for Groups"
+              />
+              <p className={styles.groupSearchPara}>Search Groups</p>
+            </button>
+            <button
+              className={styles.createGroupBtn}
+              onClick={handleCreateGroupModal}
+            >
+              <img
+                className={styles.createGroupIcon}
+                src={createGroupIcon}
+                alt="Create a group"
+              />
+              <p className={styles.createGroupPara}>Create Group</p>
+            </button>
+          </div>
+        )}
+        <div className={styles.groupAndFriendCont}>
+          <aside className={styles.friendListCont}>
+            {profile ? (
+              <FriendList
+                profile={profile}
+                friendList={friendList}
+                setFriendList={setFriendList}
+              />
+            ) : null}
+          </aside>
+          <div className={styles.groupsAside}>
+            <GroupList
+              groups={memberGroups}
+              handleClickOnGroupLi={handleClickOnGroupLi}
             />
-          ) : null}
-        </aside>
+          </div>
+        </div>
       </main>
     </div>
   );

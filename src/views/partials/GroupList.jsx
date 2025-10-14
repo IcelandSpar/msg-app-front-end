@@ -5,7 +5,13 @@ import styles from '../../styles/GroupList.module.css';
 const GroupList = ({groups, handleClickOnGroupLi}) => {
 
   return (
-    <section>
+    <section className={styles.groupListSect}>
+      <div className={styles.groupHeadingAndNoGroupParaCont}>
+        <h3 className={styles.groupsHeading}>Groups</h3>
+        {groups && groups.length > 0 ? null : <div className={styles.noGroupsParaCont}>
+          <p>(╥﹏╥)	</p><p className={styles.groupsPara}>No groups found...</p>
+        </div>}
+      </div>
       {!groups ? null : (
         <ul className={styles.groupUlCont}>
           {groups.map((groupInfo, indx) => {

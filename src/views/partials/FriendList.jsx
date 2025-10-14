@@ -64,7 +64,8 @@ const FriendList = ({ profile, friendList, setFriendList }) => {
   }, [profile.id]);
   
   return (<>
-  <h4 className={styles.friendListHeading}>Friends:</h4>
+  <h4 className={styles.friendListHeading}>Friends</h4>
+  {friendList && friendList.length > 0 ? null : <div className={styles.noFriendsParaCont}><p>( ಥ ʖ̯ ಥ)</p><p>No friends...</p></div>}
 
   {friendList == null ? null : (
     <ul className={styles.friendListUlCont}>
