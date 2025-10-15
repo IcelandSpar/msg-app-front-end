@@ -7,12 +7,19 @@
 }
 
 .friendListLiCont {
+  background-color: #4e5f66;
   border: 3px solid black;
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: .5rem 1rem;
   border-radius: 15px;
+  transition: .7s scale ease-out;
+  cursor: pointer;
+}
+
+.friendListLiCont:hover {
+  scale: 1.05;
 }
 
 .friendListHeading {
@@ -29,5 +36,11 @@
 
 .friendProfileImg {
   border-radius: 50%;
-  border: 1px solid black;
+  border: 2px solid black;
+  background-color: black;
+  transition: .5s border ease-out;
+}
+
+.friendProfileImg:hover {
+  border: 2px solid #a1c2bd;
 }

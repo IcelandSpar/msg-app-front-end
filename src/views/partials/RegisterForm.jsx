@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 
 import styles from '../../styles/RegisterForm.module.css';
 
@@ -90,6 +90,7 @@ const RegisterForm = () => {
         </div>
       </fieldset>
       <div className={styles.createProfileBtnCont}>
+        <Link to={'/login'}>Already have an account?</Link>
       <button className={styles.createProfileBtn} type="submit">Create Profile</button>
       </div>
     </form>

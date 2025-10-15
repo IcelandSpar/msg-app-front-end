@@ -102,9 +102,15 @@
 .profileImg {
   background-color: black;
   border-radius: 50%;
-  border: 1px solid black;
+  border: 2px solid black;
   cursor: pointer;
+  transition: .5s border ease-out;
 }
+
+.profileImg:hover {
+  border: 2px solid #a1c2bd;
+}
+
 
 .copyFriendCodeBtn {
   background-color: transparent;
