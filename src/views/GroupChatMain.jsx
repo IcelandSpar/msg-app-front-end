@@ -95,10 +95,19 @@ const GroupChatMain = () => {
 
   return (
     <>
-    <Navbar/>
     <main className={styles.groupChatMainCont}>
-      {!chatMsgs ? null : <GroupChatMessages endOfMsg={endOfMsg} chatMsgs={chatMsgs} />}
+      <div className={styles.navbarCont}>
+        <Navbar/>
+
+      </div>
+      {!chatMsgs ? null : (
+        <section className={styles.groupChatMsgsCont}>
+          <GroupChatMessages endOfMsg={endOfMsg} chatMsgs={chatMsgs} />
+        </section>
+        )}
+        <div className={styles.msgFormCont}>
       <MsgForm endOfMsg={endOfMsg} setChatMsgs={setChatMsgs} />
+      </div>
     </main>
   </>
   );

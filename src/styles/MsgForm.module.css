@@ -3,8 +3,6 @@
   flex-direction: column;
   max-width: 1000px;
   width: 100%;
-  bottom: 0;
-  position: fixed;
 }
 
 .inputAndBtnCont {
@@ -12,8 +10,82 @@
   justify-content: center;
   gap: 1rem;
   align-items: center;
+  width: 100%;
 }
 
 .msgLabelHidden {
   display: none;
 }
+
+.msgTextarea {
+  background-color: #aed1cc;
+  color: black;
+  font-family: "Recursive", sans-serif;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+}
+
+.msgFormSendBtn {
+  background-color: #e7f2ef;
+  color: black;
+  border-radius: 7px;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .5s background-color ease-out;
+}
+
+.sendMsgIcon {
+  transition: .5s filter ease-out;
+}
+
+.msgFormSendBtn:hover, .msgFormSendBtn:focus {
+  background-color: blue;
+}
+
+.msgFormSendBtn:hover .sendMsgIcon, .msgFormSendBtn:focus .sendMsgIcon {
+  filter: grayscale(1) invert(1);
+  animation: 4s shakePlane infinite 1s;
+
+}
+
+@keyframes shakePlane {
+  from {
+    transform: rotate(0deg);
+  }
+
+  10% {
+    transform: rotate(30deg);
+
+  }
+
+  15% {
+    transform: rotate(0deg);
+
+  }
+
+  50% {
+    transform: translateX(45px) translateY(-45px) scale(.01);
+
+  }
+
+  60% {
+    transform: translateX(0) translateY(0) scale(0);
+
+  }
+
+
+
+
+  70% {
+    transform: translateX(0) translateY(0) scale(1);
+  }
+
+}
+
+

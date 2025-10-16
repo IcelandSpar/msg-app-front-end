@@ -1,9 +1,8 @@
 
 .chatMsgsUl {
   list-style-type: none;
-  padding: none;
+  padding: 0;
   width: 100%;
-  overflow-y: scroll;
 }
 
 .chatMsgsLi {

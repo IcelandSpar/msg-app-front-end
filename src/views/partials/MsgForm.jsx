@@ -5,6 +5,7 @@ import { socket } from "../../socket";
 import UserContext from "../../UserContext";
 
 import styles from "../../styles/MsgForm.module.css";
+import sendMsgIcon from "../../assets/send.png";
 
 const MsgForm = ({ setChatMsgs, endOfMsg }) => {
   const [typingUserObj, setTypingUserObj] = useState({
@@ -110,14 +111,17 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
         <div>
           <label className={styles.msgLabelHidden} htmlFor="message">Message: </label>
           <textarea
+            className={styles.msgTextarea}
             onChange={handleKeyUp}
             ref={messageInput}
             name="message"
             id="message"
             placeholder="Type a message!"
+            rows={3}
+            cols={50}
           ></textarea>
         </div>
-        <button type="submit">Send</button>
+        <button className={styles.msgFormSendBtn} type="submit"><img className={styles.sendMsgIcon} src={sendMsgIcon} alt="send message" width={'25px'} height={'25px'}/></button>
       </div>
     </form>
   );
