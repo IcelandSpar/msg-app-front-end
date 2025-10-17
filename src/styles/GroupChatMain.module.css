@@ -1,9 +1,9 @@
 .groupChatMainCont {
   display: grid;
-  grid-template-columns: 2fr 5fr 2fr;
+  grid-template-columns: 2fr minmax(1200px, 5fr) 2fr;
   grid-template-rows: 1fr 10fr 1fr;
   height: 100vh;
-  background-image: linear-gradient(to right, #212121, #000000); 
+  background-image: linear-gradient(to right, #212121, #000000);
   align-items: end;
   padding-bottom: 1rem;
 }
@@ -19,12 +19,36 @@
   grid-row: 2 / 3;
   height: 100%;
   overflow-y: auto;
-  scrollbar-color: #E7F2EF #708993;
-  padding: .5rem 0;
+  scrollbar-color: #e7f2ef #708993;
+  scrollbar-width: thin;
 
+  padding: 0.5rem 0;
 }
 
 .msgFormCont {
   grid-row: 3 / 4;
   grid-column: 2 / 3;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .groupChatMainCont {
+    grid-template-columns: 1fr;
+    margin: 0 auto;
+  }
+
+  .navbarCont {
+    grid-column: 1 / 2;
+  }
+
+  .groupChatMsgsCont {
+    grid-column: 1 / 2;
+
+  }
+
+  .msgFormCont {
+    grid-column: 1 / 2;
+  }
 }

@@ -6,9 +6,11 @@
 }
 
 .chatMsgsLi {
-  border-top: 1px solid rgba(255, 255, 255, 0.589);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.37);
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 1rem;
 }
 
 .profileImgAndNameCont {
@@ -19,8 +21,19 @@
 
 .chatProfileImg {
   border-radius: 50%;
+  border: 3px solid #A1C2BD;
+  cursor: pointer;
+  background-color: black;
+  width: 50px;
+  height: 50px;
+}
+
+.chatProfileImg:hover {
+  border: 3px solid #E7F2EF;
 }
 
 .chatMsgContent {
   text-align: start;
+  white-space: pre-line;
+  line-height: 1.5;
 }
