@@ -1,5 +1,10 @@
 .loginPage {
   width: 100%;
-  background-image: linear-gradient(to right,#212121, #000000);
-  height: 100vh;
+  height: 100%;
+}
+
+
+
+.loginFormCont {
+  padding: 3rem ;
 }

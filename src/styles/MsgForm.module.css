@@ -18,7 +18,32 @@
 }
 
 .userTypingCont {
+  display: flex;
   padding: .5rem 1rem;
+  align-items: center;
+  gap: .5rem;
+}
+
+.dotOne, .dotTwo, .dotThree {
+  background-color: white;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dotOne {
+  animation: 1.5s shakeDots ease-out infinite;
+
+}
+
+.dotTwo {
+  animation: 1.5s shakeDots ease-out infinite .5s;
+
+}
+
+.dotThree {
+  animation: 1.5s shakeDots ease-out infinite .8s;
+
 }
 
 .userTypingAndMsgTextareaCont {
@@ -70,6 +95,24 @@
 
 }
 
+@keyframes shakeDots {
+  from {
+    transform: translateX(0) translateY(0);
+    opacity: .5;
+  }
+
+  50% {
+    transform: translateX(3px) translateY(0);
+    opacity: 1;
+
+  }
+
+  to {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+}
+
 @keyframes shakePlane {
   from {
     transform: rotate(0deg);
@@ -98,9 +141,6 @@
     transform: translateX(0) translateY(0) scale(0);
 
   }
-
-
-
 
   70% {
     transform: translateX(0) translateY(0) scale(1);

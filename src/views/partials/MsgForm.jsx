@@ -103,7 +103,10 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
           </label>
           {!typingUserObj || typingUserObj.isUserTyping == false ? null : (
             <div className={styles.userTypingCont}>
-              <p>{typingUserObj.typingUser} is typing...</p>
+              <p>{typingUserObj.typingUser} is typing</p>
+              <div className={styles.dotOne}></div>
+              <div className={styles.dotTwo}></div>
+              <div className={styles.dotThree}></div>
             </div>
           )}
           <div className={styles.textAreaMsgBtnCont}>
