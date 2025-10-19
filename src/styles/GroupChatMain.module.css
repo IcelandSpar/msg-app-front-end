@@ -31,6 +31,8 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  /* background-color: rgb(41, 41, 41); */
+
 }
 
 @media (max-width: 1200px) {

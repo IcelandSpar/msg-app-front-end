@@ -110,7 +110,7 @@ const UserHome = () => {
   }, [profile]);
 
   return (
-    <div>
+    <div className={styles.userHomePage}>
       <Navbar setFriendList={setFriendList} />
       <main className={styles.userHomeMain}>
         {isReqResModalOpen == null ? null : (

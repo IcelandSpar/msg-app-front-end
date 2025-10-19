@@ -143,7 +143,12 @@
   }
 
   70% {
-    transform: translateX(0) translateY(0) scale(1);
+    transform: translateX(0) translateY(0) scale(1.2);
+  }
+
+  75% {
+      transform: translateX(0) translateY(0) scale(1);
+
   }
 
 }

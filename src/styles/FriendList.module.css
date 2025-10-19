@@ -4,6 +4,7 @@
   flex-direction: column;
   max-width: 100%;
   padding-left: 0;
+  gap: 1rem;
 }
 
 .friendListLiCont {
@@ -11,7 +12,7 @@
   border: 3px solid black;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: .7rem;
   padding: .5rem 1rem;
   border-radius: 15px;
   transition: .7s scale ease-out;
