@@ -1,15 +1,59 @@
 .directMessagePage {
+  display: grid;
+  grid-template-columns: 2fr minmax(1200px, 5fr) 2fr;
+  grid-template-rows: 1fr 10fr 1fr;
+  height: 100vh;
+  background-image: linear-gradient(to right, #212121, #000000);
+  align-items: end;
+  padding-bottom: 1rem;
+}
 
+.navbarCont {
+  grid-row: 1 / 2;
+  grid-column: 1 / 4;
+  align-self: stretch;
 }
 
 .directMessageMain {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-color: #e7f2ef #708993;
+  scrollbar-width: thin;
 
+  padding: 0.5rem 0;
 }
 
 .messageFormCont {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  grid-row: 3 / 4;
+  grid-column: 2 / 3;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  /* background-color: rgb(41, 41, 41); */
+
 }
+
+@media (max-width: 1200px) {
+  .directMessagePage {
+    grid-template-columns: 1fr;
+    margin: 0 auto;
+  }
+
+  .navbarCont {
+    grid-column: 1 / 2;
+  }
+
+  .directMessageMain 
+ {
+    grid-column: 1 / 2;
+
+  }
+
+  .messageFormCont {
+    grid-column: 1 / 2;
+  }
+}
+
 

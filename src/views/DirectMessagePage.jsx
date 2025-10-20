@@ -19,13 +19,10 @@ const DirectMessagePage = () => {
 
   const { profile } = useContext(UserContext);
 
-
-
   useEffect(() => {
     const token = sessionStorage.getItem("msgAppToken");
 
-      if (profile && directMessageGroupId) {
-
+    if (profile && directMessageGroupId) {
       socket.connect();
       socket.emit("joinRoom", {
         profileName: profile.profileName,
@@ -83,12 +80,14 @@ const DirectMessagePage = () => {
       socket.off("received message");
       socket.off("connected");
       socket.disconnect();
-    }
+    };
   }, [directMessageGroupId, profile]);
 
   return (
     <div className={styles.directMessagePage}>
-      <Navbar />
+      <div className={styles.navbarCont}>
+        <Navbar />
+      </div>
       <main className={styles.directMessageMain}>
         {directMessages != null ? (
           <div className={styles.directMessagesCont}>
@@ -98,13 +97,13 @@ const DirectMessagePage = () => {
             />
           </div>
         ) : null}
-        <div className={styles.messageFormCont}>
-          <DirectMessageForm
-            endOfMsg={endOfMsg}
-            setDirectMessages={setDirectMessages}
-          />
-        </div>
       </main>
+      <div className={styles.messageFormCont}>
+        <DirectMessageForm
+          endOfMsg={endOfMsg}
+          setDirectMessages={setDirectMessages}
+        />
+      </div>
     </div>
   );
 };

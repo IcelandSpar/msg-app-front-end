@@ -31,7 +31,7 @@ const DirectMessages = ({directMessages, endOfMsg}) => {
                 <p className={styles.profileName}>{msg.author.profileName}</p>
                 <p>{formatDistance((msg.createdAt), new Date(), { addSuffix: true })}</p>
               </div>
-              <p>{msg.messageContent}</p>
+              <p className={styles.chatMsgContent}>{msg.messageContent}</p>
             </li>)
           })}
         <li ref={endOfMsg}></li>
