@@ -2,6 +2,7 @@ import { useRef, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import UserContext from "../../UserContext.jsx";
 import styles from "../../styles/DirectMessageForm.module.css";
+import sendIcon from "../../assets/send.png";
 import { socket } from "../../socket.js";
 
 const DirectMessageForm = ({ endOfMsg, setDirectMessages }) => {
@@ -117,6 +118,9 @@ const DirectMessageForm = ({ endOfMsg, setDirectMessages }) => {
             Message:
           </label>
           <textarea
+          rows={3}
+          cols={50}
+          className={styles.msgTextarea}
             onKeyUp={handleUserTypingTextarea}
             placeholder="Type a message!"
             ref={messageInput}
@@ -125,7 +129,7 @@ const DirectMessageForm = ({ endOfMsg, setDirectMessages }) => {
           ></textarea>
         </div>
         <div>
-          <button type="submit">Send</button>
+          <button className={styles.msgFormSendBtn} type="submit"><img className={styles.sendMsgIcon} src={sendIcon} alt="send message" width={'30px'} height={'30px'}/></button>
         </div>
       </div>
             </div>

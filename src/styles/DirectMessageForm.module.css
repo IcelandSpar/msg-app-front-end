@@ -17,3 +17,152 @@
   align-items: center;
   gap: .5rem;
 }
+
+.inputAndBtnCont {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+}
+
+.msgLabelHidden {
+  display: none;
+}
+
+.userTypingCont {
+  display: flex;
+  padding: .5rem 1rem;
+  align-items: center;
+  gap: .5rem;
+}
+
+.dotOne, .dotTwo, .dotThree {
+  background-color: white;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dotOne {
+  animation: 1.5s shakeDots ease-out infinite;
+
+}
+
+.dotTwo {
+  animation: 1.5s shakeDots ease-out infinite .5s;
+
+}
+
+.dotThree {
+  animation: 1.5s shakeDots ease-out infinite .8s;
+
+}
+
+.userTypingAndMsgTextareaCont {
+  display: flex;
+  flex-direction: column;
+}
+
+.textAreaMsgBtnCont {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.msgTextarea {
+  background-color: #aed1cc;
+  color: black;
+  font-family: "Recursive", sans-serif;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  max-width: 70vw;
+}
+
+.msgFormSendBtn {
+  background-color: #e7f2ef;
+  color: black;
+  border-radius: 7px;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .5s background-color ease-out;
+}
+
+.sendMsgIcon {
+  transition: .5s filter ease-out;
+}
+
+.msgFormSendBtn:hover, .msgFormSendBtn:focus {
+  background-color: blue;
+}
+
+.msgFormSendBtn:hover .sendMsgIcon, .msgFormSendBtn:focus .sendMsgIcon {
+  filter: grayscale(1) invert(1);
+  animation: 7s shakePlane infinite 1s;
+
+}
+
+@keyframes shakeDots {
+  from {
+    transform: translateX(0) translateY(0);
+    opacity: .5;
+  }
+
+  50% {
+    transform: translateX(3px) translateY(0);
+    opacity: 1;
+
+  }
+
+  to {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes shakePlane {
+  from {
+    transform: rotate(0deg);
+  }
+
+  10% {
+    transform: rotate(30deg);
+
+  }
+
+  20% {
+    transform: rotate(0deg);
+
+  }
+
+  40% {
+    transform: translateX(-7px) translateY(7px);
+  }
+
+  50% {
+    transform: translateX(45px) translateY(-45px) scale(.01);
+
+  }
+
+  60% {
+    transform: translateX(0) translateY(0) scale(0);
+
+  }
+
+  70% {
+    transform: translateX(0) translateY(0) scale(1.2);
+  }
+
+  75% {
+      transform: translateX(0) translateY(0) scale(1);
+
+  }
+
+}
+
