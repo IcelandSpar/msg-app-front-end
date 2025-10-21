@@ -107,11 +107,14 @@ const DirectMessageForm = ({ endOfMsg, setDirectMessages }) => {
       <div className={styles.userTypingAndTextareaCont}>
 
       
-      {!typingUserObj || typingUserObj.isUserTyping == false ? null : (
-        <div className={styles.userTypingCont}>
-          <p>{typingUserObj.typingUser} is typing...</p>
-        </div>
-      )}
+          {!typingUserObj || typingUserObj.isUserTyping == false ? null : (
+            <div className={styles.userTypingCont}>
+              <p>{typingUserObj.typingUser} is typing</p>
+              <div className={styles.dotOne}></div>
+              <div className={styles.dotTwo}></div>
+              <div className={styles.dotThree}></div>
+            </div>
+          )}
       <div className={styles.textareaAndBtnCont}>
         <div className={styles.labelAndInputCont}>
           <label className={styles.messageLabel} htmlFor="message">
