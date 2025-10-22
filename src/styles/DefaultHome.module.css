@@ -1,5 +1,61 @@
 .defaultHomePage {
   background-image: linear-gradient(#212121, #000000);
-  height: 100vh;
+  height: 100%;
   font-family: "Recursive", sans-serif;
+}
+
+.defaultHomeMainCont {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 0;
+  
+}
+
+.imgAndParaCont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.imgDescriptionPara {
+  font-size: 1.5rem;
+  max-width: 30ch;
+  text-align: center;
+}
+
+.anchorTagCont {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+
+
+}
+
+.msgInBottleIcon {
+  width: 100%;
+  object-fit: contain;
+
+}
+
+@media (max-width: 600px) {
+
+
+  .defaultHomeMainCont {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+  
+
+  .imgAndParaCont {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .imgAndParaCont:nth-child(even) {
+    flex-direction: column-reverse;
+  }
 }
