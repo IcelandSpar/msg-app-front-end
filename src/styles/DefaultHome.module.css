@@ -39,6 +39,36 @@
 
 }
 
+.threeParaImgCont {
+  margin: 4rem auto;
+  font-size: 1.2rem;
+  display: flex;
+  gap: 1rem;
+  text-align: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  flex-basis: 400px;
+}
+
+.threeParaImgCont a {
+  width: min-content;
+  margin: 0 auto;
+}
+
+.paraIconContThreeConts {
+  display: grid;
+  grid-template-rows: 3fr 1fr;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+}
+
+.iconAbovePara {
+  width: 150px;
+  height: 150px;
+}
+
 @media (max-width: 600px) {
 
 
@@ -57,5 +87,9 @@
 
   .imgAndParaCont:nth-child(even) {
     flex-direction: column-reverse;
+  }
+
+  .threeParaImgCont {
+    justify-content: center;
   }
 }

@@ -1,7 +1,11 @@
 import Navbar from './partials/Navbar.jsx';
 
 import styles from '../styles/DefaultHome.module.css';
+import talkIcon from "../assets/talk.png";
 import groupTableImg from "../assets/group_chat_home_art.svg";
+import userTypingIcon from "../assets/user_typing_icon.png";
+import customizeProfileIcon from "../assets/customize_profile.png";
+
 import msgInBottleIcon from "../assets/msg_in_bottle.svg";
 
 
@@ -18,7 +22,22 @@ const DefaultHome = () => {
         <a className={styles.anchorTagCont}  href={"https://pixabay.com/users/poli_-4882926/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=8320174"}><img src={groupTableImg} alt="Group talking" width={'300px'} height={'300px'}/></a>
         <p className={styles.imgDescriptionPara}>Create group chats for groups of friends!</p>
       </div>
-
+      <div className={styles.threeParaImgCont}>
+        <div className={styles.paraIconContThreeConts}>
+          <a href="https://www.flaticon.com/free-icons/message">
+          <img src={userTypingIcon} className={styles.iconAbovePara} alt="User typing message" width={'300px'} height={'300px'}/>
+          </a>
+          <p>See who is actively typing...</p>
+        </div>
+        <div className={styles.paraIconContThreeConts}>
+          <a href="https://www.flaticon.com/free-icons/talk"><img src={talkIcon} className={styles.iconAbovePara} alt="Friends talking" width={'300px'} height={'300px'}/></a>
+          <p>Send Messages directly to friends!</p>
+        </div>
+        <div className={styles.paraIconContThreeConts}>
+          <a href="https://www.flaticon.com/free-icons/metaverse" title="Customize profile"><img className={styles.iconAbovePara} src={customizeProfileIcon} alt="customize profile" width={'300px'} height={'300px'}/></a>
+          <p>Customize your profile!</p>
+        </div>
+      </div>
     </main>
     </div>
   )
