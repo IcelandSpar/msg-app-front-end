@@ -33,18 +33,7 @@
 
 }
 
-.loadingCont {
-  padding: 1rem 0;
-  height: 300px;
-}
 
-.loadingIcon {
-  animation: 1.8s spin infinite ease-out;
-  filter: brightness(150%);
-  margin: auto;
-  display: block;
-  width: 30%;
-}
 
 .groupUlCont {
   display: flex;

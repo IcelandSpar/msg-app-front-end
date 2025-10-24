@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import LoadingIcon from "./LoadingIcon.jsx";
 import styles from '../../styles/GroupList.module.css';
-import loadingIcon from "../../assets/loading_icon.png";
 
 const GroupList = ({groups, handleClickOnGroupLi, isLoadingGroupList}) => {
 
@@ -9,7 +9,7 @@ const GroupList = ({groups, handleClickOnGroupLi, isLoadingGroupList}) => {
     <section className={styles.groupListSect}>
       <div className={styles.groupHeadingAndNoGroupParaCont}>
         <h3 className={styles.groupsHeading}>Groups</h3>
-        {!isLoadingGroupList ? null : <a className={styles.loadingCont} href='https://www.flaticon.com/free-icons/restart'><img className={styles.loadingIcon} src={loadingIcon} alt='loading' width={'30%'}/></a>}
+        {!isLoadingGroupList ? null : <LoadingIcon/>}
         {groups && groups.length > 0 || isLoadingGroupList ? null : <div className={styles.noGroupsParaCont}>
           <p>(╥﹏╥)	</p><p className={styles.groupsPara}>No groups found...</p>
         </div>}

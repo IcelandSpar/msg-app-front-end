@@ -1,0 +1,29 @@
+.loadingCont {
+  padding: 1rem 0;
+  height: 300px;
+}
+
+.loadingIcon {
+  animation: 1.8s spin infinite ease-out;
+  filter: brightness(150%);
+  margin: auto;
+  display: block;
+  width: 30%;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    transform: rotate(-360deg);
+    opacity: 0;
+  }
+}
+

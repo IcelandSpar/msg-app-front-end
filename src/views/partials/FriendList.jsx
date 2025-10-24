@@ -2,8 +2,10 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router";
 
 import styles from '../../styles/FriendList.module.css';
+import LoadingIcon from "./LoadingIcon.jsx";
 
 const FriendList = ({ profile, friendList, setFriendList }) => {
+  const [ isLoadingList, setIsLoadingList ] = useState(true);
 
   const navigate = useNavigate();
 
@@ -48,6 +50,7 @@ const FriendList = ({ profile, friendList, setFriendList }) => {
     const token = sessionStorage.getItem('msgAppToken');
 
     if(token) {
+    setIsLoadingList(true);
     fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/friends/get-profile-friend-list/${profile.id}`, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -56,6 +59,9 @@ const FriendList = ({ profile, friendList, setFriendList }) => {
     })
     .then((res) => res.json())
     .then((res) => {
+      if(res) {
+        setIsLoadingList(false);
+      }
       setFriendList(res);
     })
     }
@@ -65,10 +71,14 @@ const FriendList = ({ profile, friendList, setFriendList }) => {
   
   return (<>
   <h4 className={styles.friendListHeading}>Friends</h4>
-  {friendList && friendList.length > 0 ? null : <div className={styles.noFriendsParaCont}><p>( ಥ ʖ̯ ಥ)</p><p>No friends...</p></div>}
-
+  {friendList && friendList.length > 0 || isLoadingList ? null : <div className={styles.noFriendsParaCont}><p>( ಥ ʖ̯ ಥ)</p><p>No friends...</p></div>}
+      {!isLoadingList ? null : (
+        <LoadingIcon/>
+      )}
   {friendList == null ? null : (
+    
     <ul className={styles.friendListUlCont}>
+
       {friendList.map((friend, indx) => {
         return (
           <li key={friend.id} className={styles.friendListLiCont}>
