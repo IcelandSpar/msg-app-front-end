@@ -24,6 +24,7 @@ const UserHome = () => {
   const [isReqResModalOpen, setIsReqResModalOpen] = useState(null);
   const [isGroupSearchModalOpen, setIsGroupSearchModalOpen] = useState(false);
   const [friendList, setFriendList] = useState(null);
+  const [ isLoadingGroupList, setIsLoadingGroupList ] = useState(true);
 
   const { profile, isLoggedIn } = useContext(UserContext);
 
@@ -86,6 +87,8 @@ const UserHome = () => {
   useEffect(() => {
     if (profile) {
       socket.connect();
+      setIsLoadingGroupList(true);
+
     }
     console.log("the test");
     const token = sessionStorage.getItem("msgAppToken");
@@ -100,6 +103,9 @@ const UserHome = () => {
     )
       .then((res) => res.json())
       .then((res) => {
+        if(res) {
+          setIsLoadingGroupList(false);
+        }
         setMemberGroups(res);
       })
       .catch((err) => console.error(err));
@@ -186,6 +192,7 @@ const UserHome = () => {
           <div className={styles.groupsAside}>
             <GroupList
               groups={memberGroups}
+              isLoadingGroupList={isLoadingGroupList}
               handleClickOnGroupLi={handleClickOnGroupLi}
             />
           </div>
