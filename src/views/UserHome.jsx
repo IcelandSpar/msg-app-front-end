@@ -85,14 +85,12 @@ const UserHome = () => {
   };
 
   useEffect(() => {
-    if (profile) {
-      socket.connect();
+    const token = sessionStorage.getItem("msgAppToken");
       setIsLoadingGroupList(true);
 
-    }
-    console.log("the test");
-    const token = sessionStorage.getItem("msgAppToken");
-    fetch(
+    if (profile && token) {
+      socket.connect();
+          fetch(
       `${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/get-member-groups`,
       {
         headers: {
@@ -109,6 +107,11 @@ const UserHome = () => {
         setMemberGroups(res);
       })
       .catch((err) => console.error(err));
+
+    } else {
+      setIsLoadingGroupList(false)
+    }
+
 
     return () => {
       socket.disconnect();

@@ -10,11 +10,11 @@ const GroupList = ({groups, handleClickOnGroupLi, isLoadingGroupList}) => {
       <div className={styles.groupHeadingAndNoGroupParaCont}>
         <h3 className={styles.groupsHeading}>Groups</h3>
         {!isLoadingGroupList ? null : <LoadingIcon/>}
-        {groups && groups.length > 0 || isLoadingGroupList ? null : <div className={styles.noGroupsParaCont}>
-          <p>(╥﹏╥)	</p><p className={styles.groupsPara}>No groups found...</p>
-        </div>}
+        {groups && groups.length <= 0 ? (<div className={styles.noGroupsParaCont}>
+          <p>(╥﹏╥)</p><p className={styles.groupsPara}>No groups found...</p>
+        </div>) : null}
       </div>
-      {!groups && isLoadingGroupList ? null : (
+      {!groups ? null : (
         <ul className={styles.groupUlCont}>
           {groups.map((groupInfo, indx) => {
             return (
