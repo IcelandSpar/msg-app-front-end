@@ -23,6 +23,13 @@ const DirectMessages = ({directMessages, endOfMsg}) => {
 
   return (
     <div className={styles.messagesCont}>
+        {directMessages && directMessages.length == 0 ? (
+          <div className={styles.noMsgsCont}>
+            <p>No Messages yet...</p>
+            <p>(⌒ω⌒)</p>
+            <p>Send a message!</p>
+          </div>
+        ) : null}
         <ul className={styles.directMessageUl}>
           {directMessages.map((msg, indx) => {
             return (<li key={indx} className={styles.msgLi}>
