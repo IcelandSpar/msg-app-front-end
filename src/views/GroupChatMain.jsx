@@ -5,6 +5,7 @@ import { socket } from "../socket.js";
 import MsgForm from "./partials/MsgForm.jsx";
 import Navbar from './partials/Navbar.jsx';
 import GroupChatMessages from "./partials/GroupChatMessages";
+import GroupMembersList from "./partials/GroupMembersList.jsx";
 import UserContext from "../UserContext.jsx";
 
 import styles from '../styles/GroupChatMain.module.css';
@@ -13,6 +14,7 @@ const GroupChatMain = () => {
   const endOfMsg = useRef(null);
 
   const [chatMsgs, setChatMsgs] = useState([]);
+  const [ groupMembers, setGroupMembers ] = useState(null);
 
   const { groupId } = useParams();
 
@@ -35,6 +37,17 @@ const GroupChatMain = () => {
       .catch((err) => console.error(err));
   };
 
+  const fetchGroupMembers = (token) => {
+    fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/get-group-members/${groupId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+    })
+    .then((res) => res.json())
+    .then((res) => setGroupMembers(res))
+    .catch((err) => console.error(err));
+  };
+
   useEffect(() => {
     let scrollDownTimeout;
     let pollChatInterval;
@@ -47,9 +60,11 @@ const GroupChatMain = () => {
       }, 1000)
       const token = sessionStorage.getItem("msgAppToken");
       fetchChatMsgs(token);
+      fetchGroupMembers(token);
 
       pollChatInterval = setInterval(() => {
         fetchChatMsgs(token);
+        fetchGroupMembers(token);
       }, intDuration);
 
       socket.connect();
@@ -104,6 +119,11 @@ const GroupChatMain = () => {
         <section className={styles.groupChatMsgsCont}>
           <GroupChatMessages endOfMsg={endOfMsg} chatMsgs={chatMsgs} />
         </section>
+        )}
+        {!groupMembers ? null : (
+          <aside className={styles.groupMembersCont}>
+            <GroupMembersList groupMembers={groupMembers}/>
+          </aside>
         )}
         <div className={styles.msgFormCont}>
       <MsgForm endOfMsg={endOfMsg} setChatMsgs={setChatMsgs} />

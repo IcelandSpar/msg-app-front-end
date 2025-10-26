@@ -1,8 +1,9 @@
 .groupChatMainCont {
   display: grid;
-  grid-template-columns: 2fr minmax(1200px, 5fr) 2fr;
+  grid-template-columns: 3fr minmax(550px, 5fr) 3fr;
   grid-template-rows: 1fr 10fr 1fr;
   height: 100vh;
+  width: 100vw;
   background-image: linear-gradient(to right, #212121, #000000);
   align-items: end;
   padding-bottom: 1rem;
@@ -35,7 +36,20 @@
 
 }
 
-@media (max-width: 1200px) {
+.groupMembersCont {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+  align-self: start;
+  justify-self: center;
+  padding: 1rem .5rem;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  scrollbar-color: #e7f2ef #708993;
+  scrollbar-width: thin;
+}
+
+@media (max-width: 550px) {
   .groupChatMainCont {
     grid-template-columns: 1fr;
     margin: 0 auto;
@@ -52,5 +66,9 @@
 
   .msgFormCont {
     grid-column: 1 / 2;
+  }
+
+  .groupMembersCont {
+    display: none;
   }
 }

@@ -118,7 +118,7 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
               id="message"
               placeholder="Type a message!"
               rows={3}
-              cols={50}
+              cols={35}
             ></textarea>
             <button className={styles.msgFormSendBtn} type="submit">
               <img
