@@ -50,8 +50,9 @@
   gap: 1rem;
   padding: .5rem 1rem;
   border-radius: 15px;
-  border: 3px solid black;
-  background-color: #708993;
+  border: 3px solid #beb8d5;
+  /* 708993 */
+  background-color: #6559a2;
   cursor: pointer;
   transition: .7s scale ease-out;
 }

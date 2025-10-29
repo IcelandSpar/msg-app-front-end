@@ -4,6 +4,7 @@ import Logout from './views/Logout.jsx';
 import Register from './views/Register.jsx';
 import UserHome from './views/UserHome.jsx';
 import MyProfile from './views/MyProfile.jsx';
+import ErrorPage from './views/ErrorPage.jsx';
 import ProfilePage from './views/ProfilePage.jsx';
 import DefaultHome from './views/DefaultHome.jsx';
 import GroupChatMain from './views/GroupChatMain.jsx';
@@ -46,6 +47,10 @@ const routes = [
   {
     path: '/profile/:profileIdViewing',
     element: <ProfilePage/>
+  },
+  {
+    path: '/*',
+    element: <ErrorPage/>,
   }
 
 ];

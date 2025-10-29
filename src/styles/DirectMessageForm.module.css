@@ -99,7 +99,7 @@
 }
 
 .msgFormSendBtn:hover, .msgFormSendBtn:focus {
-  background-color: blue;
+  background-color: #6559a2;
 }
 
 .msgFormSendBtn:hover .sendMsgIcon, .msgFormSendBtn:focus .sendMsgIcon {

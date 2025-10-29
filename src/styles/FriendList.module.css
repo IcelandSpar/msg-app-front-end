@@ -8,8 +8,8 @@
 }
 
 .friendListLiCont {
-  background-color: #4e5f66;
-  border: 3px solid black;
+  background-color: #6559a2;
+  border: 3px solid #beb8d5;
   display: flex;
   align-items: center;
   gap: .7rem;
