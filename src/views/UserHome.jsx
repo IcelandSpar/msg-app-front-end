@@ -32,7 +32,11 @@ const UserHome = () => {
 
   const handleClickOnGroupLi = (e, groupId) => {
     e.preventDefault();
-    navigate(`/channel/group/${groupId}`);
+    console.log(e.target.classList)
+    if((Array.from(e.target.classList)).find(element => element == 'navigateToGroupChat')) {
+      navigate(`/channel/group/${groupId}`);
+
+    }
   };
 
   const handleCloseFriendReqModal = (e) => {
@@ -197,6 +201,7 @@ const UserHome = () => {
               groups={memberGroups}
               isLoadingGroupList={isLoadingGroupList}
               handleClickOnGroupLi={handleClickOnGroupLi}
+              isUserHomeList={true}
             />
           </div>
         </div>

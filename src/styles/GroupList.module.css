@@ -47,6 +47,7 @@
 .groupLiCont {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
   padding: .5rem 1rem;
   border-radius: 15px;
@@ -61,6 +62,12 @@
   scale: 1.01;
 }
 
+.groupImgAndNameCont {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .groupImg {
   object-fit: contain;
   border: 2px solid black;
@@ -68,4 +75,10 @@
   width: 40px;
   height: 40px;
   background-color: black;
+}
+
+.moreOptsBtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
