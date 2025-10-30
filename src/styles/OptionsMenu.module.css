@@ -1,0 +1,23 @@
+
+.optsMenuCont {
+  z-index: 300;
+  position: absolute;
+  top: 0;
+  left: -450%;
+  background-color: #aed1cc;
+  padding: .5rem 1rem;
+  border-radius: 15px;
+  cursor: default;
+  pointer-events: none;
+}
+
+.optsMenuCont button {
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+  background-color: #6559a2;
+  border: 3px solid black;
+  cursor: pointer;
+  border-radius: 30px;
+  padding: .5rem 1rem;
+}

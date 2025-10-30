@@ -81,4 +81,5 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
+  position: relative;
 }
