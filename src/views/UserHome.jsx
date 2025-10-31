@@ -202,6 +202,7 @@ const UserHome = () => {
               isLoadingGroupList={isLoadingGroupList}
               handleClickOnGroupLi={handleClickOnGroupLi}
               isUserHomeList={true}
+              setMemberGroups={setMemberGroups}
             />
           </div>
         </div>

@@ -9,6 +9,7 @@ const GroupListItem = ({
   groupInfo,
   isUserHomeList,
   handleClickOnGroupLi,
+  setMemberGroups,
 }) => {
     const [ isOptsOpen, setIsOptsOpen ] = useState(false);
   
@@ -35,14 +36,13 @@ const GroupListItem = ({
         <h3 className={"navigateToGroupChat"}>{groupInfo.group.groupName}</h3>
       </div>
       {!isUserHomeList ? null : (
-        <button
+        <div
           onClick={handleOptsBtn}
           className={styles.moreOptsBtn}
-          type="button"
         >
           <img src={moreVertIcon} alt="more options" />
-          {!isOptsOpen ? null : <OptionsMenu/>}
-        </button>
+          {!isOptsOpen ? null : <OptionsMenu setMemberGroups={setMemberGroups} setIsOptsOpen={setIsOptsOpen} groupId={groupInfo.groupId}/>}
+        </div>
       )}
     </li>
   );

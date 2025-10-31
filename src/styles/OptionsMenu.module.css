@@ -3,12 +3,12 @@
   z-index: 300;
   position: absolute;
   top: 0;
-  left: -450%;
   background-color: #aed1cc;
+  border: 3px solid #708993;
   padding: .5rem 1rem;
   border-radius: 15px;
   cursor: default;
-  pointer-events: none;
+  transform: translateX(-100%);
 }
 
 .optsMenuCont button {
@@ -20,4 +20,6 @@
   cursor: pointer;
   border-radius: 30px;
   padding: .5rem 1rem;
+  font-family: "Recursive", sans-serif;
+  font-size: .7rem;
 }

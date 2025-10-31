@@ -14,6 +14,7 @@ const GroupList = ({
   handleClickOnGroupLi,
   isLoadingGroupList,
   isUserHomeList = false,
+  setMemberGroups,
 }) => {
 
 
@@ -33,7 +34,7 @@ const GroupList = ({
         <ul className={styles.groupUlCont}>
           {groups.map((groupInfo, indx) => {
             return (
-              <GroupListItem styles={styles} groupInfo={groupInfo} isUserHomeList={isUserHomeList} handleClickOnGroupLi={handleClickOnGroupLi}/>
+              <GroupListItem key={groupInfo.id} setMemberGroups={setMemberGroups} styles={styles} groupInfo={groupInfo} isUserHomeList={isUserHomeList} handleClickOnGroupLi={handleClickOnGroupLi}/>
             );
           })}
         </ul>
