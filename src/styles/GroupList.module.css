@@ -55,11 +55,11 @@
   /* 708993 */
   background-color: #6559a2;
   cursor: pointer;
-  transition: .7s scale ease-out;
+  /* transition: .7s scale ease-out; */
 }
 
 .groupLiCont:hover {
-  scale: 1.01;
+  /* scale: 1.01; */
 }
 
 .groupImgAndNameCont {

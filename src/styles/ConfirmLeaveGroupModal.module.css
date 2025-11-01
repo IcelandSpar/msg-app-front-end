@@ -1,0 +1,74 @@
+.confirmLeaveBackground {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.459);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 300;
+  cursor: default;
+}
+
+.confirmLeaveModal {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+
+
+  position: relative;
+  background-color: #708993;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  max-width: 500px;
+  padding: 2rem 1rem;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.groupImg {
+  border: 3px solid black;
+  border-radius: 50%;
+  background-color: black;
+}
+
+.leaveBtnsCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+
+
+.leaveBtnsCont button {
+  font-family: "Recursive", sans-serif;
+  font-size: 1.3rem;
+  padding: .5rem 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.noLeaveBtn {
+  background-color: #E7F2EF;
+  color: black;
+  transition: .7s transform ease-out;
+  border: 3px solid black;
+
+}
+
+.yesLeaveBtn {
+  border: 3px solid white;
+  background-color: #19183B;
+  transition: .7s transform ease-out;
+}
+
+.noLeaveBtn:hover {
+  transform: scale(105%);
+
+}
+
+.yesLeaveBtn:hover {
+  transform: scale(105%);
+}
