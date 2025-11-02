@@ -26,6 +26,13 @@
   padding: 0.5rem 0;
 }
 
+.loadingIcon {
+  position: relative;
+  left: 50%;
+  width: 30%;
+  transform: translateX(-50%);
+}
+
 .msgFormCont {
   grid-row: 3 / 4;
   grid-column: 2 / 3;
@@ -70,5 +77,21 @@
 
   .groupMembersCont {
     display: none;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    transform: rotate(-360deg);
+    opacity: 0;
   }
 }

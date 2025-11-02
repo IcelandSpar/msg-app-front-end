@@ -7,6 +7,7 @@ import Navbar from './partials/Navbar.jsx';
 import GroupChatMessages from "./partials/GroupChatMessages";
 import GroupMembersList from "./partials/GroupMembersList.jsx";
 import UserContext from "../UserContext.jsx";
+import LoadingIcon from "./partials/LoadingIcon.jsx";
 
 import styles from '../styles/GroupChatMain.module.css';
 
@@ -15,12 +16,16 @@ const GroupChatMain = () => {
 
   const [chatMsgs, setChatMsgs] = useState([]);
   const [ groupMembers, setGroupMembers ] = useState(null);
+  const [ isLoadingMsgs, setIsLoadingMsgs ] = useState(true);
+  const [ isLoadingMembers, setIsLoadingMembers ] = useState(true);
 
   const { groupId } = useParams();
 
   const { profile } = useContext(UserContext);
 
   const fetchChatMsgs = (token) => {
+    setIsLoadingMsgs(true);
+    setIsLoadingMembers(true);
     fetch(
       `${
         import.meta.env.VITE_FETCH_BASE_URL
@@ -33,7 +38,12 @@ const GroupChatMain = () => {
       }
     )
       .then((res) => res.json())
-      .then((res) => setChatMsgs(res))
+      .then((res) => {
+        setChatMsgs(res);
+        if(res) {
+          setIsLoadingMsgs(false);
+        }
+      })
       .catch((err) => console.error(err));
   };
 
@@ -44,7 +54,12 @@ const GroupChatMain = () => {
         },
     })
     .then((res) => res.json())
-    .then((res) => setGroupMembers(res))
+    .then((res) => {
+      setGroupMembers(res)
+      if(res) {
+        setIsLoadingMembers(false);
+      }
+    })
     .catch((err) => console.error(err));
   };
 
@@ -115,16 +130,19 @@ const GroupChatMain = () => {
         <Navbar/>
 
       </div>
+      <section className={styles.groupChatMsgsCont}>
+        {!isLoadingMsgs ? null : <LoadingIcon/>}
       {!chatMsgs ? null : (
-        <section className={styles.groupChatMsgsCont}>
           <GroupChatMessages endOfMsg={endOfMsg} chatMsgs={chatMsgs} />
+        )}
         </section>
-        )}
+        <aside className={styles.groupMembersCont}>
+        {!isLoadingMembers ? null : <LoadingIcon/>}
         {!groupMembers ? null : (
-          <aside className={styles.groupMembersCont}>
             <GroupMembersList groupMembers={groupMembers}/>
-          </aside>
+          
         )}
+        </aside>
         <div className={styles.msgFormCont}>
       <MsgForm endOfMsg={endOfMsg} setChatMsgs={setChatMsgs} />
       </div>
