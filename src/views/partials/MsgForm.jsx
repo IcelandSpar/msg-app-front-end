@@ -13,17 +13,34 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
     isUserTyping: false,
     groupId: null,
   });
+  const [ characterCount, setCharacterCount ] = useState(0);
+  const [ isUserTyping, setIsUserTyping ] = useState(false);
   const messageInput = useRef(null);
+  const wordLimitCont = useRef(null);
+  const userTypingFadeTimeout = useRef(null);
 
   const { groupId } = useParams();
   const { profile } = useContext(UserContext);
 
+
   const handleKeyUp = (e) => {
+
+
     e.preventDefault();
+    clearTimeout(userTypingFadeTimeout.current);
+    setIsUserTyping(true);
+
+    setCharacterCount(e.target.value.length)
     socket.emit("user typing", {
       profileName: profile.profileName,
       groupId: groupId,
     });
+    userTypingFadeTimeout.current = setTimeout(() => {
+      setIsUserTyping(false);
+      clearTimeout(userTypingFadeTimeout.current);
+    }, 2000);
+
+
   };
 
   const handleSubmitMsgForm = (e) => {
@@ -110,16 +127,19 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
             </div>
           )}
           <div className={styles.textAreaMsgBtnCont}>
-            <textarea
-              className={styles.msgTextarea}
-              onChange={handleKeyUp}
-              ref={messageInput}
-              name="message"
-              id="message"
-              placeholder="Type a message!"
-              rows={3}
-              cols={35}
-            ></textarea>
+            <div className={styles.textareaAndCharacterCont}>
+              <textarea
+                className={styles.msgTextarea}
+                onChange={handleKeyUp}
+                ref={messageInput}
+                name="message"
+                id="message"
+                placeholder="Type a message!"
+                rows={3}
+                cols={35}
+              ></textarea>
+              <div ref={wordLimitCont} className={`${styles.characterCountCont} ${isUserTyping ? `${styles.fadeOut}` : `${styles.fadeIn}`}`}>{characterCount}/2000</div>
+            </div>
             <button className={styles.msgFormSendBtn} type="submit">
               <img
                 className={styles.sendMsgIcon}
