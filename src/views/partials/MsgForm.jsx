@@ -2,6 +2,7 @@ import { useRef, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { socket } from "../../socket";
 
+import CharacterCount from "./CharacterCount.jsx";
 import UserContext from "../../UserContext";
 
 import styles from "../../styles/MsgForm.module.css";
@@ -24,8 +25,6 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
 
 
   const handleKeyUp = (e) => {
-
-
     e.preventDefault();
     clearTimeout(userTypingFadeTimeout.current);
     setIsUserTyping(true);
@@ -115,9 +114,7 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
     <form onSubmit={handleSubmitMsgForm} className={styles.msgForm}>
       <div className={styles.inputAndBtnCont}>
         <div className={styles.userTypingAndMsgTextareaCont}>
-          <label className={styles.msgLabelHidden} htmlFor="message">
-            Message:{" "}
-          </label>
+          <label className={styles.msgLabelHidden} htmlFor="message">Message:</label>
           {!typingUserObj || typingUserObj.isUserTyping == false ? null : (
             <div className={styles.userTypingCont}>
               <p>{typingUserObj.typingUser} is typing</p>
@@ -138,7 +135,7 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
                 rows={3}
                 cols={35}
               ></textarea>
-              <div ref={wordLimitCont} className={`${styles.characterCountCont} ${isUserTyping ? `${styles.fadeOut}` : `${styles.fadeIn}`}`}>{characterCount}/2000</div>
+              <CharacterCount wordLimitCont={wordLimitCont} characterCount={characterCount} isUserTyping={isUserTyping}/>
             </div>
             <button className={styles.msgFormSendBtn} type="submit">
               <img

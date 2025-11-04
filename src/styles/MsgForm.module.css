@@ -177,25 +177,3 @@
   }
 
 }
-
-@keyframes fadeOutAnim {
-  from {
-    opacity: 1;
-  }
-  
-  to {
-    opacity: .3;
-  }
-}
-
-@keyframes fadeInAnim {
-  from {
-    opacity: .3;
-  }
-  
-  to {
-    opacity: 1;
-  }
-}
-
-

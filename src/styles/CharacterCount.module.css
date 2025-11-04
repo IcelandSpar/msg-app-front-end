@@ -1,0 +1,43 @@
+.characterCountCont {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.438);
+  color: white;
+  top: 0;
+  right: 0;
+  padding: .5rem .5rem;
+  border-radius: 0 15px 0 15px;
+  font-size: .8rem;
+  pointer-events: none;
+}
+
+.fadeOut {
+  animation: 1s fadeOutAnim;
+  animation-fill-mode: forwards;
+}
+
+.fadeIn {
+  animation: 1s fadeInAnim;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeOutAnim {
+  from {
+    opacity: 1;
+  }
+  
+  to {
+    opacity: .3;
+  }
+}
+
+@keyframes fadeInAnim {
+  from {
+    opacity: .3;
+  }
+  
+  to {
+    opacity: 1;
+  }
+}
+
+

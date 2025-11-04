@@ -1,13 +1,21 @@
-import { useRef, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import UserContext from "../../UserContext.jsx";
-import styles from "../../styles/DirectMessageForm.module.css";
-import sendIcon from "../../assets/send.png";
 import { socket } from "../../socket.js";
+import { useRef, useContext, useEffect, useState } from "react";
+
+import CharacterCount from "./CharacterCount.jsx";
+import UserContext from "../../UserContext.jsx";
+
+import sendIcon from "../../assets/send.png";
+import styles from "../../styles/DirectMessageForm.module.css";
 
 const DirectMessageForm = ({ endOfMsg, setDirectMessages }) => {
   const messageInput = useRef(null);
   const [typingUserObj, setTypingUserObj] = useState(null);
+
+  const [characterCount, setCharacterCount] = useState(0);
+  const [isUserTyping, setIsUserTyping] = useState(false);
+  const wordLimitCont = useRef(null);
+  const userTypingFadeTimeout = useRef(null);
 
   const { profile } = useContext(UserContext);
   const { directMessageGroupId } = useParams();
@@ -58,19 +66,28 @@ const DirectMessageForm = ({ endOfMsg, setDirectMessages }) => {
         .catch((err) => console.error(err))
         .finally(() => {
           setTimeout(() => {
-            messageInput.current.value = '';
-
-          }, 1000)
+            messageInput.current.value = "";
+          }, 1000);
         });
     }
   };
 
   const handleUserTypingTextarea = (e) => {
     e.preventDefault();
+    clearTimeout(userTypingFadeTimeout.current);
+    setIsUserTyping(true);
+
+    setCharacterCount(e.target.value.length);
+
     socket.emit("user typing", {
       profileName: profile.profileName,
       groupId: directMessageGroupId,
     });
+
+    userTypingFadeTimeout.current = setTimeout(() => {
+      setIsUserTyping(false);
+      clearTimeout(userTypingFadeTimeout.current);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -91,12 +108,12 @@ const DirectMessageForm = ({ endOfMsg, setDirectMessages }) => {
       }
     });
 
-    console.log('DM render test')
+    console.log("DM render test");
 
     return () => {
       socket.off("send message");
       socket.off("user typing");
-    }
+    };
   }, [directMessageGroupId]);
 
   return (
@@ -105,38 +122,50 @@ const DirectMessageForm = ({ endOfMsg, setDirectMessages }) => {
       className={styles.messageFormCont}
     >
       <div className={styles.userTypingAndTextareaCont}>
-
-      
-          {!typingUserObj || typingUserObj.isUserTyping == false ? null : (
-            <div className={styles.userTypingCont}>
-              <p>{typingUserObj.typingUser} is typing</p>
-              <div className={styles.dotOne}></div>
-              <div className={styles.dotTwo}></div>
-              <div className={styles.dotThree}></div>
+        {!typingUserObj || typingUserObj.isUserTyping == false ? null : (
+          <div className={styles.userTypingCont}>
+            <p>{typingUserObj.typingUser} is typing</p>
+            <div className={styles.dotOne}></div>
+            <div className={styles.dotTwo}></div>
+            <div className={styles.dotThree}></div>
+          </div>
+        )}
+        <div className={styles.textareaAndBtnCont}>
+          <div className={styles.labelAndInputCont}>
+            <label className={styles.messageLabel} htmlFor="message">
+              Message:
+            </label>
+            <div className={styles.textareaAndCharacterCont}>
+              <textarea
+                rows={3}
+                cols={50}
+                className={styles.msgTextarea}
+                onKeyUp={handleUserTypingTextarea}
+                placeholder="Type a message!"
+                ref={messageInput}
+                name="message"
+                id="message"
+              ></textarea>
+              <CharacterCount
+                characterCount={characterCount}
+                isUserTyping={isUserTyping}
+                wordLimitCont={wordLimitCont}
+              />
             </div>
-          )}
-      <div className={styles.textareaAndBtnCont}>
-        <div className={styles.labelAndInputCont}>
-          <label className={styles.messageLabel} htmlFor="message">
-            Message:
-          </label>
-          <textarea
-          rows={3}
-          cols={50}
-          className={styles.msgTextarea}
-            onKeyUp={handleUserTypingTextarea}
-            placeholder="Type a message!"
-            ref={messageInput}
-            name="message"
-            id="message"
-          ></textarea>
-        </div>
-        <div>
-          <button className={styles.msgFormSendBtn} type="submit"><img className={styles.sendMsgIcon} src={sendIcon} alt="send message" width={'30px'} height={'30px'}/></button>
+          </div>
+          <div>
+            <button className={styles.msgFormSendBtn} type="submit">
+              <img
+                className={styles.sendMsgIcon}
+                src={sendIcon}
+                alt="send message"
+                width={"30px"}
+                height={"30px"}
+              />
+            </button>
+          </div>
         </div>
       </div>
-            </div>
-
     </form>
   );
 };

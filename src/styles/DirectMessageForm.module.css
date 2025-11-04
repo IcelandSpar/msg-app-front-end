@@ -59,6 +59,11 @@
 
 }
 
+.textareaAndCharacterCont {
+  position: relative;
+}
+
+
 .userTypingAndMsgTextareaCont {
   display: flex;
   flex-direction: column;
