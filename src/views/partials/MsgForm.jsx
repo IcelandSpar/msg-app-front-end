@@ -14,8 +14,9 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
     isUserTyping: false,
     groupId: null,
   });
-  const [ characterCount, setCharacterCount ] = useState(0);
-  const [ isUserTyping, setIsUserTyping ] = useState(false);
+  const [characterCount, setCharacterCount] = useState(0);
+  const [isUserTyping, setIsUserTyping] = useState(false);
+  const [characterLimitErr, setCharacterLimitErr] = useState(false);
   const messageInput = useRef(null);
   const wordLimitCont = useRef(null);
   const userTypingFadeTimeout = useRef(null);
@@ -23,13 +24,20 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
   const { groupId } = useParams();
   const { profile } = useContext(UserContext);
 
-
   const handleKeyUp = (e) => {
     e.preventDefault();
+
+    if(messageInput.current.value.length > 2000) {
+      setCharacterLimitErr(true);
+    } else {
+      setCharacterLimitErr(false);
+
+    }
+
     clearTimeout(userTypingFadeTimeout.current);
     setIsUserTyping(true);
 
-    setCharacterCount(e.target.value.length)
+    setCharacterCount(e.target.value.length);
     socket.emit("user typing", {
       profileName: profile.profileName,
       groupId: groupId,
@@ -38,53 +46,57 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
       setIsUserTyping(false);
       clearTimeout(userTypingFadeTimeout.current);
     }, 2000);
-
-
   };
 
   const handleSubmitMsgForm = (e) => {
     e.preventDefault();
-    const token = sessionStorage.getItem("msgAppToken");
 
-    const formData = new FormData();
-    formData.append("messageContent", messageInput.current.value);
-    formData.append("groupId", groupId);
-    formData.append("authorId", profile.id);
+    if (messageInput.current.value.length > 2000) {
+      setCharacterLimitErr(true);
+    } else {
+      const token = sessionStorage.getItem("msgAppToken");
 
-    fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/chat/post-chat-msg`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setChatMsgs((chatMsgs) => [
-          ...chatMsgs,
-          {
-            profileName: profile.profileName,
+      const formData = new FormData();
+      formData.append("messageContent", messageInput.current.value);
+      formData.append("groupId", groupId);
+      formData.append("authorId", profile.id);
+
+      fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/chat/post-chat-msg`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setChatMsgs((chatMsgs) => [
+            ...chatMsgs,
+            {
+              profileName: profile.profileName,
+              messageContent: messageInput.current.value,
+              imgPath: profile.profileImgFilePath,
+              createdAt: new Date(),
+            },
+          ]);
+
+          socket.emit("send message", {
+            groupId: groupId,
             messageContent: messageInput.current.value,
+            profileName: profile.profileName,
             imgPath: profile.profileImgFilePath,
             createdAt: new Date(),
-          },
-        ]);
-
-        socket.emit("send message", {
-          groupId: groupId,
-          messageContent: messageInput.current.value,
-          profileName: profile.profileName,
-          imgPath: profile.profileImgFilePath,
-          createdAt: new Date(),
-        });
-      })
-      .catch((err) => console.error(err))
-      .finally(() => {});
+          });
+        })
+        .catch((err) => console.error(err))
+        .finally(() => {});
 
     setTimeout(() => {
       endOfMsg.current?.scrollIntoView({ behavior: "smooth" });
       messageInput.current.value = "";
     }, 1000);
+    }
+
   };
 
   useEffect(() => {
@@ -114,7 +126,9 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
     <form onSubmit={handleSubmitMsgForm} className={styles.msgForm}>
       <div className={styles.inputAndBtnCont}>
         <div className={styles.userTypingAndMsgTextareaCont}>
-          <label className={styles.msgLabelHidden} htmlFor="message">Message:</label>
+          <label className={styles.msgLabelHidden} htmlFor="message">
+            Message:
+          </label>
           {!typingUserObj || typingUserObj.isUserTyping == false ? null : (
             <div className={styles.userTypingCont}>
               <p>{typingUserObj.typingUser} is typing</p>
@@ -123,9 +137,15 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
               <div className={styles.dotThree}></div>
             </div>
           )}
+                        {!characterLimitErr ? null : (
+                <p className={styles.characterLimitPara}>Character limit surpassed, please correct</p>
+              )}
           <div className={styles.textAreaMsgBtnCont}>
             <div className={styles.textareaAndCharacterCont}>
               <textarea
+                style={{
+                  border: `${!characterLimitErr ? 'none' : '3px solid red'}`
+                }}
                 className={styles.msgTextarea}
                 onChange={handleKeyUp}
                 ref={messageInput}
@@ -134,8 +154,13 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
                 placeholder="Type a message!"
                 rows={3}
                 cols={35}
+                minLength={2000}
               ></textarea>
-              <CharacterCount wordLimitCont={wordLimitCont} characterCount={characterCount} isUserTyping={isUserTyping}/>
+              <CharacterCount
+                wordLimitCont={wordLimitCont}
+                characterCount={characterCount}
+                isUserTyping={isUserTyping}
+              />
             </div>
             <button className={styles.msgFormSendBtn} type="submit">
               <img
