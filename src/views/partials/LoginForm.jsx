@@ -6,15 +6,16 @@ import styles from "../../styles/LoginForm.module.css";
 
 const LoginForm = () => {
   const [loginErr, setLoginErr] = useState(null);
+  const [ validationErrors, setValidationErrors ] = useState(null);
 
   const usernameInput = useRef(null);
   const passwordRef = useRef(null);
 
   const navigate = useNavigate();
 
-  const user = useContext(UserContext);
 
   const handleSubmit = (e) => {
+    setValidationErrors(null);
     e.preventDefault();
     setLoginErr(null);
     const formData = new FormData();
@@ -27,7 +28,9 @@ const LoginForm = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.token) {
+        if(res.errors) {
+          setValidationErrors(res.errors);
+        } else if (res.token) {
           sessionStorage.setItem("msgAppToken", res.token);
           // socket.connect();
 
@@ -47,6 +50,18 @@ const LoginForm = () => {
           <div className={styles.formSubmitErrCont}>
             <h3>Please Fix:</h3>
             <p>{loginErr}</p>
+          </div>
+        )}
+        {!validationErrors ? null : (
+          <div className={styles.formValidationErrorsCont}>
+            <h3>Please Fix:</h3>
+            <ul className={styles.formValidationErrUl}>
+            {validationErrors.map((err, errIndx) => {
+              return (
+                <li key={`error${errIndx}`}>{err.msg}</li>
+              )
+            })}
+            </ul>
           </div>
         )}
         <div className={styles.labelAndInputCont}>
