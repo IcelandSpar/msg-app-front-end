@@ -6,6 +6,7 @@ import styles from '../../styles/RegisterForm.module.css';
 const RegisterForm = () => {
   const [ registerErr, setRegisterErr ] = useState(null);
   const [ selectedFile, setSelectedFile ] = useState(null);
+  const [ validationErrors, setValidationErrors ] = useState(null);
 
   const profileNameInput = useRef(null);
   const bioInput = useRef(null);
@@ -22,6 +23,7 @@ const RegisterForm = () => {
 
   const handleSubmit = (e) => {
     setRegisterErr(null);
+    setValidationErrors(null);
     e.preventDefault();
     const formData = new FormData();
 
@@ -39,8 +41,11 @@ const RegisterForm = () => {
     })
     .then((res) => res.json())
     .then((res) => {
-      console.log(res)
-      if(res.message) {
+      if(res.errors) {
+        setValidationErrors(res.errors);
+        scrollTo({top: 0, behavior: 'smooth'});
+
+      } else if(res.message) {
         setRegisterErr(res.message);
         scrollTo({top: 0, behavior: 'smooth'});
 
@@ -61,6 +66,18 @@ const RegisterForm = () => {
         <div className={styles.errorCont}>
           <h3 className={styles.errorHeading}>Please fix:</h3>
           <p className={styles.errorMsg}>{registerErr}</p>
+        </div>
+      )}
+      {!validationErrors ? null : (
+        <div className={styles.errorCont}>
+          <h1>Please Fix:</h1>
+          <ul className={styles.validationErrorsUl}>
+            {validationErrors.map((err, errIndx) => {
+              return (
+                <li key={`err${errIndx}`}>{err.msg}</li>
+              )
+            })}
+          </ul>
         </div>
       )}
       <fieldset className={styles.registerFieldset}>

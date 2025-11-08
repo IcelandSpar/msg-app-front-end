@@ -8,6 +8,17 @@
   z-index: 0;
 }
 
+.validationErrorsUl {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  list-style-type: none;
+  padding-left: 0;
+  text-align: center;
+}
+
+
 .errorHeading {
   font-size: 1.5rem;
 }
@@ -54,6 +65,7 @@
   width: 100%;
   font-size: 1.2rem;
   padding: .5rem 1rem;
+  color: black;
 }
 
 .labelAndInputCont textarea {
