@@ -8,7 +8,7 @@ import UserContext from "../../UserContext";
 import styles from "../../styles/MsgForm.module.css";
 import sendMsgIcon from "../../assets/send.png";
 
-const MsgForm = ({ setChatMsgs, endOfMsg }) => {
+const MsgForm = ({ setChatMsgs, endOfMsg, setMsgFormErrors }) => {
   const [typingUserObj, setTypingUserObj] = useState({
     typingUser: null,
     isUserTyping: false,
@@ -27,11 +27,10 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
   const handleKeyUp = (e) => {
     e.preventDefault();
 
-    if(messageInput.current.value.length > 2000) {
+    if (messageInput.current.value.length > 2000) {
       setCharacterLimitErr(true);
     } else {
       setCharacterLimitErr(false);
-
     }
 
     clearTimeout(userTypingFadeTimeout.current);
@@ -70,33 +69,34 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
       })
         .then((res) => res.json())
         .then((res) => {
-          setChatMsgs((chatMsgs) => [
-            ...chatMsgs,
-            {
-              profileName: profile.profileName,
+          if (res.errors) {
+            setMsgFormErrors(res.errors);
+          } else {
+            setChatMsgs((chatMsgs) => [
+              ...chatMsgs,
+              {
+                profileName: profile.profileName,
+                messageContent: messageInput.current.value,
+                imgPath: profile.profileImgFilePath,
+                createdAt: new Date(),
+              },
+            ]);
+
+            socket.emit("send message", {
+              groupId: groupId,
               messageContent: messageInput.current.value,
+              profileName: profile.profileName,
               imgPath: profile.profileImgFilePath,
               createdAt: new Date(),
-            },
-          ]);
-
-          socket.emit("send message", {
-            groupId: groupId,
-            messageContent: messageInput.current.value,
-            profileName: profile.profileName,
-            imgPath: profile.profileImgFilePath,
-            createdAt: new Date(),
-          });
+            });
+          }
         })
-        .catch((err) => console.error(err))
-        .finally(() => {});
-
-    setTimeout(() => {
-      endOfMsg.current?.scrollIntoView({ behavior: "smooth" });
-      messageInput.current.value = "";
-    }, 1000);
+        .catch((err) => console.error(err));
+      setTimeout(() => {
+        endOfMsg.current?.scrollIntoView({ behavior: "smooth" });
+        messageInput.current.value = "";
+      }, 1000);
     }
-
   };
 
   useEffect(() => {
@@ -137,14 +137,16 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
               <div className={styles.dotThree}></div>
             </div>
           )}
-                        {!characterLimitErr ? null : (
-                <p className={styles.characterLimitPara}>Character limit surpassed, please correct</p>
-              )}
+          {!characterLimitErr ? null : (
+            <p className={styles.characterLimitPara}>
+              Character limit surpassed, please correct
+            </p>
+          )}
           <div className={styles.textAreaMsgBtnCont}>
             <div className={styles.textareaAndCharacterCont}>
               <textarea
                 style={{
-                  border: `${!characterLimitErr ? 'none' : '3px solid red'}`
+                  border: `${!characterLimitErr ? "none" : "3px solid red"}`,
                 }}
                 className={styles.msgTextarea}
                 onChange={handleKeyUp}
@@ -154,7 +156,7 @@ const MsgForm = ({ setChatMsgs, endOfMsg }) => {
                 placeholder="Type a message!"
                 rows={3}
                 cols={35}
-                minLength={2000}
+                maxLength={2000}
               ></textarea>
               <CharacterCount
                 wordLimitCont={wordLimitCont}

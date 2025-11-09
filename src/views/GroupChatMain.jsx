@@ -18,6 +18,7 @@ const GroupChatMain = () => {
   const [ groupMembers, setGroupMembers ] = useState(null);
   const [ isLoadingMsgs, setIsLoadingMsgs ] = useState(true);
   const [ isLoadingMembers, setIsLoadingMembers ] = useState(true);
+  const [ msgFormErrors, setMsgFormErrors ] = useState(null);
 
   const { groupId } = useParams();
 
@@ -61,6 +62,11 @@ const GroupChatMain = () => {
       }
     })
     .catch((err) => console.error(err));
+  };
+
+  const handleCloseErrMsg = (e) => {
+    e.preventDefault();
+    setMsgFormErrors(null);
   };
 
   useEffect(() => {
@@ -130,6 +136,21 @@ const GroupChatMain = () => {
         <Navbar/>
 
       </div>
+      {!msgFormErrors ? null : (
+        <div className={styles.msgFormErrBackground}>
+          <div className={styles.msgFormErrorCont}>
+            <button onClick={handleCloseErrMsg} className={styles.exitErrMsgBtn} type="button">X</button>
+            <h3>Please fix</h3>
+            <ul className={styles.msgFormErrUl}>
+              {msgFormErrors.map((msgFormErr, errIndx) => {
+                return (
+                  <li key={`error${errIndx}`}>{msgFormErr.msg}</li>
+                )
+              })}
+            </ul>
+          </div>
+        </div>
+      )}
       <section className={styles.groupChatMsgsCont}>
         {!isLoadingMsgs ? null : <LoadingIcon/>}
       {!chatMsgs ? null : (
@@ -144,7 +165,7 @@ const GroupChatMain = () => {
         )}
         </aside>
         <div className={styles.msgFormCont}>
-      <MsgForm endOfMsg={endOfMsg} setChatMsgs={setChatMsgs} />
+      <MsgForm endOfMsg={endOfMsg} setChatMsgs={setChatMsgs} setMsgFormErrors={setMsgFormErrors}/>
       </div>
     </main>
   </>
