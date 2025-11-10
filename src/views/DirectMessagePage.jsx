@@ -3,8 +3,10 @@ import { useParams } from "react-router";
 import { socket } from "../socket.js";
 
 import Navbar from "./partials/Navbar.jsx";
+import ValidationErrModal from "./partials/ValidationErrModal.jsx";
 import DirectMessages from "./partials/DirectMessages.jsx";
 import DirectMessageForm from "./partials/DirectMessageForm.jsx";
+
 
 import UserContext from "../UserContext.jsx";
 import MsgForm from "./partials/MsgForm.jsx";
@@ -13,11 +15,17 @@ import styles from "../styles/DirectMessagePage.module.css";
 
 const DirectMessagePage = () => {
   const [directMessages, setDirectMessages] = useState(null);
+  const [ validationErrors, setValidationErrors ] = useState(null);
+
   const endOfMsg = useRef(null);
 
   const { directMessageGroupId } = useParams();
 
   const { profile } = useContext(UserContext);
+
+  const handleCloseValidationMsg = (e) => {
+    setValidationErrors(null);
+  };
 
   useEffect(() => {
     const token = sessionStorage.getItem("msgAppToken");
@@ -88,6 +96,7 @@ const DirectMessagePage = () => {
       <div className={styles.navbarCont}>
         <Navbar />
       </div>
+      {!validationErrors ? null : <ValidationErrModal msgFormErrors={validationErrors} closeMsgHandler={handleCloseValidationMsg}/>}
       <main className={styles.directMessageMain}>
         {directMessages != null ? (
           <div className={styles.directMessagesCont}>
@@ -102,6 +111,7 @@ const DirectMessagePage = () => {
         <DirectMessageForm
           endOfMsg={endOfMsg}
           setDirectMessages={setDirectMessages}
+          setValidationErrors={setValidationErrors}
         />
       </div>
     </div>

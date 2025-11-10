@@ -8,7 +8,7 @@ import UserContext from "../../UserContext.jsx";
 import sendIcon from "../../assets/send.png";
 import styles from "../../styles/DirectMessageForm.module.css";
 
-const DirectMessageForm = ({ endOfMsg, setDirectMessages }) => {
+const DirectMessageForm = ({ endOfMsg, setDirectMessages, setValidationErrors }) => {
   const messageInput = useRef(null);
   const [typingUserObj, setTypingUserObj] = useState(null);
 
@@ -41,7 +41,9 @@ const DirectMessageForm = ({ endOfMsg, setDirectMessages }) => {
       )
         .then((res) => res.json())
         .then((res) => {
-          if (res.success) {
+          if(res.errors) {
+            setValidationErrors(res.errors);
+          } else if (res.success) {
             setDirectMessages((chatMsgs) => [
               ...chatMsgs,
               {

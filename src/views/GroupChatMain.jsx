@@ -2,12 +2,13 @@ import { useContext, useEffect, useState, useRef } from "react";
 import { useParams } from "react-router";
 import { socket } from "../socket.js";
 
-import MsgForm from "./partials/MsgForm.jsx";
 import Navbar from './partials/Navbar.jsx';
-import GroupChatMessages from "./partials/GroupChatMessages";
-import GroupMembersList from "./partials/GroupMembersList.jsx";
+import MsgForm from "./partials/MsgForm.jsx";
 import UserContext from "../UserContext.jsx";
 import LoadingIcon from "./partials/LoadingIcon.jsx";
+import GroupChatMessages from "./partials/GroupChatMessages";
+import GroupMembersList from "./partials/GroupMembersList.jsx";
+import ValidationErrModal from "./partials/ValidationErrModal.jsx";
 
 import styles from '../styles/GroupChatMain.module.css';
 
@@ -137,19 +138,7 @@ const GroupChatMain = () => {
 
       </div>
       {!msgFormErrors ? null : (
-        <div className={styles.msgFormErrBackground}>
-          <div className={styles.msgFormErrorCont}>
-            <button onClick={handleCloseErrMsg} className={styles.exitErrMsgBtn} type="button">X</button>
-            <h3>Please fix</h3>
-            <ul className={styles.msgFormErrUl}>
-              {msgFormErrors.map((msgFormErr, errIndx) => {
-                return (
-                  <li key={`error${errIndx}`}>{msgFormErr.msg}</li>
-                )
-              })}
-            </ul>
-          </div>
-        </div>
+        <ValidationErrModal closeMsgHandler={handleCloseErrMsg} msgFormErrors={msgFormErrors}/>
       )}
       <section className={styles.groupChatMsgsCont}>
         {!isLoadingMsgs ? null : <LoadingIcon/>}

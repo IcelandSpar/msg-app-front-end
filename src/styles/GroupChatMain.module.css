@@ -43,59 +43,6 @@
 
 }
 
-.msgFormErrBackground {
-  position: fixed;
-
-  height: 100%;
-  width: 100%;
-  z-index: 300;
-  background-color: rgba(0, 0, 0, 0.548);
-}
-
-.msgFormErrorCont {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  padding: 1rem;
-  background-color: #708993;
-  border-radius: 15px;
-  border: 3px solid #aed1cc;
-  max-width: 400px;
-  text-align: center;
-  animation: .5s openModal ease-out;
-}
-
-.msgFormErrorCont h3 {
-  font-size: 1.5rem;
-}
-
-.exitErrMsgBtn {
-  position: absolute;
-  top: .5rem;
-  right: .5rem;
-  background-color: transparent;
-  border: none;
-  font-family: "Recursive", sans-serif;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.msgFormErrUl {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-
-  list-style-type: none;
-  padding-left: 0;
-}
-
-
-
 .groupMembersCont {
   grid-column: 3 / 4;
   grid-row: 2 / 3;
@@ -146,17 +93,5 @@
   to {
     transform: rotate(-360deg);
     opacity: 0;
-  }
-}
-
-@keyframes openModal {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-100%);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(-50%);
   }
 }
