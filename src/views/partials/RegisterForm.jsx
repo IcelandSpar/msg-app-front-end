@@ -14,6 +14,7 @@ const RegisterForm = () => {
 
   const usernameInput = useRef(null);
   const passwordRef = useRef(null);
+  const confirmPassRef = useRef(null);
   
   const navigate = useNavigate();
 
@@ -34,6 +35,7 @@ const RegisterForm = () => {
 
     formData.append('username', usernameInput.current.value);
     formData.append('password', passwordRef.current.value);
+    formData.append('confirmPassword', confirmPassRef.current.value);
 
     fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/register`, {
       method: 'POST',
@@ -91,7 +93,7 @@ const RegisterForm = () => {
           <textarea ref={bioInput} type="text" id='bio' name='bio' rows={4}></textarea>
         </div>
         <div className={styles.labelAndInputCont}>
-          <label className={styles.registerFileLabel} htmlFor="profileImg">Profile Picture:</label>
+          <label className={styles.registerFileLabel} htmlFor="profileImg">Profile Picture: (opt.)</label>
           <input className={styles.registerFileInput} onChange={handleFileChange} ref={profilePictureInput} type="file" name="profileImg" id="profileImg" />
         </div>
       </fieldset>
@@ -104,6 +106,10 @@ const RegisterForm = () => {
         <div className={styles.labelAndInputCont}>
           <label htmlFor="password">Password:</label>
           <input type="password" id="password" name="password" ref={passwordRef}/>
+        </div>
+        <div className={styles.labelAndInputCont}>
+          <label htmlFor="confirmPassword">Confirm Password:</label>
+          <input ref={confirmPassRef} type="password" />
         </div>
       </fieldset>
       <div className={styles.createProfileBtnCont}>
