@@ -14,6 +14,7 @@
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   background-color: #708993;
+  border: 3px solid #aed1cc;
   border-radius: 15px;
   padding: 2rem 1rem;
   max-width: 400px;

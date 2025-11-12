@@ -24,6 +24,7 @@ const DirectMessagePage = () => {
   const { profile } = useContext(UserContext);
 
   const handleCloseValidationMsg = (e) => {
+    e.preventDefault();
     setValidationErrors(null);
   };
 

@@ -10,6 +10,7 @@ import FriendList from "./partials/FriendList.jsx";
 import AddFriendModal from "./partials/AddFriendModal.jsx";
 import CreateGroupModal from "./partials/CreateGroupModal.jsx";
 import SearchGroupModal from "./partials/SearchGroupModal.jsx";
+import ValidationErrModal from "./partials/ValidationErrModal.jsx";
 import FriendRequestResultModal from "./partials/FriendRequestResultModal.jsx";
 
 import styles from "../styles/UserHome.module.css";
@@ -25,6 +26,7 @@ const UserHome = () => {
   const [isGroupSearchModalOpen, setIsGroupSearchModalOpen] = useState(false);
   const [friendList, setFriendList] = useState(null);
   const [ isLoadingGroupList, setIsLoadingGroupList ] = useState(true);
+  const [ validationErrors, setValidationErrors ] = useState(null);
 
   const { profile, isLoggedIn } = useContext(UserContext);
 
@@ -37,6 +39,11 @@ const UserHome = () => {
       navigate(`/channel/group/${groupId}`);
 
     }
+  };
+
+  const handleCloseValidationMsg = (e) => {
+    e.preventDefault();
+    setValidationErrors(null);
   };
 
   const handleCloseFriendReqModal = (e) => {
@@ -67,7 +74,7 @@ const UserHome = () => {
 
   const handleFriendReqSubmit = (e, friendCodeInput) => {
     e.preventDefault();
-
+    handleCloseValidationMsg(e);
     const token = sessionStorage.getItem("msgAppToken");
     const formData = new FormData();
 
@@ -83,7 +90,11 @@ const UserHome = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        setIsReqResModalOpen(res);
+        if(res.errors) {
+          setValidationErrors(res.errors);
+        } else if(!res.errors) {
+          setIsReqResModalOpen(res);
+        }
       })
       .catch((err) => console.error(err));
   };
@@ -126,6 +137,9 @@ const UserHome = () => {
     <div className={styles.userHomePage}>
       <Navbar setFriendList={setFriendList} />
       <main className={styles.userHomeMain}>
+        {!validationErrors ? null : (
+          <ValidationErrModal msgFormErrors={validationErrors} closeMsgHandler={handleCloseValidationMsg}/>
+        )}
         {isReqResModalOpen == null ? null : (
           <FriendRequestResultModal
             reqObj={isReqResModalOpen}
