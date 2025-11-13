@@ -153,7 +153,7 @@ const UserHome = () => {
           />
         )}
         {!isCreateGroupModalOpen ? null : (
-          <CreateGroupModal handleCreateGroupModal={handleCreateGroupModal} />
+          <CreateGroupModal handleCreateGroupModal={handleCreateGroupModal} setValidationErrors={setValidationErrors}/>
         )}
         {!isGroupSearchModalOpen ? null : (
           <SearchGroupModal

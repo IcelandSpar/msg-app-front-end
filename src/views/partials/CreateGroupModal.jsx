@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import styles from "../../styles/CreateGroupModal.module.css";
 import createGroupIcon from "../../assets/create_group_icon.svg";
 
-const CreateGroupModal = ({ handleCreateGroupModal }) => {
+const CreateGroupModal = ({ handleCreateGroupModal, setValidationErrors }) => {
   const groupNameInput = useRef(null);
   const [ selectedFile, setSelectedFile ] = useState(null);
 
@@ -25,8 +25,13 @@ const CreateGroupModal = ({ handleCreateGroupModal }) => {
       body: formData,
     })
       .then((res) => res.json())
-      .then((res) => console.log(res));
-    handleCreateGroupModal(e);
+      .then((res) => {
+        if(res.errors) {
+          setValidationErrors(res.errors);
+        } else {
+          handleCreateGroupModal(e);
+        }
+      });
   };
 
   return (
