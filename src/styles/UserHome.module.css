@@ -1,6 +1,7 @@
 .userHomePage {
-
 }
+
+
 
 .userHomeMain {
   width: 100%;
@@ -9,8 +10,6 @@
   max-width: 1200px;
   margin: 0 auto;
 }
-
-
 
 .addFriendSearchGroupBtnsCont {
   margin: 1rem 1rem;
@@ -61,7 +60,6 @@
   height: 25px;
 }
 
-
 .groupAndFriendCont {
   display: grid;
   grid-template-columns: 1.2fr 3fr 1.2fr;
@@ -103,5 +101,41 @@
   .createGroupIcon {
     width: 15px;
     height: 15px;
+  }
+}
+
+@media (max-width: 700px) {
+  .addFriendSearchGroupBtnsCont {
+  }
+  
+  .userHomePage {
+  }
+
+  .userHomeMain {
+    max-width: 700px;
+    width: 100%;
+  }
+
+  .groupAndFriendCont {
+    grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
+    height: 100%;
+    
+  }
+
+  .groupsAside {
+    max-height: 40vh;
+    overflow-y: auto;
+    width: 100%;
+    margin: 2rem 0;
+  }
+
+
+
+  .friendListCont {
+    max-height: 40vh;
+    overflow-y: auto;
+    width: 100%;
+    margin: 2rem 0;
   }
 }
