@@ -1,0 +1,62 @@
+.homeSidebarCont {
+  position: absolute;
+  /* z-index: 999; */
+  width: 100%;
+  height: 100%;
+  top: 0rem;
+  background-color: green;
+  animation: .5s slideIn ease-out forwards;
+}
+
+.toggleOpenHomeMenu {
+
+}
+
+.toggleHideHomeMenu {
+  animation: .5s slideOut ease-out forwards;
+}
+
+@keyframes  slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@media (max-width: 450px) {
+  .homeSidebarCont {
+    width: 100%;
+
+  }
+}
+
+@media (min-width: 600px) {
+  .homeSidebarCont {
+    max-width: 400px;
+  }
+}
+
+@media (min-width: 700px) {
+ .homeSidebarCont  {
+  animation: .5s slideOut ease-out forwards;
+
+ }
+}

@@ -7,6 +7,7 @@ import { socket } from "../socket.js";
 import Navbar from "./partials/Navbar.jsx";
 import GroupList from "./partials/GroupList.jsx";
 import FriendList from "./partials/FriendList.jsx";
+import HomeSidebar from "./partials/HomeSidebar.jsx";
 import AddFriendModal from "./partials/AddFriendModal.jsx";
 import CreateGroupModal from "./partials/CreateGroupModal.jsx";
 import SearchGroupModal from "./partials/SearchGroupModal.jsx";
@@ -27,10 +28,16 @@ const UserHome = () => {
   const [friendList, setFriendList] = useState(null);
   const [ isLoadingGroupList, setIsLoadingGroupList ] = useState(true);
   const [ validationErrors, setValidationErrors ] = useState(null);
+  const [ isSidebarOpen, setIsSidebarOpen ] = useState(false);
 
   const { profile, isLoggedIn } = useContext(UserContext);
 
   const navigate = useNavigate();
+
+  const handleHomeSidebar = (e) => {
+    e.preventDefault();
+    setIsSidebarOpen((prev) => !prev);
+  };
 
   const handleClickOnGroupLi = (e, groupId) => {
     e.preventDefault();
@@ -137,6 +144,9 @@ const UserHome = () => {
     <div className={styles.userHomePage}>
       <Navbar setFriendList={setFriendList} />
       <main className={styles.userHomeMain}>
+        {!isSidebarOpen ? null : <div className={styles.homeSidebarCont}>
+          <HomeSidebar profile={profile} setFriendList={setFriendList} friendList={friendList} setIsSidebarOpen={setIsSidebarOpen}/>
+        </div>}
         {!validationErrors ? null : (
           <ValidationErrModal msgFormErrors={validationErrors} closeMsgHandler={handleCloseValidationMsg}/>
         )}
@@ -163,6 +173,8 @@ const UserHome = () => {
         )}
         {!isLoggedIn ? null : (
           <div className={styles.addFriendSearchGroupBtnsCont}>
+            <button className={styles.friendAsideBtn} onClick={handleHomeSidebar} type="button">Friends</button>
+
             <button
               className={styles.addFriendBtn}
               type="button"
