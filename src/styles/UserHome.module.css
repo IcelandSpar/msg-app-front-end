@@ -23,7 +23,8 @@
 .friendAsideBtn {
   display: none;
 
-  background-color: green;
+  background-color: #708993;
+  cursor: pointer;
   padding: .5rem 1rem;
   border-radius: 7px;
 }

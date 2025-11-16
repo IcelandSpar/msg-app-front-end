@@ -16,6 +16,7 @@ import FriendRequestResultModal from "./partials/FriendRequestResultModal.jsx";
 
 import styles from "../styles/UserHome.module.css";
 import addFriendIcon from "../assets/add_friend_icon.svg";
+import sidebarBtnIcon from "../assets/sidebar_menu_icon.svg";
 import groupSearchIcon from "../assets/group_search_icon.svg";
 import createGroupIcon from "../assets/create_group_icon.svg";
 
@@ -173,7 +174,7 @@ const UserHome = () => {
         )}
         {!isLoggedIn ? null : (
           <div className={styles.addFriendSearchGroupBtnsCont}>
-            <button className={styles.friendAsideBtn} onClick={handleHomeSidebar} type="button">Friends</button>
+            <button className={styles.friendAsideBtn} onClick={handleHomeSidebar} type="button"><img src={sidebarBtnIcon} width={'25px'} height={'25px'}/></button>
 
             <button
               className={styles.addFriendBtn}

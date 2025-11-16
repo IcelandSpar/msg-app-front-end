@@ -1,11 +1,11 @@
 .homeSidebarCont {
   position: absolute;
-  /* z-index: 999; */
   width: 100%;
   height: 100%;
   top: 0rem;
-  background-color: green;
+  background-color: #647981;
   animation: .5s slideIn ease-out forwards;
+  padding: 1rem 2rem;
 }
 
 .toggleOpenHomeMenu {
@@ -14,6 +14,14 @@
 
 .toggleHideHomeMenu {
   animation: .5s slideOut ease-out forwards;
+}
+
+.closeSidebarBtn {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  border-radius: 7px;
+  padding: .8rem;
 }
 
 @keyframes  slideIn {
