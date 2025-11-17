@@ -71,6 +71,7 @@ const LoginForm = () => {
             id="username"
             name="username"
             ref={usernameInput}
+            autoFocus
           />
         </div>
         <div className={styles.labelAndInputCont}>

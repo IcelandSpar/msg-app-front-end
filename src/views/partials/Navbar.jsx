@@ -121,16 +121,16 @@ const Navbar = ({ setFriendList }) => {
       )}
       <nav className={styles.navbar}>
         <div className={styles.linksCont}>
-          <Link to={"/"}>
+          <Link title="Home" to={"/"}>
             <img src={meetMeIcon} alt="Home" width={"30px"} height={"30px"} />
           </Link>
           {profile ? null : (
             <div className={styles.loginRegisterCont}>
-              <Link  className={styles.linkIconCont} to={"/login"}>
+              <Link title="Login" className={styles.linkIconCont} to={"/login"}>
               <img src={loginIcon} alt="login" width={"25px"} height={"25px"} />
               <p>Login</p>
               </Link>
-              <Link className={styles.linkIconCont} to={"/register"}>
+              <Link title="Register" className={styles.linkIconCont} to={"/register"}>
               <img src={signUpIcon} alt="regiter" width={'25px'} height={'25px'}/>
               <p>Register</p>
               </Link>
@@ -139,13 +139,13 @@ const Navbar = ({ setFriendList }) => {
 
           {!profile ? null : (
             <div className={styles.myHomeLogoutCont}>
-              <Link className={styles.linkIconCont} to={"/channel/myhome"}>
+              <Link title={`${profile.profileName}'s Home`} className={styles.linkIconCont} to={"/channel/myhome"}>
                 <img src={homeIcon} alt="home" width={"25px"} height={"25px"} />
-                <p>My Home</p>
+                <p  className={styles.linkPara}>My Home</p>
               </Link>
-              <Link className={styles.linkIconCont} to={"/logout"}>
+              <Link title="Logout" className={styles.linkIconCont} to={"/logout"}>
               <img src={logoutIcon} alt="logout" width={'25px'} height={'25px'}/>
-              <p>Log out</p>
+              <p className={styles.linkPara}>Log out</p>
               </Link>
             </div>
           )}
@@ -171,6 +171,7 @@ const Navbar = ({ setFriendList }) => {
             <div>
               <div className={styles.profileCont}>
                 <img
+                title="Your Profile"
                 tabIndex={0}
                   onClick={handleClickOnProfile}
                   className={styles.profileImg}
@@ -184,10 +185,11 @@ const Navbar = ({ setFriendList }) => {
                 <p>{profile.profileName}</p>
               </div>
               <button
+                title="Copy friend code to clipboard"
                 className={styles.copyFriendCodeBtn}
                 onClick={(e) => handleFriendCodeBtn(e, profile.friendCode)}
               >
-                Friend Code: {profile.friendCode}{" "}
+                <span className={styles.friendCodeDescription}>Friend Code:</span>{profile.friendCode}
                 <img src={contentCopyIcon} alt="copy" />
               </button>
             </div>

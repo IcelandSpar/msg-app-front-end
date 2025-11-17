@@ -86,7 +86,7 @@ const RegisterForm = () => {
         <legend className={styles.registerLegends}>Profile Info</legend>
         <div className={styles.labelAndInputCont}>
           <label htmlFor="profileName">Profile Name:</label>
-          <input ref={profileNameInput} type="text" id='profileName' name='profileName'/>
+          <input ref={profileNameInput} type="text" id='profileName' name='profileName' autoFocus/>
         </div>
         <div className={styles.labelAndInputCont}>
           <label htmlFor="bio">Bio:</label>

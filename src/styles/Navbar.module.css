@@ -9,7 +9,7 @@
   justify-content: space-between;
   padding: .5rem 1rem;
   z-index: 300;
-  box-shadow: 0px 0px 50px 0px black;
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.603);
 }
 
 .copiedToClipCont {
@@ -19,7 +19,7 @@
   transform: translateX(-50%);
   background-color: white;
   padding: .5rem 1rem;
-
+  z-index: 999;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -76,6 +76,8 @@
   gap: .2rem;
   align-items: center;
 }
+
+
 
 .loginRegisterCont {
   display: flex;
@@ -155,5 +157,14 @@
   to {
     top: -120%;
     opacity: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .linkPara {
+  display: none;
+}
+  .friendCodeDescription {
+    display: none;
   }
 }
