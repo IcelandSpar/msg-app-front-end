@@ -12,12 +12,12 @@
   overflow-y: auto;
   animation: .3s openNotifCont ease-out;
   scrollbar-color: black #4e5f66;
-
 }
 
 .notifUl {
   list-style-type: none;
   padding: 0;
+  z-index: 9999;
 }
 
 .notifUl li {
@@ -48,6 +48,17 @@
   color: black;
 }
 
+
+.dismissNotifBtn {
+  background-color: #d1dbd9;
+  color: black;
+  border-radius: 7px;
+  padding: .5rem 1rem;
+  cursor: pointer;
+  font-family: "Recursive", sans-serif;
+  border: 2px solid #4e5f66;
+  font-size: .8rem;
+}
 
 .notifFriendAcceptBtn {
   background-color: #19183B;

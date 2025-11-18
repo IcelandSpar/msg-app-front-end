@@ -113,7 +113,7 @@ const NotificationDropdown = ({
                           {notif.Receiver.profileName} accepted your friend
                           request!
                         </p>
-                        <button onClick={(e) => handleDismissBtn(e, notif.id)}>
+                        <button className={styles.dismissNotifBtn} onClick={(e) => handleDismissBtn(e, notif.id)}>
                           Dismiss
                         </button>
                       </li>
