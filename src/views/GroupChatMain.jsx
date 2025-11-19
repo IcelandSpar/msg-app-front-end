@@ -11,6 +11,7 @@ import GroupMembersList from "./partials/GroupMembersList.jsx";
 import ValidationErrModal from "./partials/ValidationErrModal.jsx";
 
 import styles from '../styles/GroupChatMain.module.css';
+import sidebarMenu from '../assets/sidebar_menu_icon.svg';
 
 const GroupChatMain = () => {
   const endOfMsg = useRef(null);
@@ -20,10 +21,16 @@ const GroupChatMain = () => {
   const [ isLoadingMsgs, setIsLoadingMsgs ] = useState(true);
   const [ isLoadingMembers, setIsLoadingMembers ] = useState(true);
   const [ msgFormErrors, setMsgFormErrors ] = useState(null);
+  const [ isMemberSidebarOpen, setIsMemberSidebarOpen ] = useState(false);
 
   const { groupId } = useParams();
 
   const { profile } = useContext(UserContext);
+
+  const handleGroupMemberSidebarBtn = (e) => {
+    e.preventDefault();
+    setIsMemberSidebarOpen((prev) => !prev);
+  };
 
   const fetchChatMsgs = (token) => {
     setIsLoadingMsgs(true);
@@ -135,8 +142,18 @@ const GroupChatMain = () => {
     <main className={styles.groupChatMainCont}>
       <div className={styles.navbarCont}>
         <Navbar/>
-
       </div>
+      <button onClick={handleGroupMemberSidebarBtn} className={styles.sidebarBtn} type="button"><img src={sidebarMenu} alt="Sidebar" width={'25px'} height={'25px'}/></button>
+      {!isMemberSidebarOpen ? null : (
+        <div className={styles.groupMemberSidebarBackground}>
+          <aside className={styles.groupMemberListSidebar}>
+            <button onClick={handleGroupMemberSidebarBtn} className={styles.innerSidebarBtn} type="button"><img src={sidebarMenu} alt="Sidebar" width={'25px'} height={'25px'}/></button>
+
+            {groupMembers ? <GroupMembersList groupMembers={groupMembers}/> : null}
+
+          </aside>
+        </div>
+      )}
       {!msgFormErrors ? null : (
         <ValidationErrModal closeMsgHandler={handleCloseErrMsg} msgFormErrors={msgFormErrors}/>
       )}

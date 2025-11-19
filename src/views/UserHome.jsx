@@ -42,7 +42,6 @@ const UserHome = () => {
 
   const handleClickOnGroupLi = (e, groupId) => {
     e.preventDefault();
-    console.log(e.target.classList)
     if((Array.from(e.target.classList)).find(element => element == 'navigateToGroupChat')) {
       navigate(`/channel/group/${groupId}`);
 
