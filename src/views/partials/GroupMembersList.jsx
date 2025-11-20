@@ -6,7 +6,7 @@ import crownIcon from "../../assets/crown_icon.svg";
 const GroupMembersList = ({ groupMembers }) => {
   return (
     <div className={styles.groupMembersListCont}>
-      <h4>Admins</h4>
+      <h4 className={styles.groupMemberHeaders}>Admins</h4>
       <ul className={styles.memberUls}>
         {groupMembers.adminRoleMembers.map((admin, indx) => {
           return (
@@ -32,7 +32,7 @@ const GroupMembersList = ({ groupMembers }) => {
           );
         })}
       </ul>
-      <h4>Members</h4>
+      <h4 className={styles.groupMemberHeaders}>Members</h4>
       <ul className={styles.memberUls}>
         {groupMembers.userRoleMembers.map((member, indx) => {
           return (

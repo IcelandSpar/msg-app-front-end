@@ -15,6 +15,7 @@
   grid-column: 2 / 3;
   justify-self: end;
   margin: 1rem 0;
+  padding: none;
 }
 .sidebarBtn, .innerSidebarBtn {
   cursor: pointer;
@@ -26,6 +27,15 @@
 
 .innerSidebarBtn {
   align-self: flex-start;
+  border: none;
+  background-color: transparent;
+  padding: none;
+  border: 3px solid #708993;
+  transition: .5s border ease-out;
+}
+
+.innerSidebarBtn:hover {
+  border: 3px solid rgb(136, 159, 168);
 }
 
 .navbarCont {
@@ -41,20 +51,22 @@
   height: 100%;
   width: 100%;
   z-index: 200;
+  overflow: hidden;
 }
 
 .groupMemberListSidebar {
   position: relative;
   justify-self: end;
-  background-color: #6559a2;
+  background-color: #647981;
   height: 100%;
   width: 100%;
-  max-width: 400px;
+  max-width: 350px;
   padding: 1rem 2rem;
 
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  animation: .5s slideIn ease-out forwards;
 }
 
 .groupChatMsgsCont {
@@ -98,6 +110,32 @@
   scrollbar-width: thin;
 }
 
+@keyframes  slideIn {
+  from {
+    transform: translateX(+100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+
 @media (max-width: 900px) {
   .groupChatMainCont {
     grid-template-rows: 1fr 1fr 10fr 1fr;
@@ -126,6 +164,14 @@
     grid-template-columns: 1fr;
     margin: 0 auto;
   }
+
+  .groupMemberListSidebar {
+    width: 100%;
+    max-width: none;
+  }
+
+
+
 
   .navbarCont {
     grid-column: 1 / 2;
