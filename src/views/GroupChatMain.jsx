@@ -2,7 +2,7 @@ import { useContext, useEffect, useState, useRef } from "react";
 import { useParams } from "react-router";
 import { socket } from "../socket.js";
 
-import Navbar from './partials/Navbar.jsx';
+import Navbar from "./partials/Navbar.jsx";
 import MsgForm from "./partials/MsgForm.jsx";
 import UserContext from "../UserContext.jsx";
 import LoadingIcon from "./partials/LoadingIcon.jsx";
@@ -10,18 +10,19 @@ import GroupChatMessages from "./partials/GroupChatMessages";
 import GroupMembersList from "./partials/GroupMembersList.jsx";
 import ValidationErrModal from "./partials/ValidationErrModal.jsx";
 
-import styles from '../styles/GroupChatMain.module.css';
-import sidebarMenu from '../assets/sidebar_menu_icon.svg';
+import styles from "../styles/GroupChatMain.module.css";
+import sidebarMenu from "../assets/sidebar_menu_icon.svg";
 
 const GroupChatMain = () => {
   const endOfMsg = useRef(null);
 
   const [chatMsgs, setChatMsgs] = useState([]);
-  const [ groupMembers, setGroupMembers ] = useState(null);
-  const [ isLoadingMsgs, setIsLoadingMsgs ] = useState(true);
-  const [ isLoadingMembers, setIsLoadingMembers ] = useState(true);
-  const [ msgFormErrors, setMsgFormErrors ] = useState(null);
-  const [ isMemberSidebarOpen, setIsMemberSidebarOpen ] = useState(false);
+  const [groupMembers, setGroupMembers] = useState(null);
+  const [isLoadingMsgs, setIsLoadingMsgs] = useState(true);
+  const [isLoadingMembers, setIsLoadingMembers] = useState(true);
+  const [msgFormErrors, setMsgFormErrors] = useState(null);
+  const [isMemberSidebarOpen, setIsMemberSidebarOpen] = useState(false);
+  const [isCloseAnimToggle, setIsCloseAnimToggle] = useState(false);
 
   const { groupId } = useParams();
 
@@ -29,7 +30,15 @@ const GroupChatMain = () => {
 
   const handleGroupMemberSidebarBtn = (e) => {
     e.preventDefault();
-    setIsMemberSidebarOpen((prev) => !prev);
+    if (isMemberSidebarOpen) {
+      setIsCloseAnimToggle(true);
+      setTimeout(() => {
+        setIsMemberSidebarOpen(false);
+      }, 500);
+    } else {
+      setIsCloseAnimToggle(false);
+      setIsMemberSidebarOpen(true);
+    }
   };
 
   const fetchChatMsgs = (token) => {
@@ -49,7 +58,7 @@ const GroupChatMain = () => {
       .then((res) => res.json())
       .then((res) => {
         setChatMsgs(res);
-        if(res) {
+        if (res) {
           setIsLoadingMsgs(false);
         }
       })
@@ -57,19 +66,24 @@ const GroupChatMain = () => {
   };
 
   const fetchGroupMembers = (token) => {
-    fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/get-group-members/${groupId}`, {
+    fetch(
+      `${
+        import.meta.env.VITE_FETCH_BASE_URL
+      }/group-actions/get-group-members/${groupId}`,
+      {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-    })
-    .then((res) => res.json())
-    .then((res) => {
-      setGroupMembers(res)
-      if(res) {
-        setIsLoadingMembers(false);
       }
-    })
-    .catch((err) => console.error(err));
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        setGroupMembers(res);
+        if (res) {
+          setIsLoadingMembers(false);
+        }
+      })
+      .catch((err) => console.error(err));
   };
 
   const handleCloseErrMsg = (e) => {
@@ -84,9 +98,9 @@ const GroupChatMain = () => {
 
     try {
       scrollDownTimeout = setTimeout(() => {
-        endOfMsg.current?.scrollIntoView({ behavior: 'smooth' });
+        endOfMsg.current?.scrollIntoView({ behavior: "smooth" });
         clearTimeout(scrollDownTimeout);
-      }, 1000)
+      }, 1000);
       const token = sessionStorage.getItem("msgAppToken");
       fetchChatMsgs(token);
       fetchGroupMembers(token);
@@ -107,26 +121,25 @@ const GroupChatMain = () => {
         groupId: groupId,
       });
       socket.on("joinRoomMsg", (msg) => {
-        console.log(msg)
+        console.log(msg);
       });
 
       socket.on("received message", (msgInfo) => {
-          setChatMsgs((chatMsgs) => [
-            ...chatMsgs,
-            {
-              profileName: msgInfo.profileName,
-              messageContent: msgInfo.messageContent,
-              imgPath: msgInfo.imgPath,
-              createdAt: new Date(),
-            },
-          ]);
-        
+        setChatMsgs((chatMsgs) => [
+          ...chatMsgs,
+          {
+            profileName: msgInfo.profileName,
+            messageContent: msgInfo.messageContent,
+            imgPath: msgInfo.imgPath,
+            createdAt: new Date(),
+          },
+        ]);
       });
     } catch (err) {
       console.error(err);
     }
 
-    console.log('group chat render test')
+    console.log("group chat render test");
 
     return () => {
       clearInterval(pollChatInterval);
@@ -139,42 +152,70 @@ const GroupChatMain = () => {
 
   return (
     <>
-    <main className={styles.groupChatMainCont}>
-      <div className={styles.navbarCont}>
-        <Navbar/>
-      </div>
-      <button onClick={handleGroupMemberSidebarBtn} className={styles.sidebarBtn} type="button"><img src={sidebarMenu} alt="Sidebar" width={'25px'} height={'25px'}/></button>
-      {!isMemberSidebarOpen ? null : (
-        <div className={styles.groupMemberSidebarBackground}>
-          <aside className={styles.groupMemberListSidebar}>
-            <button onClick={handleGroupMemberSidebarBtn} className={styles.innerSidebarBtn} type="button"><img src={sidebarMenu} alt="Sidebar" width={'25px'} height={'25px'}/></button>
-
-            {groupMembers ? <GroupMembersList groupMembers={groupMembers}/> : null}
-
-          </aside>
+      <main className={styles.groupChatMainCont}>
+        <div className={styles.navbarCont}>
+          <Navbar />
         </div>
-      )}
-      {!msgFormErrors ? null : (
-        <ValidationErrModal closeMsgHandler={handleCloseErrMsg} msgFormErrors={msgFormErrors}/>
-      )}
-      <section className={styles.groupChatMsgsCont}>
-        {!isLoadingMsgs ? null : <LoadingIcon/>}
-      {!chatMsgs ? null : (
-          <GroupChatMessages endOfMsg={endOfMsg} chatMsgs={chatMsgs} />
+        <button
+          onClick={handleGroupMemberSidebarBtn}
+          className={styles.sidebarBtn}
+          type="button"
+        >
+          <img src={sidebarMenu} alt="Sidebar" width={"25px"} height={"25px"} />
+        </button>
+        {!isMemberSidebarOpen ? null : (
+          <div className={styles.groupMemberSidebarBackground}>
+            <aside
+              className={`${styles.groupMemberListSidebar} ${
+                isCloseAnimToggle ? `${styles.toggleCloseSidebar}` : `${styles.toggleOpenSidebar}`
+              }`}
+            >
+              <button
+                onClick={handleGroupMemberSidebarBtn}
+                className={styles.innerSidebarBtn}
+                type="button"
+              >
+                <img
+                  src={sidebarMenu}
+                  alt="Sidebar"
+                  width={"25px"}
+                  height={"25px"}
+                />
+              </button>
+
+              {groupMembers ? (
+                <GroupMembersList groupMembers={groupMembers} />
+              ) : null}
+            </aside>
+          </div>
         )}
+        {!msgFormErrors ? null : (
+          <ValidationErrModal
+            closeMsgHandler={handleCloseErrMsg}
+            msgFormErrors={msgFormErrors}
+          />
+        )}
+        <section className={styles.groupChatMsgsCont}>
+          {!isLoadingMsgs ? null : <LoadingIcon />}
+          {!chatMsgs ? null : (
+            <GroupChatMessages endOfMsg={endOfMsg} chatMsgs={chatMsgs} />
+          )}
         </section>
         <aside className={styles.groupMembersCont}>
-        {!isLoadingMembers ? null : <LoadingIcon/>}
-        {!groupMembers ? null : (
-            <GroupMembersList groupMembers={groupMembers}/>
-          
-        )}
+          {!isLoadingMembers ? null : <LoadingIcon />}
+          {!groupMembers ? null : (
+            <GroupMembersList groupMembers={groupMembers} />
+          )}
         </aside>
         <div className={styles.msgFormCont}>
-      <MsgForm endOfMsg={endOfMsg} setChatMsgs={setChatMsgs} setMsgFormErrors={setMsgFormErrors}/>
-      </div>
-    </main>
-  </>
+          <MsgForm
+            endOfMsg={endOfMsg}
+            setChatMsgs={setChatMsgs}
+            setMsgFormErrors={setMsgFormErrors}
+          />
+        </div>
+      </main>
+    </>
   );
 };
 
