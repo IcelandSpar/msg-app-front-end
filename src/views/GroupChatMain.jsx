@@ -78,6 +78,7 @@ const GroupChatMain = () => {
     )
       .then((res) => res.json())
       .then((res) => {
+        console.log(res);
         setGroupMembers(res);
         if (res) {
           setIsLoadingMembers(false);

@@ -1,8 +1,9 @@
 .directMessagePage {
   display: grid;
-  grid-template-columns: 2fr minmax(1200px, 5fr) 2fr;
+  grid-template-columns: 3fr minmax(550px, 5fr) 3fr;
   grid-template-rows: 1fr 10fr 1fr;
   height: 100vh;
+  width: 100vw;
   background-image: linear-gradient(to right, #212121, #000000);
   align-items: end;
   padding-bottom: 1rem;
@@ -12,6 +13,35 @@
   grid-row: 1 / 2;
   grid-column: 1 / 4;
   align-self: stretch;
+}
+
+.sidebarBtn {
+  display: none;
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+  justify-self: end;
+  margin: 1rem 0;
+  padding: none;
+}
+.sidebarBtn, .innerSidebarBtn {
+  cursor: pointer;
+
+  background-color: #708993;
+  padding: .5rem 1rem;
+  border-radius: 7px;
+}
+
+.innerSidebarBtn {
+  align-self: flex-start;
+  border: none;
+  background-color: transparent;
+  padding: none;
+  border: 3px solid #708993;
+  transition: .5s border ease-out;
+}
+
+.innerSidebarBtn:hover {
+  border: 3px solid rgb(136, 159, 168);
 }
 
 .directMessageMain {
@@ -25,6 +55,20 @@
   padding: 0.5rem 0;
 }
 
+
+.groupMembersCont {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+  align-self: start;
+  justify-self: center;
+  padding: 1rem .5rem;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  scrollbar-color: #e7f2ef #708993;
+  scrollbar-width: thin;
+}
+
 .messageFormCont {
   grid-row: 3 / 4;
   grid-column: 2 / 3;
@@ -35,7 +79,7 @@
 
 }
 
-@media (max-width: 1200px) {
+/* @media (max-width: 1200px) {
   .directMessagePage {
     grid-template-columns: 1fr;
     margin: 0 auto;
@@ -53,6 +97,69 @@
 
   .messageFormCont {
     grid-column: 1 / 2;
+  }
+} */
+
+
+@media (max-width: 900px) {
+  .directMessagePage {
+    grid-template-rows: 1fr 1fr 10fr 1fr;
+    
+  }
+
+  .sidebarBtn {
+    display: block;
+  }
+
+  .directMessageMain {
+    grid-row: 3 / 4;
+  }
+
+  .groupMembersCont {
+    display: none;
+  }
+
+   .messageFormCont {
+    grid-row: 5 / 6;
+  }
+}
+
+@media (max-width: 550px) {
+  .directMessagePage {
+    grid-template-columns: 1fr;
+    margin: 0 auto;
+  }
+
+  .groupMemberListSidebar {
+    width: 100%;
+    max-width: none;
+  }
+
+
+
+
+  .navbarCont {
+    grid-column: 1 / 2;
+  }
+
+  .sidebarBtn {
+    display: block;
+    grid-column: 1/ 2;
+    margin-right: 1rem;
+
+  }
+
+  .directMessageMain {
+    grid-column: 1 / 2;
+
+  }
+
+  .messageFormCont {
+    grid-column: 1 / 2;
+  }
+
+  .groupMembersCont {
+    display: none;
   }
 }
 

@@ -3,25 +3,53 @@ import { useParams } from "react-router";
 import { socket } from "../socket.js";
 
 import Navbar from "./partials/Navbar.jsx";
-import ValidationErrModal from "./partials/ValidationErrModal.jsx";
 import DirectMessages from "./partials/DirectMessages.jsx";
+import GroupMembersList from "./partials/GroupMembersList.jsx";
 import DirectMessageForm from "./partials/DirectMessageForm.jsx";
-
+import ValidationErrModal from "./partials/ValidationErrModal.jsx";
 
 import UserContext from "../UserContext.jsx";
 import MsgForm from "./partials/MsgForm.jsx";
 
 import styles from "../styles/DirectMessagePage.module.css";
+import sidebarMenu from "../assets/sidebar_menu_icon.svg";
 
 const DirectMessagePage = () => {
   const [directMessages, setDirectMessages] = useState(null);
-  const [ validationErrors, setValidationErrors ] = useState(null);
+  const [validationErrors, setValidationErrors] = useState(null);
+  const [isLoadingMembers, setIsLoadingMembers] = useState(false);
+  const [groupMembers, setGroupMembers] = useState({
+    success: true,
+
+    userRoleMembers: [
+      {
+        groupId: "1",
+        id: "1",
+        joined: new Date(),
+        member: {
+          id: "2",
+          profileName: "Hello world",
+          bio: "hehe",
+          profileImgFilePath: null,
+          friendCode: "3",
+          userId: "4",
+        },
+        role: "USER",
+        updatedAt: new Date(),
+      },
+    ],
+    adminRoleMembers: [],
+  });
 
   const endOfMsg = useRef(null);
 
   const { directMessageGroupId } = useParams();
 
   const { profile } = useContext(UserContext);
+
+  const handleGroupMemberSidebarBtn = (e) => {
+    e.preventDefault();
+  };
 
   const handleCloseValidationMsg = (e) => {
     e.preventDefault();
@@ -97,7 +125,25 @@ const DirectMessagePage = () => {
       <div className={styles.navbarCont}>
         <Navbar />
       </div>
-      {!validationErrors ? null : <ValidationErrModal msgFormErrors={validationErrors} closeMsgHandler={handleCloseValidationMsg}/>}
+      <button
+        onClick={handleGroupMemberSidebarBtn}
+        className={styles.sidebarBtn}
+        type="button"
+      >
+        <img src={sidebarMenu} alt="Sidebar" width={"25px"} height={"25px"} />
+      </button>
+      {!validationErrors ? null : (
+        <ValidationErrModal
+          msgFormErrors={validationErrors}
+          closeMsgHandler={handleCloseValidationMsg}
+        />
+      )}
+      <aside className={styles.groupMembersCont}>
+        {!isLoadingMembers ? null : <LoadingIcon />}
+        {!groupMembers ? null : (
+          <GroupMembersList groupMembers={groupMembers} isDirectMessage={true}/>
+        )}
+      </aside>
       <main className={styles.directMessageMain}>
         {directMessages != null ? (
           <div className={styles.directMessagesCont}>
