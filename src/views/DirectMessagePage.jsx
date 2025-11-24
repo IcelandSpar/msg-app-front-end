@@ -18,28 +18,7 @@ const DirectMessagePage = () => {
   const [directMessages, setDirectMessages] = useState(null);
   const [validationErrors, setValidationErrors] = useState(null);
   const [isLoadingMembers, setIsLoadingMembers] = useState(false);
-  const [groupMembers, setGroupMembers] = useState({
-    success: true,
-
-    userRoleMembers: [
-      {
-        groupId: "1",
-        id: "1",
-        joined: new Date(),
-        member: {
-          id: "2",
-          profileName: "Hello world",
-          bio: "hehe",
-          profileImgFilePath: null,
-          friendCode: "3",
-          userId: "4",
-        },
-        role: "USER",
-        updatedAt: new Date(),
-      },
-    ],
-    adminRoleMembers: [],
-  });
+  const [groupMembers, setGroupMembers] = useState(null);
 
   const endOfMsg = useRef(null);
 
@@ -107,6 +86,12 @@ const DirectMessagePage = () => {
           // if (res.success) {
           //   socket.connect();
           // }
+          console.log(res)
+          setGroupMembers({
+            success: true,
+            adminRoleMembers: [],
+            userRoleMembers: res.directMessageGroupMembers,
+          })
           setDirectMessages(res.directMessages);
         })
         .catch((err) => console.error(err));
