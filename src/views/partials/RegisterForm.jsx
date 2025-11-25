@@ -93,7 +93,7 @@ const RegisterForm = () => {
           <textarea ref={bioInput} type="text" id='bio' name='bio' rows={4}></textarea>
         </div>
         <div className={styles.labelAndInputCont}>
-          <label className={styles.registerFileLabel} htmlFor="profileImg">Profile Picture: (opt.)</label>
+          <label className={styles.registerFileLabel} htmlFor="profileImg">Profile Picture: (optional)</label>
           <input className={styles.registerFileInput} onChange={handleFileChange} ref={profilePictureInput} type="file" name="profileImg" id="profileImg" />
         </div>
       </fieldset>

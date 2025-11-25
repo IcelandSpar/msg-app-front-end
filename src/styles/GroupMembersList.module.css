@@ -14,6 +14,7 @@
 
 .memberLis {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: .5rem;
   cursor: pointer;
@@ -23,7 +24,18 @@
   background-color: #6559a2;
   border: 3px solid #beb8d5;
 
+  transition: .4s scale ease-out, .4s box-shadow ease-out;
+
 }
+
+
+
+.memberLis:hover, .memberLis:focus {
+  scale: 1.01;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.26);
+}
+
+
 
 .imgLink {
   max-width: 25px;
@@ -36,7 +48,7 @@
 }
 
 .memberName {
-  flex-grow: 10;
+  flex-grow: 0;
 }
 
 .memberProfileImg {

@@ -56,6 +56,37 @@
 }
 
 
+.groupMemberSidebarBackground {
+  grid-column: 1 / 4;
+  grid-row: 2 / 6;
+  background-color: rgba(0, 0, 0, 0.39);
+  height: 100%;
+  width: 100%;
+  z-index: 200;
+  overflow: hidden;
+}
+
+.groupMemberListSidebar {
+  position: relative;
+  justify-self: end;
+  background-color: #647981;
+  height: 100%;
+  width: 100%;
+  max-width: 350px;
+  padding: 1rem 2rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: .5s slideIn ease-out forwards;
+}
+
+.toggleCloseSidebar {
+  animation: .5s slideOut ease-out forwards;
+
+}
+
+
 .groupMembersCont {
   grid-column: 3 / 4;
   grid-row: 2 / 3;
@@ -99,6 +130,31 @@
     grid-column: 1 / 2;
   }
 } */
+
+@keyframes  slideIn {
+  from {
+    transform: translateX(+100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(+100%);
+  }
+}
 
 
 @media (max-width: 900px) {

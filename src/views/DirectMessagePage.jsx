@@ -19,6 +19,8 @@ const DirectMessagePage = () => {
   const [validationErrors, setValidationErrors] = useState(null);
   const [isLoadingMembers, setIsLoadingMembers] = useState(false);
   const [groupMembers, setGroupMembers] = useState(null);
+  const [ isMemberSidebarOpen, setIsMemberSidebarOpen ] = useState(false);
+  const [ isCloseAnimToggle, setIsCloseAnimToggle ] = useState(false);
 
   const endOfMsg = useRef(null);
 
@@ -26,9 +28,19 @@ const DirectMessagePage = () => {
 
   const { profile } = useContext(UserContext);
 
-  const handleGroupMemberSidebarBtn = (e) => {
+    const handleGroupMemberSidebarBtn = (e) => {
     e.preventDefault();
+    if (isMemberSidebarOpen) {
+      setIsCloseAnimToggle(true);
+      setTimeout(() => {
+        setIsMemberSidebarOpen(false);
+      }, 500);
+    } else {
+      setIsCloseAnimToggle(false);
+      setIsMemberSidebarOpen(true);
+    }
   };
+
 
   const handleCloseValidationMsg = (e) => {
     e.preventDefault();
@@ -117,6 +129,32 @@ const DirectMessagePage = () => {
       >
         <img src={sidebarMenu} alt="Sidebar" width={"25px"} height={"25px"} />
       </button>
+                      {!isMemberSidebarOpen ? null : (
+          <div className={styles.groupMemberSidebarBackground}>
+            <aside
+              className={`${styles.groupMemberListSidebar} ${
+                isCloseAnimToggle ? `${styles.toggleCloseSidebar}` : `${styles.toggleOpenSidebar}`
+              }`}
+            >
+              <button
+                onClick={handleGroupMemberSidebarBtn}
+                className={styles.innerSidebarBtn}
+                type="button"
+              >
+                <img
+                  src={sidebarMenu}
+                  alt="Sidebar"
+                  width={"25px"}
+                  height={"25px"}
+                />
+              </button>
+
+              {groupMembers ? (
+                <GroupMembersList groupMembers={groupMembers} isDirectMessage={true}/>
+              ) : null}
+            </aside>
+          </div>
+        )}
       {!validationErrors ? null : (
         <ValidationErrModal
           msgFormErrors={validationErrors}

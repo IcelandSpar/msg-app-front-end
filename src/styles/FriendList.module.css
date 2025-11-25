@@ -15,12 +15,13 @@
   gap: .7rem;
   padding: .5rem 1rem;
   border-radius: 15px;
-  transition: .7s scale ease-out;
+  transition: .4s scale ease-out, .4s box-shadow ease-out;
   cursor: pointer;
 }
 
-.friendListLiCont:hover {
-  scale: 1.05;
+.friendListLiCont:hover, .friendListLiCont:focus {
+  scale: 1.01;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.26);
 }
 
 .friendListHeading {
