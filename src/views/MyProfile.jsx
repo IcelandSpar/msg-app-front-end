@@ -12,6 +12,7 @@ const MyProfile = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [ selectedFile, setSelectedFile ] = useState(null);
   const [ isProfileUpdateModalOpen, setIsProfileUpdateModalOpen ] = useState(false);
+  const [ validationErrors, setValidationErrors ] = useState(null);
 
   const bioInput = useRef(null);
   const profileNameInput = useRef(null);
@@ -64,8 +65,12 @@ const MyProfile = () => {
       )
       .then((res) => res.json())
       .then((res) => {
+        console.log(res);
         if(res.success) {
           setIsProfileUpdateModalOpen(true);
+        }
+        if(res.errors) {
+          setValidationErrors(res.errors);
         }
       })
       .catch((err) => console.error(err));
@@ -92,7 +97,9 @@ const MyProfile = () => {
 
   return (
     <div className={styles.myProfilePage}>
-      <Navbar />
+      <div>
+        <Navbar />
+      </div>
         {userProfile == null ? null : <div>
           <UserProfileInfo profile={userProfile} />
         </div>}
@@ -107,6 +114,18 @@ const MyProfile = () => {
           )}
         {userProfile == null ? null : (
           <div>
+            {!validationErrors ? null : (
+              <div className={styles.errorCont}>
+                <h1>Please Fix:</h1>
+                <ul className={styles.validationErrorsUl}>
+                  {validationErrors.map((err, errIndx) => {
+                    return (
+                      <li key={`err${errIndx}`}>{err.msg}</li>
+                    )
+                  })}
+                </ul>
+              </div>
+            )}
             <UpdateProfileForm
               userProfile={userProfile}
               handleFormSubmit={handleFormSubmit}
