@@ -23,6 +23,7 @@ const GroupChatMain = () => {
   const [msgFormErrors, setMsgFormErrors] = useState(null);
   const [isMemberSidebarOpen, setIsMemberSidebarOpen] = useState(false);
   const [isCloseAnimToggle, setIsCloseAnimToggle] = useState(false);
+  const [ isAdmin, setIsAdmin ] = useState(false);
 
   const { groupId } = useParams();
 
@@ -78,13 +79,23 @@ const GroupChatMain = () => {
     )
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         setGroupMembers(res);
         if (res) {
           setIsLoadingMembers(false);
         }
       })
       .catch((err) => console.error(err));
+  };
+
+  const checkIfAdmin = (token) => {
+    fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/check-if-admin/${groupId}/${profile.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      method: 'GET',
+    }).then((res) => res.json())
+    .then((res) => setIsAdmin(res.isAdmin))
+    .catch((err) => console.error(err));
   };
 
   const handleCloseErrMsg = (e) => {
@@ -105,7 +116,7 @@ const GroupChatMain = () => {
       const token = sessionStorage.getItem("msgAppToken");
       fetchChatMsgs(token);
       fetchGroupMembers(token);
-
+      checkIfAdmin(token);
       pollChatInterval = setInterval(() => {
         fetchChatMsgs(token);
         fetchGroupMembers(token);
@@ -185,7 +196,7 @@ const GroupChatMain = () => {
               </button>
 
               {groupMembers ? (
-                <GroupMembersList groupMembers={groupMembers} />
+                <GroupMembersList groupMembers={groupMembers} isAdmin={isAdmin}/>
               ) : null}
             </aside>
           </div>
@@ -205,7 +216,7 @@ const GroupChatMain = () => {
         <aside className={styles.groupMembersCont}>
           {!isLoadingMembers ? null : <LoadingIcon />}
           {!groupMembers ? null : (
-            <GroupMembersList groupMembers={groupMembers} />
+            <GroupMembersList groupMembers={groupMembers} isAdmin={isAdmin} />
           )}
         </aside>
         <div className={styles.msgFormCont}>

@@ -1,9 +1,18 @@
 import { Link } from "react-router";
+import { useContext } from "react";
 
-import styles from "../../styles/GroupMembersList.module.css";
+import UserContext from "../../UserContext";
+
+
 import crownIcon from "../../assets/crown_icon.svg";
+import optionsBtnIcon from "../../assets/more_vert_icon.svg";
+import styles from "../../styles/GroupMembersList.module.css";
 
-const GroupMembersList = ({ groupMembers, isDirectMessage = false }) => {
+
+const GroupMembersList = ({ groupMembers, isDirectMessage = false, isAdmin = false }) => {
+
+  const { profile } = useContext(UserContext);
+
   return (
     <div className={styles.groupMembersListCont}>
       {isDirectMessage ? null : <h4 className={styles.groupMemberHeaders}>Admins</h4>}
@@ -28,7 +37,10 @@ const GroupMembersList = ({ groupMembers, isDirectMessage = false }) => {
                 src={crownIcon}
                 alt="crown"
               />
-            </li>
+              {isAdmin && profile.id != admin.profileId ? <img className={styles.optionsBtn} src={optionsBtnIcon} alt="more options" /> : null}
+       
+        
+        </li>
           );
         })}
       </ul>
@@ -50,6 +62,8 @@ const GroupMembersList = ({ groupMembers, isDirectMessage = false }) => {
               </Link>
 
               <p className={styles.memberName}>{member.member.profileName}</p>
+              {isAdmin && profile.id != member.profileId ? <img className={styles.optionsBtn} src={optionsBtnIcon} alt="more options" /> : null}
+
             </li>
           );
         })}

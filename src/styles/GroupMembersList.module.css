@@ -61,6 +61,11 @@
 .adminCrownIcon {
 }
 
+.optionsBtn {
+  justify-self: flex-end;
+  cursor: pointer;
+}
+
 @media (max-width: 1000px) {
 
   .memberLis {
