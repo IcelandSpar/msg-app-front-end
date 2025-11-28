@@ -44,6 +44,42 @@
   align-self: stretch;
 }
 
+.memberOptsModalBackground {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.555);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 300;
+}
+
+.memberOptsModal {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background-color: #708993;
+  border: 3px solid #a1c2bd;
+  max-width: 300px;
+  padding: 2rem 1rem;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.exitOptsBtn {
+  position: absolute;
+  right: .5rem;
+  top: .5rem;
+  background-color: transparent;
+  border: none;
+
+  font-family: "Recursive", sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+
+}
+
 .groupMemberSidebarBackground {
   grid-column: 1 / 4;
   grid-row: 2 / 6;

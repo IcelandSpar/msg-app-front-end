@@ -9,9 +9,10 @@ import optionsBtnIcon from "../../assets/more_vert_icon.svg";
 import styles from "../../styles/GroupMembersList.module.css";
 
 
-const GroupMembersList = ({ groupMembers, isDirectMessage = false, isAdmin = false }) => {
+const GroupMembersList = ({ groupMembers, isDirectMessage = false, isAdmin = false, handleMemberOptsModal }) => {
 
   const { profile } = useContext(UserContext);
+
 
   return (
     <div className={styles.groupMembersListCont}>
@@ -37,7 +38,7 @@ const GroupMembersList = ({ groupMembers, isDirectMessage = false, isAdmin = fal
                 src={crownIcon}
                 alt="crown"
               />
-              {isAdmin && profile.id != admin.profileId ? <img className={styles.optionsBtn} src={optionsBtnIcon} alt="more options" /> : null}
+              {isAdmin && profile.id != admin.profileId ? <img onClick={(e) => handleMemberOptsModal(e, admin)} className={styles.optionsBtn} src={optionsBtnIcon} alt="more options" /> : null}
        
         
         </li>
@@ -62,7 +63,7 @@ const GroupMembersList = ({ groupMembers, isDirectMessage = false, isAdmin = fal
               </Link>
 
               <p className={styles.memberName}>{member.member.profileName}</p>
-              {isAdmin && profile.id != member.profileId ? <img className={styles.optionsBtn} src={optionsBtnIcon} alt="more options" /> : null}
+              {isAdmin && profile.id != member.profileId ? <img onClick={(e) => handleMemberOptsModal(e, member)} className={styles.optionsBtn} src={optionsBtnIcon} alt="more options" /> : null}
 
             </li>
           );

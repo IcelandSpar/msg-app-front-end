@@ -24,6 +24,7 @@ const GroupChatMain = () => {
   const [isMemberSidebarOpen, setIsMemberSidebarOpen] = useState(false);
   const [isCloseAnimToggle, setIsCloseAnimToggle] = useState(false);
   const [ isAdmin, setIsAdmin ] = useState(false);
+  const [ isMemberOptsOpen, setIsMemberOptsOpen ] = useState(null);
 
   const { groupId } = useParams();
 
@@ -42,9 +43,22 @@ const GroupChatMain = () => {
     }
   };
 
+  const handleMemberOptsModal = (e, profileInfo = null) => {
+    e.preventDefault();
+    if (isMemberOptsOpen) {
+      setIsMemberOptsOpen(null);
+    } else {
+    setIsMemberOptsOpen(profileInfo);
+    }
+  };
+
+  const handleRemoveMember = (e, profileInfo, adminId) => {
+    e.preventDefault();
+    console.log(profileInfo, adminId);
+  };
+
   const fetchChatMsgs = (token) => {
     setIsLoadingMsgs(true);
-    setIsLoadingMembers(true);
     fetch(
       `${
         import.meta.env.VITE_FETCH_BASE_URL
@@ -67,6 +81,8 @@ const GroupChatMain = () => {
   };
 
   const fetchGroupMembers = (token) => {
+    setIsLoadingMembers(true);
+
     fetch(
       `${
         import.meta.env.VITE_FETCH_BASE_URL
@@ -119,7 +135,7 @@ const GroupChatMain = () => {
       checkIfAdmin(token);
       pollChatInterval = setInterval(() => {
         fetchChatMsgs(token);
-        fetchGroupMembers(token);
+        // fetchGroupMembers(token);
       }, intDuration);
 
       socket.connect();
@@ -168,6 +184,15 @@ const GroupChatMain = () => {
         <div className={styles.navbarCont}>
           <Navbar />
         </div>
+        {!isMemberOptsOpen ? null : (
+          <div className={styles.memberOptsModalBackground}>
+            <div className={styles.memberOptsModal}>
+              <button onClick={(e) => handleMemberOptsModal(e)} type="button" className={styles.exitOptsBtn}>X</button>
+              <p>Remove {isMemberOptsOpen.member.profileName} from the group?</p>
+              <button onClick={(e) => handleRemoveMember(e, isMemberOptsOpen, profile.id)} type="button">Remove</button>
+            </div>
+          </div>
+        )}
         <button
           onClick={handleGroupMemberSidebarBtn}
           className={styles.sidebarBtn}
@@ -196,7 +221,7 @@ const GroupChatMain = () => {
               </button>
 
               {groupMembers ? (
-                <GroupMembersList groupMembers={groupMembers} isAdmin={isAdmin}/>
+                <GroupMembersList groupMembers={groupMembers} isAdmin={isAdmin} handleMemberOptsModal={handleMemberOptsModal}/>
               ) : null}
             </aside>
           </div>
@@ -216,7 +241,7 @@ const GroupChatMain = () => {
         <aside className={styles.groupMembersCont}>
           {!isLoadingMembers ? null : <LoadingIcon />}
           {!groupMembers ? null : (
-            <GroupMembersList groupMembers={groupMembers} isAdmin={isAdmin} />
+            <GroupMembersList groupMembers={groupMembers} isAdmin={isAdmin} handleMemberOptsModal={handleMemberOptsModal}/>
           )}
         </aside>
         <div className={styles.msgFormCont}>
