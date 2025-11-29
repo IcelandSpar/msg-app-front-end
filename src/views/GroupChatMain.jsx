@@ -12,6 +12,7 @@ import ValidationErrModal from "./partials/ValidationErrModal.jsx";
 
 import styles from "../styles/GroupChatMain.module.css";
 import sidebarMenu from "../assets/sidebar_menu_icon.svg";
+import unfriendIcon from "../assets/unfriend_icon.svg";
 
 const GroupChatMain = () => {
   const endOfMsg = useRef(null);
@@ -23,8 +24,8 @@ const GroupChatMain = () => {
   const [msgFormErrors, setMsgFormErrors] = useState(null);
   const [isMemberSidebarOpen, setIsMemberSidebarOpen] = useState(false);
   const [isCloseAnimToggle, setIsCloseAnimToggle] = useState(false);
-  const [ isAdmin, setIsAdmin ] = useState(false);
-  const [ isMemberOptsOpen, setIsMemberOptsOpen ] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isMemberOptsOpen, setIsMemberOptsOpen] = useState(null);
 
   const { groupId } = useParams();
 
@@ -48,13 +49,38 @@ const GroupChatMain = () => {
     if (isMemberOptsOpen) {
       setIsMemberOptsOpen(null);
     } else {
-    setIsMemberOptsOpen(profileInfo);
+      setIsMemberOptsOpen(profileInfo);
     }
   };
 
   const handleRemoveMember = (e, profileInfo, adminId) => {
     e.preventDefault();
-    console.log(profileInfo, adminId);
+
+    const token = sessionStorage.getItem("msgAppToken");
+
+    if (token) {
+      fetch(
+        `${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/remove-member/${
+          profileInfo.groupId
+        }/${profileInfo.profileId}/${adminId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          method: 'DELETE'
+        }
+      ).then((res) => res.json())
+      .then((res) => {
+        setGroupMembers({
+          ...groupMembers,
+          adminRoleMembers: groupMembers.adminRoleMembers.filter((item) => item.profileId != res.removedMember.profileId),
+          userRoleMembers: groupMembers.userRoleMembers.filter((item) => item.profileId != res.removedMember.profileId),
+        });
+        setIsMemberOptsOpen(null);
+
+      })
+      .catch((err) => console.error(err));
+    }
   };
 
   const fetchChatMsgs = (token) => {
@@ -104,14 +130,20 @@ const GroupChatMain = () => {
   };
 
   const checkIfAdmin = (token) => {
-    fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/check-if-admin/${groupId}/${profile.id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      method: 'GET',
-    }).then((res) => res.json())
-    .then((res) => setIsAdmin(res.isAdmin))
-    .catch((err) => console.error(err));
+    fetch(
+      `${
+        import.meta.env.VITE_FETCH_BASE_URL
+      }/group-actions/check-if-admin/${groupId}/${profile.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        method: "GET",
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => setIsAdmin(res.isAdmin))
+      .catch((err) => console.error(err));
   };
 
   const handleCloseErrMsg = (e) => {
@@ -187,9 +219,30 @@ const GroupChatMain = () => {
         {!isMemberOptsOpen ? null : (
           <div className={styles.memberOptsModalBackground}>
             <div className={styles.memberOptsModal}>
-              <button onClick={(e) => handleMemberOptsModal(e)} type="button" className={styles.exitOptsBtn}>X</button>
-              <p>Remove {isMemberOptsOpen.member.profileName} from the group?</p>
-              <button onClick={(e) => handleRemoveMember(e, isMemberOptsOpen, profile.id)} type="button">Remove</button>
+              <button
+                onClick={(e) => handleMemberOptsModal(e)}
+                type="button"
+                className={styles.exitOptsBtn}
+              >
+                X
+              </button>
+              <ul className={styles.optionsModalUl}>
+                <li className={styles.optionsModalLi}>
+                  <p>
+                    Remove {isMemberOptsOpen.member.profileName} from the group?
+                  </p>
+                  <button
+                    className={styles.removeMemberBtn}
+                    onClick={(e) =>
+                      handleRemoveMember(e, isMemberOptsOpen, profile.id)
+                    }
+                    type="button"
+                  >
+                    <p>Remove</p>
+                    <img src={unfriendIcon} alt="remove" />
+                  </button>
+                </li>
+              </ul>
             </div>
           </div>
         )}
@@ -204,7 +257,9 @@ const GroupChatMain = () => {
           <div className={styles.groupMemberSidebarBackground}>
             <aside
               className={`${styles.groupMemberListSidebar} ${
-                isCloseAnimToggle ? `${styles.toggleCloseSidebar}` : `${styles.toggleOpenSidebar}`
+                isCloseAnimToggle
+                  ? `${styles.toggleCloseSidebar}`
+                  : `${styles.toggleOpenSidebar}`
               }`}
             >
               <button
@@ -221,7 +276,11 @@ const GroupChatMain = () => {
               </button>
 
               {groupMembers ? (
-                <GroupMembersList groupMembers={groupMembers} isAdmin={isAdmin} handleMemberOptsModal={handleMemberOptsModal}/>
+                <GroupMembersList
+                  groupMembers={groupMembers}
+                  isAdmin={isAdmin}
+                  handleMemberOptsModal={handleMemberOptsModal}
+                />
               ) : null}
             </aside>
           </div>
@@ -241,7 +300,11 @@ const GroupChatMain = () => {
         <aside className={styles.groupMembersCont}>
           {!isLoadingMembers ? null : <LoadingIcon />}
           {!groupMembers ? null : (
-            <GroupMembersList groupMembers={groupMembers} isAdmin={isAdmin} handleMemberOptsModal={handleMemberOptsModal}/>
+            <GroupMembersList
+              groupMembers={groupMembers}
+              isAdmin={isAdmin}
+              handleMemberOptsModal={handleMemberOptsModal}
+            />
           )}
         </aside>
         <div className={styles.msgFormCont}>
