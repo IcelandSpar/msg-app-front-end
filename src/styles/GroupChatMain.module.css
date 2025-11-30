@@ -64,6 +64,10 @@
   max-width: 500px;
   padding: 2rem 1rem;
   border-radius: 15px;
+  max-height: 50vh;
+  overflow-y: auto;
+  scrollbar-color: #e7f2ef #708993;
+
 }
 
 .optionsModalUl {
@@ -74,10 +78,44 @@
 }
 
 .optionsModalLi {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  grid-template-rows: auto;
+  align-items: stretch;
+  gap: .5rem;
+  border-bottom: 1px solid white;
+  padding: 1rem;
+}
+
+
+
+.questionAndProfileImg {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+.questionAndProfileImg img {
+  background-color: black;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  margin: 0 .5rem;
+}
+
+.memberOptsBtn {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
   justify-content: center;
-  gap: 1rem;
+  font-family: "Recursive", sans-serif;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  background-color: #a1c2bd;
+  cursor: pointer;
+  border: 3px solid #a1c2bd;
 }
 
 .removeMemberBtn {
