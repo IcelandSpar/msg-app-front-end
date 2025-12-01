@@ -85,6 +85,33 @@ const GroupChatMain = () => {
     }
   };
 
+  const handlePromoteMember = (e, profileInfo, adminId) => {
+    e.preventDefault();
+    const token = sessionStorage.getItem("msgAppToken");
+
+    if(token) {
+      fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/promote-to-admin/${profileInfo.groupId}/${profileInfo.profileId}/${adminId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        method: 'PUT',
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res)
+        if(res.promotedMember) {
+          setGroupMembers({
+            ...groupMembers,
+            adminRoleMembers: res.adminRoleMembers,
+            userRoleMembers: groupMembers.userRoleMembers.filter((item) => item.profileId != res.promotedMember.profileId),
+          })
+          setIsMemberOptsOpen(null);
+        }
+      })
+      .catch((err) => console.error(err))
+    }
+  }
+
   const fetchChatMsgs = (token) => {
     setIsLoadingMsgs(true);
     fetch(
@@ -249,7 +276,7 @@ const GroupChatMain = () => {
                   
                     <p className={styles.questionAndProfileImg}>Promote <img src={`${import.meta.env.VITE_FETCH_BASE_URL}/${isMemberOptsOpen.member.profileImgFilePath}`} alt="User profile image" width={'20px'} height={'20px'}/>{`${isMemberOptsOpen.member.profileName}`} to admin?</p>
                   
-                  <button className={styles.memberOptsBtn}><p>Promote</p><img src={crownIcon} alt="admin crown" /></button>
+                  <button type="button" onClick={(e) => handlePromoteMember(e, isMemberOptsOpen, profile.id)} className={styles.memberOptsBtn}><p>Promote</p><img src={crownIcon} alt="admin crown" /></button>
                   </li>
                 ) : null}
 
