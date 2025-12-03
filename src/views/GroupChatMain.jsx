@@ -257,7 +257,7 @@ const GroupChatMain = () => {
               </button>
               <ul className={styles.optionsModalUl}>
                 <li className={styles.optionsModalLi}>
-                      <p className={styles.questionAndProfileImg}>Remove <img src={`${import.meta.env.VITE_FETCH_BASE_URL}/${isMemberOptsOpen.member.profileImgFilePath}`} alt="User profile image" width={'20'} height={'20px'}/>{`${isMemberOptsOpen.member.profileName}`} from the group?</p>
+                      <p className={styles.questionAndProfileImg}>Remove <img className={styles.memberOptsProfileImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${isMemberOptsOpen.member.profileImgFilePath}`} alt="User profile image" width={'20'} height={'20px'}/>{`${isMemberOptsOpen.member.profileName}`} from the group?</p>
                     
 
                   <button
@@ -274,7 +274,7 @@ const GroupChatMain = () => {
                 {isMemberOptsOpen.role == "USER" ? (
                 <li className={styles.optionsModalLi}>
                   
-                    <p className={styles.questionAndProfileImg}>Promote <img src={`${import.meta.env.VITE_FETCH_BASE_URL}/${isMemberOptsOpen.member.profileImgFilePath}`} alt="User profile image" width={'20px'} height={'20px'}/>{`${isMemberOptsOpen.member.profileName}`} to admin?</p>
+                    <p className={styles.questionAndProfileImg}>Promote <img className={styles.memberOptsProfileImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${isMemberOptsOpen.member.profileImgFilePath}`} alt="User profile image" width={'20px'} height={'20px'}/>{`${isMemberOptsOpen.member.profileName}`} to admin?</p>
                   
                   <button type="button" onClick={(e) => handlePromoteMember(e, isMemberOptsOpen, profile.id)} className={styles.memberOptsBtn}><p>Promote</p><img src={crownIcon} alt="admin crown" /></button>
                   </li>

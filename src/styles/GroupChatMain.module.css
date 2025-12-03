@@ -148,6 +148,11 @@
 
 }
 
+.memberOptsProfileImg {
+  border: 3px solid black;
+  box-sizing: content-box;
+}
+
 .removeMemberBtn:hover img {
   filter: brightness(0%);
 }
