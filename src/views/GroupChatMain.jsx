@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState, useRef } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { socket } from "../socket.js";
 
 import Navbar from "./partials/Navbar.jsx";
@@ -32,6 +32,8 @@ const GroupChatMain = () => {
   const { groupId } = useParams();
 
   const { profile } = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const handleGroupMemberSidebarBtn = (e) => {
     e.preventDefault();
@@ -69,19 +71,23 @@ const GroupChatMain = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          method: 'DELETE'
+          method: "DELETE",
         }
-      ).then((res) => res.json())
-      .then((res) => {
-        setGroupMembers({
-          ...groupMembers,
-          adminRoleMembers: groupMembers.adminRoleMembers.filter((item) => item.profileId != res.removedMember.profileId),
-          userRoleMembers: groupMembers.userRoleMembers.filter((item) => item.profileId != res.removedMember.profileId),
-        });
-        setIsMemberOptsOpen(null);
-
-      })
-      .catch((err) => console.error(err));
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          setGroupMembers({
+            ...groupMembers,
+            adminRoleMembers: groupMembers.adminRoleMembers.filter(
+              (item) => item.profileId != res.removedMember.profileId
+            ),
+            userRoleMembers: groupMembers.userRoleMembers.filter(
+              (item) => item.profileId != res.removedMember.profileId
+            ),
+          });
+          setIsMemberOptsOpen(null);
+        })
+        .catch((err) => console.error(err));
     }
   };
 
@@ -89,28 +95,37 @@ const GroupChatMain = () => {
     e.preventDefault();
     const token = sessionStorage.getItem("msgAppToken");
 
-    if(token) {
-      fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/promote-to-admin/${profileInfo.groupId}/${profileInfo.profileId}/${adminId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        method: 'PUT',
-      })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res)
-        if(res.promotedMember) {
-          setGroupMembers({
-            ...groupMembers,
-            adminRoleMembers: res.adminRoleMembers,
-            userRoleMembers: groupMembers.userRoleMembers.filter((item) => item.profileId != res.promotedMember.profileId),
-          })
-          setIsMemberOptsOpen(null);
+    if (token) {
+      fetch(
+        `${
+          import.meta.env.VITE_FETCH_BASE_URL
+        }/group-actions/promote-to-admin/${profileInfo.groupId}/${
+          profileInfo.profileId
+        }/${adminId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          method: "PUT",
         }
-      })
-      .catch((err) => console.error(err))
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          if (res.promotedMember) {
+            setGroupMembers({
+              ...groupMembers,
+              adminRoleMembers: res.adminRoleMembers,
+              userRoleMembers: groupMembers.userRoleMembers.filter(
+                (item) => item.profileId != res.promotedMember.profileId
+              ),
+            });
+            setIsMemberOptsOpen(null);
+          }
+        })
+        .catch((err) => console.error(err));
     }
-  }
+  };
 
   const fetchChatMsgs = (token) => {
     setIsLoadingMsgs(true);
@@ -180,6 +195,35 @@ const GroupChatMain = () => {
     setMsgFormErrors(null);
   };
 
+  const checkIfMemberOfGroup = (token) => {
+    if (!token) {
+      navigate("/");
+    } else {
+      fetch(
+        `${
+          import.meta.env.VITE_FETCH_BASE_URL
+        }/group-actions/check-if-member/${groupId}/${profile.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          method: "GET",
+        }
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          if(res.isMember) {
+            fetchChatMsgs(token);
+            fetchGroupMembers(token);
+            checkIfAdmin(token);
+          } else {
+            navigate('/channel/myhome');
+          }
+        })
+        .catch((err) => console.error(err));
+    }
+  };
+
   useEffect(() => {
     let scrollDownTimeout;
     let pollChatInterval;
@@ -191,9 +235,10 @@ const GroupChatMain = () => {
         clearTimeout(scrollDownTimeout);
       }, 1000);
       const token = sessionStorage.getItem("msgAppToken");
-      fetchChatMsgs(token);
-      fetchGroupMembers(token);
-      checkIfAdmin(token);
+
+
+      checkIfMemberOfGroup(token);
+
       pollChatInterval = setInterval(() => {
         fetchChatMsgs(token);
         // fetchGroupMembers(token);
@@ -257,8 +302,19 @@ const GroupChatMain = () => {
               </button>
               <ul className={styles.optionsModalUl}>
                 <li className={styles.optionsModalLi}>
-                      <p className={styles.questionAndProfileImg}>Remove <img className={styles.memberOptsProfileImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${isMemberOptsOpen.member.profileImgFilePath}`} alt="User profile image" width={'20'} height={'20px'}/>{`${isMemberOptsOpen.member.profileName}`} from the group?</p>
-                    
+                  <p className={styles.questionAndProfileImg}>
+                    Remove{" "}
+                    <img
+                      className={styles.memberOptsProfileImg}
+                      src={`${import.meta.env.VITE_FETCH_BASE_URL}/${
+                        isMemberOptsOpen.member.profileImgFilePath
+                      }`}
+                      alt="User profile image"
+                      width={"20"}
+                      height={"20px"}
+                    />
+                    {`${isMemberOptsOpen.member.profileName}`} from the group?
+                  </p>
 
                   <button
                     className={styles.removeMemberBtn}
@@ -272,14 +328,33 @@ const GroupChatMain = () => {
                   </button>
                 </li>
                 {isMemberOptsOpen.role == "USER" ? (
-                <li className={styles.optionsModalLi}>
-                  
-                    <p className={styles.questionAndProfileImg}>Promote <img className={styles.memberOptsProfileImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${isMemberOptsOpen.member.profileImgFilePath}`} alt="User profile image" width={'20px'} height={'20px'}/>{`${isMemberOptsOpen.member.profileName}`} to admin?</p>
-                  
-                  <button type="button" onClick={(e) => handlePromoteMember(e, isMemberOptsOpen, profile.id)} className={styles.memberOptsBtn}><p>Promote</p><img src={crownIcon} alt="admin crown" /></button>
+                  <li className={styles.optionsModalLi}>
+                    <p className={styles.questionAndProfileImg}>
+                      Promote{" "}
+                      <img
+                        className={styles.memberOptsProfileImg}
+                        src={`${import.meta.env.VITE_FETCH_BASE_URL}/${
+                          isMemberOptsOpen.member.profileImgFilePath
+                        }`}
+                        alt="User profile image"
+                        width={"20px"}
+                        height={"20px"}
+                      />
+                      {`${isMemberOptsOpen.member.profileName}`} to admin?
+                    </p>
+
+                    <button
+                      type="button"
+                      onClick={(e) =>
+                        handlePromoteMember(e, isMemberOptsOpen, profile.id)
+                      }
+                      className={styles.memberOptsBtn}
+                    >
+                      <p>Promote</p>
+                      <img src={crownIcon} alt="admin crown" />
+                    </button>
                   </li>
                 ) : null}
-
               </ul>
             </div>
           </div>
