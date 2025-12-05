@@ -20,7 +20,7 @@ const GroupMembersList = ({ groupMembers, isDirectMessage = false, isAdmin = fal
       <ul className={styles.memberUls}>
         {groupMembers.adminRoleMembers.map((admin, indx) => {
           return (
-            <li className={styles.memberLis}>
+            <li key={admin.member.id} className={styles.memberLis}>
               <Link className={styles.imgLink} to={`/profile/${admin.member.id}`}>
                 <img
                   className={styles.memberProfileImg}

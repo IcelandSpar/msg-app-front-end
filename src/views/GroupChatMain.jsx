@@ -8,13 +8,12 @@ import UserContext from "../UserContext.jsx";
 import LoadingIcon from "./partials/LoadingIcon.jsx";
 import GroupChatMessages from "./partials/GroupChatMessages";
 import GroupMembersList from "./partials/GroupMembersList.jsx";
+import MemberOptionsModal from "./partials/MemberOptionsModal.jsx";
 import ValidationErrModal from "./partials/ValidationErrModal.jsx";
 
 import styles from "../styles/GroupChatMain.module.css";
 
-import unfriendIcon from "../assets/unfriend_icon.svg";
 import sidebarMenu from "../assets/sidebar_menu_icon.svg";
-import crownIcon from "../assets/crown_icon.svg";
 
 const GroupChatMain = () => {
   const endOfMsg = useRef(null);
@@ -270,7 +269,7 @@ const GroupChatMain = () => {
         ]);
       });
     } catch (err) {
-      console.error(err);
+        console.error(err);
     }
 
     console.log("group chat render test");
@@ -291,73 +290,7 @@ const GroupChatMain = () => {
           <Navbar />
         </div>
         {!isMemberOptsOpen ? null : (
-          <div className={styles.memberOptsModalBackground}>
-            <div className={styles.memberOptsModal}>
-              <button
-                onClick={(e) => handleMemberOptsModal(e)}
-                type="button"
-                className={styles.exitOptsBtn}
-              >
-                X
-              </button>
-              <ul className={styles.optionsModalUl}>
-                <li className={styles.optionsModalLi}>
-                  <p className={styles.questionAndProfileImg}>
-                    Remove{" "}
-                    <img
-                      className={styles.memberOptsProfileImg}
-                      src={`${import.meta.env.VITE_FETCH_BASE_URL}/${
-                        isMemberOptsOpen.member.profileImgFilePath
-                      }`}
-                      alt="User profile image"
-                      width={"20"}
-                      height={"20px"}
-                    />
-                    {`${isMemberOptsOpen.member.profileName}`} from the group?
-                  </p>
-
-                  <button
-                    className={styles.removeMemberBtn}
-                    onClick={(e) =>
-                      handleRemoveMember(e, isMemberOptsOpen, profile.id)
-                    }
-                    type="button"
-                  >
-                    <p>Remove</p>
-                    <img src={unfriendIcon} alt="remove" />
-                  </button>
-                </li>
-                {isMemberOptsOpen.role == "USER" ? (
-                  <li className={styles.optionsModalLi}>
-                    <p className={styles.questionAndProfileImg}>
-                      Promote{" "}
-                      <img
-                        className={styles.memberOptsProfileImg}
-                        src={`${import.meta.env.VITE_FETCH_BASE_URL}/${
-                          isMemberOptsOpen.member.profileImgFilePath
-                        }`}
-                        alt="User profile image"
-                        width={"20px"}
-                        height={"20px"}
-                      />
-                      {`${isMemberOptsOpen.member.profileName}`} to admin?
-                    </p>
-
-                    <button
-                      type="button"
-                      onClick={(e) =>
-                        handlePromoteMember(e, isMemberOptsOpen, profile.id)
-                      }
-                      className={styles.memberOptsBtn}
-                    >
-                      <p>Promote</p>
-                      <img src={crownIcon} alt="admin crown" />
-                    </button>
-                  </li>
-                ) : null}
-              </ul>
-            </div>
-          </div>
+          <MemberOptionsModal handleMemberOptsModal={handleMemberOptsModal} handleRemoveMember={handleRemoveMember} isMemberOptsOpen={isMemberOptsOpen} handlePromoteMember={handlePromoteMember} profile={profile}/>
         )}
         <button
           onClick={handleGroupMemberSidebarBtn}
