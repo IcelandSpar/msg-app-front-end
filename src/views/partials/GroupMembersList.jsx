@@ -21,6 +21,7 @@ const GroupMembersList = ({ groupMembers, isDirectMessage = false, isAdmin = fal
         {groupMembers.adminRoleMembers.map((admin, indx) => {
           return (
             <li key={admin.member.id} className={styles.memberLis}>
+              <div className={styles.imglinkAndName}>
               <Link className={styles.imgLink} to={`/profile/${admin.member.id}`}>
                 <img
                   className={styles.memberProfileImg}
@@ -38,6 +39,7 @@ const GroupMembersList = ({ groupMembers, isDirectMessage = false, isAdmin = fal
                 src={crownIcon}
                 alt="crown"
               />
+              </div>
               {isAdmin && profile.id != admin.profileId ? <img onClick={(e) => handleMemberOptsModal(e, admin)} className={styles.optionsBtn} src={optionsBtnIcon} alt="more options" /> : null}
        
         
@@ -50,19 +52,22 @@ const GroupMembersList = ({ groupMembers, isDirectMessage = false, isAdmin = fal
         {groupMembers.userRoleMembers.map((member, indx) => {
           return (
             <li className={styles.memberLis} key={member.member.id}>
-              <Link className={styles.imgLink} to={`/profile/${member.member.id}`}>
-                <img
-                  className={styles.memberProfileImg}
-                  src={`${import.meta.env.VITE_FETCH_BASE_URL}/${
-                    member.member.profileImgFilePath
-                  }`}
-                  alt={`${member.member.profileName}'s profile picture`}
-                  width={"25px"}
-                  height={"25px"}
-                />
-              </Link>
+              <div className={styles.imglinkAndName}>
+                <Link className={styles.imgLink} to={`/profile/${member.member.id}`}>
+                  <img
+                    className={styles.memberProfileImg}
+                    src={`${import.meta.env.VITE_FETCH_BASE_URL}/${
+                      member.member.profileImgFilePath
+                    }`}
+                    alt={`${member.member.profileName}'s profile picture`}
+                    width={"25px"}
+                    height={"25px"}
+                  />
+                </Link>
 
-              <p className={styles.memberName}>{member.member.profileName}</p>
+                <p className={styles.memberName}>{member.member.profileName}</p>
+              </div>
+
               {isAdmin && profile.id != member.profileId ? <img onClick={(e) => handleMemberOptsModal(e, member)} className={styles.optionsBtn} src={optionsBtnIcon} alt="more options" /> : null}
 
             </li>

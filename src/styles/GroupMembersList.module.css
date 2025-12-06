@@ -13,11 +13,14 @@
 }
 
 .memberLis {
-  display: flex;
+  /* display: flex;
   justify-content: center;
+  align-items: center; */
+  display: grid;
   align-items: center;
+  grid-template-columns: 1fr 5fr 1fr;
+
   gap: .5rem;
-  cursor: pointer;
   padding: .5rem 1rem;
   border-radius: 15px;
   max-width: 200px;
@@ -47,6 +50,17 @@
   flex-grow: 1;
 }
 
+.imglinkAndName {
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
+  align-items: center;
+
+
+  align-items: center;
+  grid-column: 2 / 3
+}
+
 .memberName {
   flex-grow: 0;
 }
@@ -64,6 +78,7 @@
 .optionsBtn {
   justify-self: flex-end;
   cursor: pointer;
+  grid-column:  3/ 4;
 }
 
 @media (max-width: 1000px) {
