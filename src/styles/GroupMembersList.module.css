@@ -28,7 +28,7 @@
   border: 3px solid #beb8d5;
 
   transition: .4s scale ease-out, .4s box-shadow ease-out;
-
+  position: relative;
 }
 
 
@@ -70,6 +70,14 @@
   border-radius: 50%;
   border: 2px solid black;
   background-color: black;
+  transition: .5s border ease-out;
+
+}
+
+
+
+.memberProfileImg:hover {
+  border: 2px solid #a1c2bd;
 }
 
 .adminCrownIcon {
@@ -79,6 +87,8 @@
   justify-self: flex-end;
   cursor: pointer;
   grid-column:  3/ 4;
+  position: absolute;
+  right: -.7rem;
 }
 
 @media (max-width: 1000px) {
