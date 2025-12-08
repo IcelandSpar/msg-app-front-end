@@ -6,11 +6,16 @@
 
 .memberUls {
   padding: 0;
-
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: .8rem;
 }
+
+  .groupMemberHeaders {
+    text-align: center;
+  }
 
 .memberLis {
   /* display: flex;
@@ -18,12 +23,12 @@
   align-items: center; */
   display: grid;
   align-items: center;
-  grid-template-columns: 1fr 5fr 1fr;
-
+  grid-template-columns: 5fr 1fr;
+  width: 100%;
   gap: .5rem;
   padding: .5rem 1rem;
   border-radius: 15px;
-  max-width: 200px;
+  max-width: 250px;
   background-color: #6559a2;
   border: 3px solid #beb8d5;
 
@@ -52,17 +57,18 @@
 
 .imglinkAndName {
   display: flex;
-  justify-content: center;
+  /* justify-content: stretch; */
   gap: .5rem;
   align-items: center;
-
-
-  align-items: center;
-  grid-column: 2 / 3
+  grid-column: 1 / 2;
 }
 
 .memberName {
   flex-grow: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 10ch;
+  text-overflow: ellipsis;
 }
 
 .memberProfileImg {
@@ -86,23 +92,78 @@
 .optionsBtn {
   justify-self: flex-end;
   cursor: pointer;
-  grid-column:  3/ 4;
-  position: absolute;
-  right: -.7rem;
+  grid-column:  2 / 3;
+  /* position: absolute;
+  right: -.7rem; */
+
+}
+
+@media (min-width: 1200px) {
+  .groupMemberHeaders {
+    text-align: start;
+  }
+  .memberUls {
+      align-items: start;
+  }
+}
+
+@media (max-width: 1200px) {
+  .memberName {
+    max-width: 10ch;
+  }
 }
 
 @media (max-width: 1000px) {
 
+  .memberName {
+    max-width: 11ch;
+  }
+  
+
   .memberLis {
-    width: 100%;
-    max-width: none;
   }
 
-  .groupMemberHeaders {
-    text-align: center;
-  }
+
   .memberUls {
     width: 100%;
   }
 
 }
+
+@media (max-width: 900px) {
+
+  .memberUls {
+    align-items: center;
+
+  }
+  .memberLis {
+    width: 100%;
+    grid-template-columns: 1fr 5fr 1fr;
+    max-width: 1000px;
+    width: 100%;
+
+  }
+
+  .imglinkAndName {
+    display: flex;
+    justify-content: center;
+    grid-column: 2 / 3;
+  }
+
+  .optionsBtn {
+    grid-column: 3 / 4;
+  }
+
+
+
+  /* @media (max-width: 800px) {
+    wd
+  } */
+
+}
+/* 
+@media (max-width: 900px) {
+  .imglinkAndName {
+    justify-content: start;
+  }
+} */
