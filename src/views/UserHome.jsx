@@ -76,7 +76,9 @@ const UserHome = () => {
 
   const handleCloseFriendModal = (e) => {
     e.preventDefault();
-    setIsAddFriendModalOpen(false);
+    (Array.from(e.target.classList)[1] == 'friendReqModalBackground') ? setIsAddFriendModalOpen(false) : null
+
+    
   };
 
   const handleFriendReqSubmit = (e, friendCodeInput) => {

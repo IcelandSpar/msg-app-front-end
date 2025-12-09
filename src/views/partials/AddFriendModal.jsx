@@ -11,10 +11,10 @@ const AddFriendModal = ({ handleFriendReqSubmit, handleCloseFriendModal }) => {
   const { profile } = useContext(UserContext);
 
   return (
-    <div className={styles.modalBackground}>
+    <div onClick={(e) => handleCloseFriendModal(e)} className={`${styles.modalBackground} friendReqModalBackground`}>
       <div className={styles.modalCont}>
         <button
-          className={styles.exitModalBtn}
+          className={`${styles.exitModalBtn} friendReqModalBackground`}
           onClick={handleCloseFriendModal}
           type="button"
         >
