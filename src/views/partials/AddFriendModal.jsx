@@ -39,7 +39,7 @@ const AddFriendModal = ({ handleFriendReqSubmit, handleCloseFriendModal }) => {
             </div>
           </fieldset>
           <div className={styles.sendReqBtnCont}>
-           <button className={styles.sendReqBtn} type="submit">
+           <button onClick={(e) => handleFriendReqSubmit(e, friendCodeInput)} className={styles.sendReqBtn} type="submit">
             <p className={styles.sendReqPara}>Send Request</p>
             <img className={styles.sendReqIcon} src={wavingHandIcon} alt="Send friend request" />
            </button>

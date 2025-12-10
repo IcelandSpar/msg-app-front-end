@@ -60,8 +60,13 @@ const SearchGroupModal = ({ handleSearchGroupModal, setMemberGroups }) => {
 
   const handleCloseModals = (e) => {
     e.preventDefault();
-    setGroupToJoin(null);
-    handleSearchGroupModal(e)
+    
+    if((Array.from(e.target.classList))[1] == "searchModalBackground") {
+      setGroupToJoin(null);
+      handleSearchGroupModal(e);
+    }
+
+
   }
 
   const handleJoinBtn = (e, groupToJoin) => {
@@ -88,9 +93,9 @@ const SearchGroupModal = ({ handleSearchGroupModal, setMemberGroups }) => {
   }
 
   return (
-    <div className={styles.modalBackground}>
+    <div onClick={handleCloseModals} className={`${styles.modalBackground} searchModalBackground`}>
       {!groupToJoin ? null : (
-        <div className={styles.joinGroupModalBackground}>
+        <div className={`${styles.joinGroupModalBackground} searchModalBackground`}>
           <div className={styles.joinGroupModalCont}>
             <div className={styles.groupImgAndParaCont}>
               <img className={styles.groupImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${groupToJoin.groupImgPath}`} alt="group image" width={'50px'} height={'50px'}/>
@@ -98,8 +103,8 @@ const SearchGroupModal = ({ handleSearchGroupModal, setMemberGroups }) => {
               <p className={styles.joinPara}>{groupToJoin.groupName}?</p>
             </div>
             <div className={styles.joinOrNotBtnCont}>
-              <button className={styles.noJoinBtn} onClick={handleCloseModals} type="button">Nevermind</button>
-              <button className={styles.joinBtn} onClick={(e) => handleJoinBtn(e, groupToJoin)} type="button">Join</button>
+              <button className={`${styles.noJoinBtn} searchModalBackground`} onClick={handleCloseModals} type="button">Nevermind</button>
+              <button className={`${styles.joinBtn} searchModalBackground`} onClick={(e) => handleJoinBtn(e, groupToJoin)} type="button">Join</button>
             </div>
           </div>
         </div>
