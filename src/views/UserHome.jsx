@@ -61,7 +61,7 @@ const UserHome = () => {
 
   const handleCreateGroupModal = (e) => {
     e.preventDefault();
-    setIsCreateGroupModalOpen((prev) => !prev);
+    (Array.from(e.target.classList))[1] == 'createGroupClose' ? setIsCreateGroupModalOpen(false) : setIsCreateGroupModalOpen(true);
   };
 
   const handleAddFriendBtn = (e) => {

@@ -8,7 +8,7 @@ const CreateGroupModal = ({ handleCreateGroupModal, setValidationErrors }) => {
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
-  }
+  };
 
   const handleCreateGroupSubmit = (e) => {
     e.preventDefault();
@@ -35,9 +35,9 @@ const CreateGroupModal = ({ handleCreateGroupModal, setValidationErrors }) => {
   };
 
   return (
-    <div className={styles.modalBackground}>
+    <div onClick={handleCreateGroupModal} className={`${styles.modalBackground} createGroupClose`}>
       <div className={styles.createGroupModal}>
-        <button className={styles.createGroupCloseBtn} onClick={handleCreateGroupModal}>X</button>
+        <button className={`${styles.createGroupCloseBtn} createGroupClose`} onClick={handleCreateGroupModal}>X</button>
 
         <form
           onSubmit={handleCreateGroupSubmit}
