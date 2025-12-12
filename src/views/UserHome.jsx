@@ -50,7 +50,7 @@ const UserHome = () => {
 
   const handleCloseValidationMsg = (e) => {
     e.preventDefault();
-    setValidationErrors(null);
+    (Array.from(e.target.classList))[1] == 'closeValidationErrModal' ? setValidationErrors(null) : null;
   };
 
   const handleCloseFriendReqModal = (e) => {

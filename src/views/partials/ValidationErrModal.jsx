@@ -2,11 +2,11 @@ import styles from "../../styles/ValidationErrModal.module.css";
 
 const ValidationErrModal = ({msgFormErrors, closeMsgHandler}) => {
   return (
-    <div className={styles.msgFormErrBackground}>
+    <div onClick={closeMsgHandler} className={`${styles.msgFormErrBackground} closeValidationErrModal`}>
       <div className={styles.msgFormErrorCont}>
         <button
           onClick={closeMsgHandler}
-          className={styles.exitErrMsgBtn}
+          className={`${styles.exitErrMsgBtn} closeValidationErrModal`}
           type="button"
         >
           X
