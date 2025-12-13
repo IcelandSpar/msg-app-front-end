@@ -40,6 +40,11 @@ const UserHome = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
+  const handleCloseSidebar = (e) => {
+    e.preventDefault()
+    Array.from(e.target.classList)[1] == 'closeSidebar' ? setIsSidebarOpen(false) : null;
+  };
+
   const handleClickOnGroupLi = (e, groupId) => {
     e.preventDefault();
     if((Array.from(e.target.classList)).find(element => element == 'navigateToGroupChat')) {
@@ -146,7 +151,7 @@ const UserHome = () => {
     <div className={styles.userHomePage}>
       <Navbar setFriendList={setFriendList} />
       <main className={styles.userHomeMain}>
-        {!isSidebarOpen ? null : <div className={styles.homeSidebarCont}>
+        {!isSidebarOpen ? null : <div onClick={handleCloseSidebar} className={`${styles.homeSidebarCont} closeSidebar`}>
           <HomeSidebar profile={profile} setFriendList={setFriendList} friendList={friendList} setIsSidebarOpen={setIsSidebarOpen}/>
         </div>}
         {!validationErrors ? null : (
