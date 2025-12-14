@@ -30,7 +30,8 @@ const DirectMessagePage = () => {
 
     const handleGroupMemberSidebarBtn = (e) => {
     e.preventDefault();
-    if (isMemberSidebarOpen) {
+    let className = (Array.from(e.target.classList))[1];
+    if (isMemberSidebarOpen && (className == 'closeMemberSidebar')) {
       setIsCloseAnimToggle(true);
       setTimeout(() => {
         setIsMemberSidebarOpen(false);
@@ -130,7 +131,7 @@ const DirectMessagePage = () => {
         <img src={sidebarMenu} alt="Sidebar" width={"25px"} height={"25px"} />
       </button>
                       {!isMemberSidebarOpen ? null : (
-          <div className={styles.groupMemberSidebarBackground}>
+          <div onClick={handleGroupMemberSidebarBtn} className={`${styles.groupMemberSidebarBackground} closeMemberSidebar`}>
             <aside
               className={`${styles.groupMemberListSidebar} ${
                 isCloseAnimToggle ? `${styles.toggleCloseSidebar}` : `${styles.toggleOpenSidebar}`
@@ -138,10 +139,11 @@ const DirectMessagePage = () => {
             >
               <button
                 onClick={handleGroupMemberSidebarBtn}
-                className={styles.innerSidebarBtn}
+                className={`${styles.innerSidebarBtn} closeMemberSidebar`}
                 type="button"
               >
                 <img
+                  className={`${styles.closeMemberSidebar} closeMemberSidebar`}
                   src={sidebarMenu}
                   alt="Sidebar"
                   width={"25px"}
