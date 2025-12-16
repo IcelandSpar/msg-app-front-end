@@ -8,12 +8,12 @@ import unfriendIcon from "../../assets/unfriend_icon.svg";
 
 const MemberOptionsModal = ({ handleMemberOptsModal, handleRemoveMember, isMemberOptsOpen, handlePromoteMember, profile }) => {
   return (
-          <div className={styles.memberOptsModalBackground}>
+          <div onClick={(e) => handleMemberOptsModal(e)} className={`${styles.memberOptsModalBackground} closeMemberOptsModal`}>
             <div className={styles.memberOptsModal}>
               <button
                 onClick={(e) => handleMemberOptsModal(e)}
                 type="button"
-                className={styles.exitOptsBtn}
+                className={`${styles.exitOptsBtn} closeMemberOptsModal`}
               >
                 X
               </button>

@@ -49,8 +49,11 @@ const GroupChatMain = () => {
 
   const handleMemberOptsModal = (e, profileInfo = null) => {
     e.preventDefault();
+    let classClicked = Array.from(e.target.classList)[1];
     if (isMemberOptsOpen) {
-      setIsMemberOptsOpen(null);
+      if(classClicked == 'closeMemberOptsModal') {
+        setIsMemberOptsOpen(null);
+      }
     } else {
       setIsMemberOptsOpen(profileInfo);
     }
