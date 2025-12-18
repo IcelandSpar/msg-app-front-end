@@ -14,43 +14,54 @@ import DirectMessagePage from './views/DirectMessagePage.jsx';
 const routes = [
   {
     path: '/',
-    element: <DefaultHome/>
+    element: <DefaultHome/>,
+    errorElement: <ErrorPage/>,
   },
   {
     path: '/login',
-    element: <Login/>
+    element: <Login/>,
+    errorElement: <ErrorPage/>,
   },
   {
     path: '/register',
-    element: <Register/>
+    element: <Register/>,
+    errorElement: <ErrorPage/>,
   },
   {
     path: '/logout',
-    element: <Logout/>
+    element: <Logout/>,
+    errorElement: <ErrorPage/>,
   },
   {
     path: '/channel/myhome',
-    element:<UserHome/>
+    element:<UserHome/>,
+    errorElement: <ErrorPage/>,
   },
   {
     path: '/channel/group/:groupId',
-    element: <GroupChatMain/>
+    element: <GroupChatMain/>,
+    errorElement: <ErrorPage/>,
+
   },
   {
     path: '/channel/direct-message/:directMessageGroupId',
-    element: <DirectMessagePage/>
+    element: <DirectMessagePage/>,
+    errorElement: <ErrorPage/>,
   },
   {
     path: '/profile/myprofile',
     element: <MyProfile/>,
+    errorElement: <ErrorPage/>,
   },
   {
     path: '/profile/:profileIdViewing',
-    element: <ProfilePage/>
+    element: <ProfilePage/>,
+    errorElement: <ErrorPage/>,
   },
   {
     path: '/*',
     element: <ErrorPage/>,
+    errorElement: <ErrorPage/>,
   }
 
 ];

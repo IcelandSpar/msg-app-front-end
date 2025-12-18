@@ -15,6 +15,7 @@ const ErrorPage = () => {
         <div className={styles.headingLinkCont}>
           <p>(⌒_⌒;)</p>
           <h2>This page doesn't exist...</h2>
+          <p>Something went wrong...</p>
           <Link to={'/'}><p>Go Home</p></Link>
         </div>
       </main>
