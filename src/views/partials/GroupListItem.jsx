@@ -94,6 +94,7 @@ const GroupListItem = ({
               handleOptsBtn={handleOptsBtn}
               handleOpenConfirmModal={handleOpenConfirmModal}
               groupId={groupInfo.groupId}
+              userRole={groupInfo.role}
             />
           )}
         </div>
