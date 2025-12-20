@@ -35,7 +35,7 @@ const CreateGroupModal = ({ handleCreateGroupModal, setValidationErrors }) => {
   };
 
   return (
-    <div onClick={handleCreateGroupModal} className={`${styles.modalBackground} createGroupClose`}>
+    <div className={`${styles.modalBackground} createGroupClose`}>
       <div className={styles.createGroupModal}>
         <button className={`${styles.createGroupCloseBtn} createGroupClose`} onClick={handleCreateGroupModal}>X</button>
 
@@ -59,7 +59,7 @@ const CreateGroupModal = ({ handleCreateGroupModal, setValidationErrors }) => {
             <input onChange={handleFileChange} type="file" name="groupImg" id="groupImg" />
           </div>
           <div className={styles.btnsCont}>
-            <button className={styles.createGroupBtn}>
+            <button onClick={handleCreateGroupModal} className={styles.createGroupBtn}>
               <p className={styles.createGroupBtnPara}>Create Group Chat</p>
               <img className={styles.createGroupBtnIcon} src={createGroupIcon} alt="create group" />
             </button>

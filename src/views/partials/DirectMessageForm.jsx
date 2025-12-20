@@ -1,6 +1,8 @@
 import { useParams } from "react-router";
 import { socket } from "../../socket.js";
 import { useRef, useContext, useEffect, useState } from "react";
+import he from "he";
+
 
 import CharacterCount from "./CharacterCount.jsx";
 import UserContext from "../../UserContext.jsx";
@@ -126,7 +128,7 @@ const DirectMessageForm = ({ endOfMsg, setDirectMessages, setValidationErrors })
       <div className={styles.userTypingAndTextareaCont}>
         {!typingUserObj || typingUserObj.isUserTyping == false ? null : (
           <div className={styles.userTypingCont}>
-            <p>{typingUserObj.typingUser} is typing</p>
+            <p>{he.decode(typingUserObj.typingUser)} is typing</p>
             <div className={styles.dotOne}></div>
             <div className={styles.dotTwo}></div>
             <div className={styles.dotThree}></div>

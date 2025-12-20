@@ -1,4 +1,4 @@
-
+import he from "he";
 
 import styles from "../../styles/GroupChatMain.module.css";
 
@@ -30,7 +30,7 @@ const MemberOptionsModal = ({ handleMemberOptsModal, handleRemoveMember, isMembe
                       width={"20"}
                       height={"20px"}
                     />
-                    {`${isMemberOptsOpen.member.profileName}`} from the group?
+                    {`${he.decode(isMemberOptsOpen.member.profileName)}`} from the group?
                   </p>
 
                   <button
@@ -57,7 +57,7 @@ const MemberOptionsModal = ({ handleMemberOptsModal, handleRemoveMember, isMembe
                         width={"20px"}
                         height={"20px"}
                       />
-                      {`${isMemberOptsOpen.member.profileName}`} to admin?
+                      {`${he.decode(isMemberOptsOpen.member.profileName)}`} to admin?
                     </p>
 
                     <button

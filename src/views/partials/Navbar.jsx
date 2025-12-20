@@ -1,6 +1,8 @@
 import { useEffect, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import UserContext from "../../UserContext";
+import he from "he";
+
 
 import NotificationDropdown from "./NotificationDropdown.jsx";
 
@@ -139,7 +141,7 @@ const Navbar = ({ setFriendList }) => {
 
           {!profile ? null : (
             <div className={styles.myHomeLogoutCont}>
-              <Link title={`${profile.profileName}'s Home`} className={styles.linkIconCont} to={"/channel/myhome"}>
+              <Link title={`${he.decode(profile.profileName)}'s Home`} className={styles.linkIconCont} to={"/channel/myhome"}>
                 <img src={homeIcon} alt="home" width={"25px"} height={"25px"} />
                 <p  className={styles.linkPara}>My Home</p>
               </Link>
@@ -182,7 +184,7 @@ const Navbar = ({ setFriendList }) => {
                   width={`30px`}
                   height={`30px`}
                 />
-                <p>{profile.profileName}</p>
+                <p>{he.decode(profile.profileName)}</p>
               </div>
               <button
                 title="Copy friend code to clipboard"

@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import UserContext from "../../UserContext";
+import he from "he";
 
 import styles from "../../styles/NotificationDropdown.module.css";
 import { is } from "date-fns/locale";
@@ -110,7 +111,7 @@ const NotificationDropdown = ({
                     return (
                       <li key={notif.id}>
                         <p>
-                          {notif.Receiver.profileName} accepted your friend
+                          {he.decode(notif.Receiver.profileName)} accepted your friend
                           request!
                         </p>
                         <button className={styles.dismissNotifBtn} onClick={(e) => handleDismissBtn(e, notif.id)}>
@@ -122,7 +123,7 @@ const NotificationDropdown = ({
                     return (
                       <li key={notif.id}>
                         <p>
-                          {notif.Sender.profileName} sent you a friend request!
+                          {he.decode(notif.Sender.profileName)} sent you a friend request!
                         </p>
                         <div className={styles.friendReqBtnCont}>
                           <button

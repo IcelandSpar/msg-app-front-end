@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useContext } from "react";
+import he from "he";
 import UserContext from "../../UserContext.jsx";
 
 import OptionsMenu from "./OptionsMenu.jsx";
@@ -81,9 +82,9 @@ const GroupListItem = ({
           src={`${import.meta.env.VITE_FETCH_BASE_URL}/${
             groupInfo.group.groupImgPath
           }`}
-          alt={`${groupInfo.groupName} Group Chat Image`}
+          alt={`${(groupInfo.groupName)} Group Chat Image`}
         />
-        <h3 className={"navigateToGroupChat"}>{groupInfo.group.groupName}</h3>
+        <h3 className={"navigateToGroupChat"}>{he.decode(groupInfo.group.groupName)}</h3>
       </div>
       {!isUserHomeList ? null : (
         <div onClick={handleOptsBtn} className={styles.moreOptsBtn}>

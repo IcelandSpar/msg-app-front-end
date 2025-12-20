@@ -1,5 +1,7 @@
 import { Link } from "react-router";
 import { useContext } from "react";
+import he from "he";
+
 
 import UserContext from "../../UserContext";
 
@@ -33,7 +35,7 @@ const GroupMembersList = ({ groupMembers, isDirectMessage = false, isAdmin = fal
                   height={"25px"}
                 />
               </Link>
-              <p className={styles.memberName}>{admin.member.profileName}</p>
+              <p className={styles.memberName}>{he.decode(admin.member.profileName)}</p>
               <img
                 className={styles.adminCrownIcon}
                 src={crownIcon}
@@ -65,7 +67,7 @@ const GroupMembersList = ({ groupMembers, isDirectMessage = false, isAdmin = fal
                   />
                 </Link>
 
-                <p className={styles.memberName}>{member.member.profileName}</p>
+                <p className={styles.memberName}>{he.decode(member.member.profileName)}</p>
               </div>
 
               {isAdmin && profile.id != member.profileId ? <img onClick={(e) => handleMemberOptsModal(e, member)} className={styles.optionsBtn} src={optionsBtnIcon} alt="more options" /> : null}

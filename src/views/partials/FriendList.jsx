@@ -1,5 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router";
+import he from "he";
+
 
 import styles from "../../styles/FriendList.module.css";
 import LoadingIcon from "./LoadingIcon.jsx";
@@ -128,8 +130,8 @@ const FriendList = ({ profile, friendList, setFriendList }) => {
                 />
                 <p className={`redirectToDm`}>
                   {profile.id == friend.friendOne.id
-                    ? `${friend.friendTwo.profileName}`
-                    : `${friend.friendOne.profileName}`}
+                    ? `${he.decode(friend.friendTwo.profileName)}`
+                    : `${he.decode(friend.friendOne.profileName)}`}
                 </p>
               </li>
             );

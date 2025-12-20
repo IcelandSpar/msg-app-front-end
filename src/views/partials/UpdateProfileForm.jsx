@@ -1,4 +1,6 @@
 import { useState } from "react";
+import he from "he";
+
 
 import styles from "../../styles/UpdateProfileForm.module.css";
 import saveIcon from "../../assets/save_icon.svg";
@@ -27,7 +29,7 @@ const UpdateProfileForm = ({
             type="text"
             id="profileName"
             name="profileName"
-            value={userProfile.profileName}
+            value={he.decode(userProfile.profileName)}
           />
         </div>
         <div className={styles.labelInputCont}>
@@ -38,7 +40,7 @@ const UpdateProfileForm = ({
             ref={bioInput}
             onChange={handleChangeBioInfo}
             type="text"
-            value={userProfile.bio}
+            value={he.decode(userProfile.bio)}
             name="bio"
             id="bio"
           ></textarea>

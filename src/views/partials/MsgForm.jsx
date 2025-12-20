@@ -1,6 +1,8 @@
 import { useRef, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { socket } from "../../socket";
+import he from "he";
+
 
 import CharacterCount from "./CharacterCount.jsx";
 import UserContext from "../../UserContext";
@@ -131,7 +133,7 @@ const MsgForm = ({ setChatMsgs, endOfMsg, setMsgFormErrors }) => {
           </label>
           {!typingUserObj || typingUserObj.isUserTyping == false ? null : (
             <div className={styles.userTypingCont}>
-              <p>{typingUserObj.typingUser} is typing</p>
+              <p>{he.decode(typingUserObj.typingUser)} is typing</p>
               <div className={styles.dotOne}></div>
               <div className={styles.dotTwo}></div>
               <div className={styles.dotThree}></div>
