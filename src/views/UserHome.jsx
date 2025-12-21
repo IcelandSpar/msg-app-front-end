@@ -176,6 +176,7 @@ const UserHome = () => {
           <SearchGroupModal
             setMemberGroups={setMemberGroups}
             handleSearchGroupModal={handleSearchGroupModal}
+            setIsGroupSearchModalOpen={setIsGroupSearchModalOpen}
           />
         )}
         {!isLoggedIn ? null : (
@@ -204,7 +205,7 @@ const UserHome = () => {
                 src={groupSearchIcon}
                 alt="Search for Groups"
               />
-              <p className={styles.groupSearchPara}>Search Groups</p>
+              <p className={styles.groupSearchPara}>Join Groups</p>
             </button>
             <button
               className={styles.createGroupBtn}

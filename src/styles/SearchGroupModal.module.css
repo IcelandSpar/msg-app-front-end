@@ -130,6 +130,7 @@
   background-color: #708993;
   border-radius: 15px;
   animation: .5s openModal ease-out forwards;
+  border: 3px solid #aed1cc;
 
 }
 

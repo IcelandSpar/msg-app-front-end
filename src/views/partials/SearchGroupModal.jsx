@@ -1,12 +1,13 @@
 import { useState, useRef, useContext } from "react";
 import UserContext from '../../UserContext.jsx';
+import he from "he";
 
 import GroupList from "./GroupList.jsx";
 
 import styles from "../../styles/SearchGroupModal.module.css";
 import groupSearchIcon from "../../assets/group_search_icon.svg";
 
-const SearchGroupModal = ({ handleSearchGroupModal, setMemberGroups }) => {
+const SearchGroupModal = ({ handleSearchGroupModal, setMemberGroups, setIsGroupSearchModalOpen }) => {
   const [groups, setGroups] = useState(null);
   const [ groupToJoin, setGroupToJoin ] = useState(null);
 
@@ -64,6 +65,7 @@ const SearchGroupModal = ({ handleSearchGroupModal, setMemberGroups }) => {
     if((Array.from(e.target.classList))[1] == "searchModalBackground") {
       setGroupToJoin(null);
       handleSearchGroupModal(e);
+      setIsGroupSearchModalOpen(false);
     }
 
 
@@ -100,7 +102,7 @@ const SearchGroupModal = ({ handleSearchGroupModal, setMemberGroups }) => {
             <div className={styles.groupImgAndParaCont}>
               <img className={styles.groupImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${groupToJoin.groupImgPath}`} alt="group image" width={'50px'} height={'50px'}/>
               <p className={styles.joinPara}>Would you like to join</p>
-              <p className={styles.joinPara}>{groupToJoin.groupName}?</p>
+              <p className={styles.joinPara}>{he.decode(groupToJoin.groupName)}?</p>
             </div>
             <div className={styles.joinOrNotBtnCont}>
               <button className={`${styles.noJoinBtn} searchModalBackground`} onClick={handleCloseModals} type="button">Nevermind</button>
