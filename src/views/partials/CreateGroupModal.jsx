@@ -2,9 +2,14 @@ import { useRef, useState } from "react";
 import styles from "../../styles/CreateGroupModal.module.css";
 import createGroupIcon from "../../assets/create_group_icon.svg";
 
-const CreateGroupModal = ({ handleCreateGroupModal, setValidationErrors }) => {
+const CreateGroupModal = ({
+  handleCreateGroupModal,
+  setValidationErrors,
+  setMemberGroups,
+  setIsCreateGroupModalOpen,
+}) => {
   const groupNameInput = useRef(null);
-  const [ selectedFile, setSelectedFile ] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -26,10 +31,11 @@ const CreateGroupModal = ({ handleCreateGroupModal, setValidationErrors }) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        if(res.errors) {
+        if (res.errors) {
           setValidationErrors(res.errors);
         } else {
-          handleCreateGroupModal(e);
+          setMemberGroups(() => res.memberGroups);
+          setIsCreateGroupModalOpen(false);
         }
       });
   };
@@ -37,17 +43,24 @@ const CreateGroupModal = ({ handleCreateGroupModal, setValidationErrors }) => {
   return (
     <div className={`${styles.modalBackground} createGroupClose`}>
       <div className={styles.createGroupModal}>
-        <button className={`${styles.createGroupCloseBtn} createGroupClose`} onClick={handleCreateGroupModal}>X</button>
+        <button
+          className={`${styles.createGroupCloseBtn} createGroupClose`}
+          onClick={handleCreateGroupModal}
+        >
+          X
+        </button>
 
         <form
           onSubmit={handleCreateGroupSubmit}
           className={styles.createGroupModalForm}
-          encType='multipart/form-data'
+          encType="multipart/form-data"
         >
           <div className={styles.modalLabelInputCont}>
-            <label className={styles.formLabels} htmlFor="groupName">Group Chat Name</label>
+            <label className={styles.formLabels} htmlFor="groupName">
+              Group Chat Name
+            </label>
             <input
-            className={styles.groupNameInput}
+              className={styles.groupNameInput}
               ref={groupNameInput}
               type="text"
               id="groupName"
@@ -55,13 +68,28 @@ const CreateGroupModal = ({ handleCreateGroupModal, setValidationErrors }) => {
             />
           </div>
           <div className={styles.modalLabelInputCont}>
-            <label className={styles.formLabels} htmlFor="groupImg">Group Picture</label>
-            <input onChange={handleFileChange} type="file" name="groupImg" id="groupImg" />
+            <label className={styles.formLabels} htmlFor="groupImg">
+              Group Picture
+            </label>
+            <input
+              onChange={handleFileChange}
+              type="file"
+              name="groupImg"
+              id="groupImg"
+            />
           </div>
           <div className={styles.btnsCont}>
-            <button onClick={handleCreateGroupModal} className={styles.createGroupBtn}>
+            <button
+              type="submit"
+              onClick={handleCreateGroupSubmit}
+              className={styles.createGroupBtn}
+            >
               <p className={styles.createGroupBtnPara}>Create Group Chat</p>
-              <img className={styles.createGroupBtnIcon} src={createGroupIcon} alt="create group" />
+              <img
+                className={styles.createGroupBtnIcon}
+                src={createGroupIcon}
+                alt="create group"
+              />
             </button>
           </div>
         </form>

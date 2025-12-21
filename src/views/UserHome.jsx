@@ -170,7 +170,7 @@ const UserHome = () => {
           />
         )}
         {!isCreateGroupModalOpen ? null : (
-          <CreateGroupModal handleCreateGroupModal={handleCreateGroupModal} setValidationErrors={setValidationErrors}/>
+          <CreateGroupModal handleCreateGroupModal={handleCreateGroupModal} setValidationErrors={setValidationErrors} setMemberGroups={setMemberGroups} setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}/>
         )}
         {!isGroupSearchModalOpen ? null : (
           <SearchGroupModal
