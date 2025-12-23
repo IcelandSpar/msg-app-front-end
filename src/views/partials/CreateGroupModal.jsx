@@ -40,8 +40,16 @@ const CreateGroupModal = ({
       });
   };
 
+  const handleCloseModal = (e) => {
+    e.preventDefault();
+    if(Array.from(e.target.classList)[1] == 'createGroupClose') {
+      setIsCreateGroupModalOpen(false);
+    };
+  };
+
+
   return (
-    <div className={`${styles.modalBackground} createGroupClose`}>
+    <div onClick={handleCloseModal} className={`${styles.modalBackground} createGroupClose`}>
       <div className={styles.createGroupModal}>
         <button
           className={`${styles.createGroupCloseBtn} createGroupClose`}
