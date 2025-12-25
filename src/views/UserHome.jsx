@@ -22,14 +22,17 @@ import createGroupIcon from "../assets/create_group_icon.svg";
 
 const UserHome = () => {
   const [memberGroups, setMemberGroups] = useState(null);
+  const [friendList, setFriendList] = useState(null);
+
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
   const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
   const [isReqResModalOpen, setIsReqResModalOpen] = useState(null);
   const [isGroupSearchModalOpen, setIsGroupSearchModalOpen] = useState(false);
-  const [friendList, setFriendList] = useState(null);
+
   const [ isLoadingGroupList, setIsLoadingGroupList ] = useState(true);
   const [ validationErrors, setValidationErrors ] = useState(null);
   const [ isSidebarOpen, setIsSidebarOpen ] = useState(false);
+
 
   const { profile, isLoggedIn } = useContext(UserContext);
 

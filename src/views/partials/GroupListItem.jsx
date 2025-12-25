@@ -5,6 +5,8 @@ import UserContext from "../../UserContext.jsx";
 
 import OptionsMenu from "./OptionsMenu.jsx";
 import ConfirmLeaveGroupModal from "./ConfirmLeaveGroupModal.jsx";
+import ConfirmDeleteGroupModal from "./ConfirmDeleteGroupModal.jsx";
+
 
 import moreVertIcon from "../../assets/more_vert_icon.svg";
 
@@ -17,6 +19,8 @@ const GroupListItem = ({
 }) => {
   const [isOptsOpen, setIsOptsOpen] = useState(false);
   const [isConfirmLeaveOpen, setIsConfirmLeaveOpen] = useState(false);
+  const [isConfirmDeleteGroupModalOpen, setIsConfirmDeleteGroupModalOpen] =
+    useState(null);
 
   const { profile } = useContext(UserContext);
 
@@ -31,12 +35,17 @@ const GroupListItem = ({
     setIsConfirmLeaveOpen(true);
   };
 
+  const handleOpenConfirmDeleteModal = (e) => {
+    e.preventDefault();
+    setIsConfirmDeleteGroupModalOpen((prev) => !prev);
+  };
+  
+
   const handleNevermindBtn = (e) => {
     e.preventDefault();
     setIsOptsOpen(false);
     setIsConfirmLeaveOpen(false);
   };
-
 
   const handleLeaveGroupBtn = (e) => {
     e.preventDefault();
@@ -82,9 +91,11 @@ const GroupListItem = ({
           src={`${import.meta.env.VITE_FETCH_BASE_URL}/${
             groupInfo.group.groupImgPath
           }`}
-          alt={`${(groupInfo.groupName)} Group Chat Image`}
+          alt={`${groupInfo.groupName} Group Chat Image`}
         />
-        <h3 className={"navigateToGroupChat"}>{he.decode(groupInfo.group.groupName)}</h3>
+        <h3 className={"navigateToGroupChat"}>
+          {he.decode(groupInfo.group.groupName)}
+        </h3>
       </div>
       {!isUserHomeList ? null : (
         <div onClick={handleOptsBtn} className={styles.moreOptsBtn}>
@@ -94,13 +105,21 @@ const GroupListItem = ({
               setMemberGroups={setMemberGroups}
               handleOptsBtn={handleOptsBtn}
               handleOpenConfirmModal={handleOpenConfirmModal}
+              handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal}
               groupId={groupInfo.groupId}
-              userRole={groupInfo.role}
+              creatorId={groupInfo.group.creatorId}
             />
           )}
         </div>
       )}
-    {!isConfirmLeaveOpen ? null : <ConfirmLeaveGroupModal handleNevermindBtn={handleNevermindBtn} groupInfo={groupInfo} handleLeaveGroupBtn={handleLeaveGroupBtn}/>}
+      {!isConfirmDeleteGroupModalOpen ? null : <ConfirmDeleteGroupModal groupInfo={groupInfo} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal}/>}
+      {!isConfirmLeaveOpen ? null : (
+        <ConfirmLeaveGroupModal
+          handleNevermindBtn={handleNevermindBtn}
+          groupInfo={groupInfo}
+          handleLeaveGroupBtn={handleLeaveGroupBtn}
+        />
+      )}
     </li>
   );
 };

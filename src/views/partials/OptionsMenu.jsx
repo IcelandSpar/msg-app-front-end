@@ -1,3 +1,5 @@
+import { useContext, useState } from "react";
+import UserContext from "../../UserContext.jsx";
 import he from "he";
 
 
@@ -6,7 +8,11 @@ import styles from "../../styles/OptionsMenu.module.css";
 import leaveGroupIcon from "../../assets/leave_group_icon.svg";
 import deleteIcon from "../../assets/delete_icon.svg";
 
-const OptionsMenu = ({ handleOpenConfirmModal, userRole }) => {
+const OptionsMenu = ({ handleOpenConfirmModal, creatorId, handleOpenConfirmDeleteModal }) => {
+
+  const { profile } = useContext(UserContext);
+
+
   return (
     <div className={styles.optsMenuCont}>
       <button onClick={handleOpenConfirmModal} type="button">
@@ -18,8 +24,9 @@ const OptionsMenu = ({ handleOpenConfirmModal, userRole }) => {
           height={"25px"}
         />
       </button>
-      {userRole == "ADMIN"? (
-        <button>
+
+      {profile.id ==  creatorId ? (
+        <button onClick={handleOpenConfirmDeleteModal} type="button">
           <p>Delete Group</p>
           <img src={deleteIcon} alt="Delete Group" />
         </button>
