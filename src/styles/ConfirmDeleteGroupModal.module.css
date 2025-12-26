@@ -46,7 +46,7 @@
 }
 
 .deleteQuestionParas b {
-  text-decoration: 3px underline;
+  text-decoration: 3px underline #ff0f0f;
   text-underline-offset: 3px;
 }
 

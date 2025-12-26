@@ -112,7 +112,7 @@ const GroupListItem = ({
           )}
         </div>
       )}
-      {!isConfirmDeleteGroupModalOpen ? null : <ConfirmDeleteGroupModal groupInfo={groupInfo} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal}/>}
+      {!isConfirmDeleteGroupModalOpen ? null : <ConfirmDeleteGroupModal groupInfo={groupInfo} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} setMemberGroups={setMemberGroups}/>}
       {!isConfirmLeaveOpen ? null : (
         <ConfirmLeaveGroupModal
           handleNevermindBtn={handleNevermindBtn}
