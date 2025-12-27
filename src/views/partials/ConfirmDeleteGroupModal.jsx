@@ -32,8 +32,15 @@ const ConfirmDeleteGroupModal = ({ handleOpenConfirmDeleteModal, groupInfo, setM
 
   };
 
+  const closeDeleteModal = (e) => {
+    e.preventDefault();
+    if(Array.from(e.target.classList)[1] == 'closeDeleteModal') {
+      handleOpenConfirmDeleteModal(e);
+    }
+  };
+
   return (
-    <div className={styles.confirmLeaveBackground}>
+    <div onClick={closeDeleteModal} className={`${styles.confirmLeaveBackground} closeDeleteModal`}>
       <div className={styles.confirmLeaveModal}>
         <p className={styles.deleteQuestionParas}>Are you sure you want to <b>permanently delete</b></p>
         <p className={styles.groupName}><b>{he.decode(groupInfo.group.groupName)}?</b></p>

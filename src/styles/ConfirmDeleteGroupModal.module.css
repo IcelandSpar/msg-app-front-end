@@ -27,7 +27,6 @@
   gap: 1rem;
   align-items: center;
 
-
   position: relative;
   background-color: #708993;
   top: 50%;
@@ -38,6 +37,7 @@
   text-align: center;
   border-radius: 15px;
   border: 3px solid #aed1cc;
+  animation: .3s openModal ease-out forwards;
 
 }
 
@@ -98,4 +98,16 @@
 
 .yesLeaveBtn:hover {
   transform: scale(105%);
+}
+
+@keyframes openModal {
+  from {
+    opacity: 0;
+    transform: translateY(-100%) translateX(-50%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(-50%);
+  }
 }
