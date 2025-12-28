@@ -8,6 +8,7 @@ import UserContext from "../UserContext.jsx";
 import LoadingIcon from "./partials/LoadingIcon.jsx";
 import GroupChatMessages from "./partials/GroupChatMessages";
 import GroupMembersList from "./partials/GroupMembersList.jsx";
+import OptsAndChatSidebar from "./partials/OptsAndChatSidebar.jsx";
 import MemberOptionsModal from "./partials/MemberOptionsModal.jsx";
 import ValidationErrModal from "./partials/ValidationErrModal.jsx";
 
@@ -292,6 +293,7 @@ const GroupChatMain = () => {
         <div className={styles.navbarCont}>
           <Navbar />
         </div>
+        <OptsAndChatSidebar/>
         {!isMemberOptsOpen ? null : (
           <MemberOptionsModal handleMemberOptsModal={handleMemberOptsModal} handleRemoveMember={handleRemoveMember} isMemberOptsOpen={isMemberOptsOpen} handlePromoteMember={handlePromoteMember} profile={profile}/>
         )}

@@ -1,0 +1,55 @@
+.chatsAndOptsSidebar {
+  padding: 1rem .5rem;
+  grid-column: 1 / 2;
+  grid-template-rows: 2 / 3;
+  height: 100%;
+  margin: 0 0 0 auto;
+  max-width: 250px;
+  width: 100%;
+}
+
+.groupActionBtns {
+  display: flex;
+  justify-content: flex-start;
+  gap: .5rem;
+}
+
+.settingsBtn, .addMemberBtn {
+  background-color: #a1c2bd;
+  border-radius: 50%;
+  padding: 0.3rem;
+  border: 3px solid #a1c2bd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.settingsBtn:hover img {
+  animation: 2.5s spin forwards infinite;
+
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(90deg);
+
+  }
+
+  50% {
+    transform: rotate(180deg);
+
+  }
+
+  75% {
+    transform: rotate(270deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
