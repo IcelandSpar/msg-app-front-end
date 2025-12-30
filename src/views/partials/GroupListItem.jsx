@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useContext } from "react";
 import he from "he";
 import UserContext from "../../UserContext.jsx";
+import { handleNevermindBtn, handleLeaveGroupBtn } from "../../utils/groupSettings.js";
+
 
 import OptionsMenu from "./OptionsMenu.jsx";
 import ConfirmLeaveGroupModal from "./ConfirmLeaveGroupModal.jsx";
@@ -29,53 +31,7 @@ const GroupListItem = ({
     setIsOptsOpen((prev) => !prev);
   };
 
-  const handleOpenConfirmModal = (e) => {
-    e.preventDefault();
-    setIsOptsOpen(false);
-    setIsConfirmLeaveOpen(true);
-  };
 
-  const handleOpenConfirmDeleteModal = (e) => {
-    e.preventDefault();
-    setIsConfirmDeleteGroupModalOpen((prev) => !prev);
-  };
-  
-
-  const handleNevermindBtn = (e) => {
-    e.preventDefault();
-    setIsOptsOpen(false);
-    setIsConfirmLeaveOpen(false);
-  };
-
-  const handleLeaveGroupBtn = (e) => {
-    e.preventDefault();
-
-    const token = sessionStorage.getItem("msgAppToken");
-    if (token && profile) {
-      fetch(
-        `${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/leave-group/${
-          profile.id
-        }/${groupInfo.groupId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          method: "POST",
-        }
-      )
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.success) {
-            setIsOptsOpen(false);
-            setIsConfirmLeaveOpen(false);
-
-            setMemberGroups((prev) =>
-              prev.filter((item) => item.groupId != res.removedMember.groupId)
-            );
-          }
-        });
-    }
-  };
 
   return (
     <li
@@ -102,11 +58,8 @@ const GroupListItem = ({
           <img src={moreVertIcon} alt="more options" />
           {!isOptsOpen ? null : (
             <OptionsMenu
-              setMemberGroups={setMemberGroups}
-              handleOptsBtn={handleOptsBtn}
-              handleOpenConfirmModal={handleOpenConfirmModal}
-              handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal}
-              groupId={groupInfo.groupId}
+              setIsOptsOpen={setIsOptsOpen}
+              setIsConfirmLeaveOpen={setIsConfirmLeaveOpen}
               creatorId={groupInfo.group.creatorId}
             />
           )}
@@ -118,6 +71,9 @@ const GroupListItem = ({
           handleNevermindBtn={handleNevermindBtn}
           groupInfo={groupInfo}
           handleLeaveGroupBtn={handleLeaveGroupBtn}
+          setIsOptsOpen={setIsOptsOpen}
+          setIsConfirmLeaveOpen={setIsConfirmLeaveOpen}
+          setMemberGroups={setMemberGroups}
         />
       )}
     </li>

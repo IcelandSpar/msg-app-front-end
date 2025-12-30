@@ -2,20 +2,22 @@ import { useContext, useState } from "react";
 import UserContext from "../../UserContext.jsx";
 import he from "he";
 
+import { handleOpenConfirmModal, handleOpenConfirmDeleteModal } from "../../utils/groupSettings.js";
+
 
 import styles from "../../styles/OptionsMenu.module.css";
 
 import leaveGroupIcon from "../../assets/leave_group_icon.svg";
 import deleteIcon from "../../assets/delete_icon.svg";
 
-const OptionsMenu = ({ handleOpenConfirmModal, creatorId, handleOpenConfirmDeleteModal }) => {
+const OptionsMenu = ({ creatorId, setIsOptsOpen, setIsConfirmLeaveOpen }) => {
 
   const { profile } = useContext(UserContext);
 
 
   return (
     <div className={styles.optsMenuCont}>
-      <button onClick={handleOpenConfirmModal} type="button">
+      <button onClick={(e) => handleOpenConfirmModal(e, setIsOptsOpen, setIsConfirmLeaveOpen)} type="button">
         <p>Leave Group</p>
         <img
           src={leaveGroupIcon}
