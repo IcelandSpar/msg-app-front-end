@@ -10,7 +10,7 @@ import styles from "../../styles/OptionsMenu.module.css";
 import leaveGroupIcon from "../../assets/leave_group_icon.svg";
 import deleteIcon from "../../assets/delete_icon.svg";
 
-const OptionsMenu = ({ creatorId, setIsOptsOpen, setIsConfirmLeaveOpen }) => {
+const OptionsMenu = ({ creatorId, setIsOptsOpen, setIsConfirmLeaveOpen, setIsConfirmDeleteGroupModalOpen }) => {
 
   const { profile } = useContext(UserContext);
 
@@ -28,7 +28,7 @@ const OptionsMenu = ({ creatorId, setIsOptsOpen, setIsConfirmLeaveOpen }) => {
       </button>
 
       {profile.id ==  creatorId ? (
-        <button onClick={handleOpenConfirmDeleteModal} type="button">
+        <button onClick={(e) => handleOpenConfirmDeleteModal(e, setIsConfirmDeleteGroupModalOpen)} type="button">
           <p>Delete Group</p>
           <img src={deleteIcon} alt="Delete Group" />
         </button>

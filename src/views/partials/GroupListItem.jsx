@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import he from "he";
 import UserContext from "../../UserContext.jsx";
-import { handleNevermindBtn, handleLeaveGroupBtn } from "../../utils/groupSettings.js";
+import { handleNevermindBtn, handleLeaveGroupBtn, handleOpenConfirmDeleteModal } from "../../utils/groupSettings.js";
 
 
 import OptionsMenu from "./OptionsMenu.jsx";
@@ -21,8 +21,7 @@ const GroupListItem = ({
 }) => {
   const [isOptsOpen, setIsOptsOpen] = useState(false);
   const [isConfirmLeaveOpen, setIsConfirmLeaveOpen] = useState(false);
-  const [isConfirmDeleteGroupModalOpen, setIsConfirmDeleteGroupModalOpen] =
-    useState(null);
+  const [isConfirmDeleteGroupModalOpen, setIsConfirmDeleteGroupModalOpen] = useState(false);
 
   const { profile } = useContext(UserContext);
 
@@ -60,12 +59,13 @@ const GroupListItem = ({
             <OptionsMenu
               setIsOptsOpen={setIsOptsOpen}
               setIsConfirmLeaveOpen={setIsConfirmLeaveOpen}
+              setIsConfirmDeleteGroupModalOpen={setIsConfirmDeleteGroupModalOpen}
               creatorId={groupInfo.group.creatorId}
             />
           )}
         </div>
       )}
-      {!isConfirmDeleteGroupModalOpen ? null : <ConfirmDeleteGroupModal groupInfo={groupInfo} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} setMemberGroups={setMemberGroups}/>}
+      {!isConfirmDeleteGroupModalOpen ? null : <ConfirmDeleteGroupModal groupInfo={groupInfo} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} setIsConfirmDeleteGroupModalOpen={setIsConfirmDeleteGroupModalOpen} setMemberGroups={setMemberGroups}/>}
       {!isConfirmLeaveOpen ? null : (
         <ConfirmLeaveGroupModal
           handleNevermindBtn={handleNevermindBtn}

@@ -8,11 +8,13 @@ import {
 } from "../../utils/groupSettings.js";
 
 import ConfirmLeaveGroupModal from "./ConfirmLeaveGroupModal.jsx";
+import ConfirmDeleteGroupModal from "./ConfirmDeleteGroupModal.jsx";
 
 import styles from "../../styles/GroupOptionsModal.module.css";
 
 const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen }) => {
   const [isConfirmLeaveOpen, setIsConfirmLeaveOpen] = useState(false);
+  const [ isConfirmDeleteGroupModalOpen, setIsConfirmDeleteGroupModalOpen ] = useState(false);
 
 
 
@@ -27,6 +29,17 @@ const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen }) => {
           handleLeaveGroupBtn={handleLeaveGroupBtn}
           setIsOptsOpen={setIsOptsModalOpen}
           setIsConfirmLeaveOpen={setIsConfirmLeaveOpen}
+          setMemberGroups={null}
+        />
+      )}
+      {!isConfirmDeleteGroupModalOpen ? null : (
+        <ConfirmDeleteGroupModal
+          groupInfo={{
+            groupInfo,
+            group: groupInfo,
+          }}
+          handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal}
+          setIsConfirmDeleteGroupModalOpen={setIsConfirmDeleteGroupModalOpen}
           setMemberGroups={null}
         />
       )}
@@ -65,7 +78,7 @@ const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen }) => {
           </li>
           <li className={styles.groupOptsLi}>
             <p>Delete {!groupInfo ? null : groupInfo.groupName}?</p>
-            <button className={styles.deleteGroupBtn}>
+            <button onClick={(e) => handleOpenConfirmDeleteModal(e, setIsConfirmDeleteGroupModalOpen)} className={styles.deleteGroupBtn}>
               <p>Delete</p>
             </button>
           </li>
