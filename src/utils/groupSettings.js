@@ -18,7 +18,12 @@ const handleOpenConfirmDeleteModal = (e, setIsConfirmDeleteGroupModalOpen) => {
 const handleNevermindBtn = (e, setIsOptsOpen, setIsConfirmLeaveOpen) => {
   e.preventDefault();
   setIsOptsOpen(false);
-  setIsConfirmLeaveOpen(false);
+  if(!setIsConfirmLeaveOpen) {
+    null
+  } else {
+    setIsConfirmLeaveOpen(false);
+
+  }
 };
 
 const handleLeaveGroupBtn = (

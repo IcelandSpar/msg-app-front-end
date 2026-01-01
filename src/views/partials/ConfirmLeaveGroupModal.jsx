@@ -18,7 +18,7 @@ const ConfirmLeaveGroupModal = ({
   const closeLeaveModal = (e) => {
     e.preventDefault();
     if (Array.from(e.target.classList)[1] == "closeLeaveGroupModal") {
-      handleNevermindBtn(e);
+      handleNevermindBtn(e, setIsConfirmLeaveOpen);
     }
   };
 

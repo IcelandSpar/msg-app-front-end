@@ -16,6 +16,11 @@ const ConfirmDeleteGroupModal = ({ groupInfo, setIsConfirmDeleteGroupModalOpen, 
     }
   };
 
+  const handleNevermindBtn = (e) => {
+    e.preventDefault;
+    setIsConfirmDeleteGroupModalOpen(false);
+  }
+
   return (
     <div onClick={closeDeleteModal} className={`${styles.confirmLeaveBackground} closeDeleteModal`}>
       <div className={styles.confirmLeaveModal}>
@@ -24,7 +29,7 @@ const ConfirmDeleteGroupModal = ({ groupInfo, setIsConfirmDeleteGroupModalOpen, 
         <p>All messages will be deleted!</p>
         <img className={styles.groupImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${groupInfo.group.groupImgPath}`} alt="group image" width={'100px'} height={'100px'}/>
         <div className={styles.leaveBtnsCont}>
-          <button onClick={(e) => handleOpenConfirmDeleteModal(e)} className={`${styles.noLeaveBtn} closeDeleteModal`} type="button">Nevermind</button>
+          <button onClick={handleNevermindBtn} className={`${styles.noLeaveBtn}`} type="button">Nevermind</button>
           <button onClick={(e) => handleDeleteGroup(e, profile.id, groupInfo, setMemberGroups, setIsConfirmDeleteGroupModalOpen)} className={styles.yesLeaveBtn} type="button">Delete Group</button>
         </div>
       </div>

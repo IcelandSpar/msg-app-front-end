@@ -16,10 +16,14 @@ const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen }) => {
   const [isConfirmLeaveOpen, setIsConfirmLeaveOpen] = useState(false);
   const [ isConfirmDeleteGroupModalOpen, setIsConfirmDeleteGroupModalOpen ] = useState(false);
 
-
+  const handleCloseOptsModal = (e) => {
+    if(Array.from(e.target.classList)[1] == 'closeOptsModal') {
+      setIsOptsModalOpen((prev) => !prev);
+    }
+  };
 
   return (
-    <div className={styles.optsModalBackground}>
+    <div onClick={handleCloseOptsModal} className={`${styles.optsModalBackground} closeOptsModal`}>
       {!isConfirmLeaveOpen ? null : (
         <ConfirmLeaveGroupModal
           handleNevermindBtn={handleNevermindBtn}
