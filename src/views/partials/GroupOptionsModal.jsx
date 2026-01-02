@@ -7,6 +7,7 @@ import {
   handleLeaveGroupBtn,
 } from "../../utils/groupSettings.js";
 
+import EditGroupNameInput from "./EditGroupNameInput.jsx";
 import ConfirmLeaveGroupModal from "./ConfirmLeaveGroupModal.jsx";
 import ConfirmDeleteGroupModal from "./ConfirmDeleteGroupModal.jsx";
 
@@ -15,12 +16,20 @@ import styles from "../../styles/GroupOptionsModal.module.css";
 const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen }) => {
   const [isConfirmLeaveOpen, setIsConfirmLeaveOpen] = useState(false);
   const [ isConfirmDeleteGroupModalOpen, setIsConfirmDeleteGroupModalOpen ] = useState(false);
+  const [ isEditNameInputOpen, setIsEditNameInputOpen ] = useState(false);
+
+  const toggleEditNameInput = (e) => {
+    e.preventDefault();
+    setIsEditNameInputOpen((prev) => !prev);
+  };
+
 
   const handleCloseOptsModal = (e) => {
     if(Array.from(e.target.classList)[1] == 'closeOptsModal') {
       setIsOptsModalOpen((prev) => !prev);
     }
   };
+
 
   return (
     <div onClick={handleCloseOptsModal} className={`${styles.optsModalBackground} closeOptsModal`}>
@@ -61,9 +70,10 @@ const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen }) => {
         <ul className={styles.groupOptsUl}>
           <li className={styles.groupOptsLi}>
             <p>Edit group name?</p>
-            <button className={styles.groupOptsBtn}>
-              <p>Edit</p>
+            <button onClick={toggleEditNameInput} className={styles.groupOptsBtn}>
+              <p>{!isEditNameInputOpen ? "Edit" : "Close"}</p>
             </button>
+            { !isEditNameInputOpen ? null : <EditGroupNameInput groupName={groupInfo.groupName}/> }
           </li>
           <li className={styles.groupOptsLi}>
             <p>Leave {!groupInfo ? null : groupInfo.groupName}?</p>
