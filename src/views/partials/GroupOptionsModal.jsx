@@ -13,7 +13,7 @@ import ConfirmDeleteGroupModal from "./ConfirmDeleteGroupModal.jsx";
 
 import styles from "../../styles/GroupOptionsModal.module.css";
 
-const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen }) => {
+const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen, setGroupInfo }) => {
   const [isConfirmLeaveOpen, setIsConfirmLeaveOpen] = useState(false);
   const [ isConfirmDeleteGroupModalOpen, setIsConfirmDeleteGroupModalOpen ] = useState(false);
   const [ isEditNameInputOpen, setIsEditNameInputOpen ] = useState(false);
@@ -73,7 +73,7 @@ const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen }) => {
             <button onClick={toggleEditNameInput} className={styles.groupOptsBtn}>
               <p>{!isEditNameInputOpen ? "Edit" : "Close"}</p>
             </button>
-            { !isEditNameInputOpen ? null : <EditGroupNameInput groupName={groupInfo.groupName}/> }
+            { !isEditNameInputOpen ? null : <EditGroupNameInput groupInfo={groupInfo} handleToggleInput={toggleEditNameInput} setGroupInfo={setGroupInfo}/> }
           </li>
           <li className={styles.groupOptsLi}>
             <p>Leave {!groupInfo ? null : groupInfo.groupName}?</p>

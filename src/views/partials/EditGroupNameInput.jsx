@@ -1,29 +1,73 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
+
+import UserContext from "../../UserContext.jsx";
+
 import styles from "../../styles/EditGroupNameInput.module.css";
 
-const EditGroupNameInput = ({ groupName, handleToggleInput }) => {
+const EditGroupNameInput = ({ groupInfo, handleToggleInput, setGroupInfo }) => {
   const groupNameInput = useRef(null);
-  const [ groupNameInputVal, setGroupNameInputVal ] = useState(groupName);
-  
+  const [groupNameInputVal, setGroupNameInputVal] = useState(groupInfo.groupName);
 
-  const handleSubmitGroupName = (e) => {
-    e.preventDefault();
-  };
+  const { profile } = useContext(UserContext);
 
   const handleOnChangeInput = (e) => {
     e.preventDefault();
     setGroupNameInputVal(groupNameInput.current.value);
-  }
+  };
 
+  const handleSubmitGroupName = (e) => {
+    e.preventDefault();
 
+    const token = sessionStorage.getItem("msgAppToken");
+
+    if (token) {
+
+      const formData = new FormData();
+      formData.append('groupName', groupNameInput.current.value);
+
+      fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/update-group-name/${groupInfo.id}/${profile.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        method: "PUT",
+        body: new URLSearchParams(formData),
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        if(res.success) {
+          handleToggleInput(e);
+          setGroupInfo({
+            ...groupInfo,
+            groupName: groupNameInput.current.value,
+          })
+        }
+
+      })
+      .catch((err) => console.error(err));
+    }
+  };
 
   return (
     <div className={styles.editInputForm}>
       <div className={styles.labelAndInputCont}>
         <label htmlFor="groupName">Group Name:</label>
-        <input onChange={handleOnChangeInput} className={styles.groupNameInput} type="text" ref={groupNameInput} value={groupNameInputVal}/>
+        <input
+          onChange={handleOnChangeInput}
+          className={styles.groupNameInput}
+          type="text"
+          id="groupName"
+          name="groupName"
+          ref={groupNameInput}
+          value={groupNameInputVal}
+        />
       </div>
-      <button className={styles.updateBtn} onClick={handleSubmitGroupName} type="button">Update</button>
+      <button
+        className={styles.updateBtn}
+        onClick={handleSubmitGroupName}
+        type="button"
+      >
+        Update
+      </button>
     </div>
   );
 };

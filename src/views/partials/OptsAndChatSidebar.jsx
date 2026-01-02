@@ -45,7 +45,7 @@ const OptsAndChatSidebar = () => {
         <h2>{groupInfo.groupName}</h2>
       )}
       {!isOptsModalOpen ? null : (
-        <GroupOptionsModal groupInfo={groupInfo} setIsOptsModalOpen={setIsOptsModalOpen}/>
+        <GroupOptionsModal groupInfo={groupInfo} setIsOptsModalOpen={setIsOptsModalOpen} setGroupInfo={setGroupInfo}/>
       )}
       <div className={styles.groupActionBtns}>
         <button
