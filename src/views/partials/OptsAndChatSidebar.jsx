@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 
-import { handleOptsModal } from "../../utils/groupSettings.js";
+import { handleOptsModal, fetchGroupInfo } from "../../utils/groupSettings.js";
 
 import GroupOptionsModal from "./GroupOptionsModal.jsx";
 
@@ -20,23 +20,9 @@ const OptsAndChatSidebar = () => {
   const { groupId } = useParams();
 
 
+
   useEffect(() => {
-    const token = sessionStorage.getItem("msgAppToken");
-    if (token) {
-      fetch(
-        `${
-          import.meta.env.VITE_FETCH_BASE_URL
-        }/group-actions/get-group-info/${groupId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          method: 'GET',
-        }
-      )
-      .then((res) => res.json())
-      .then((res) => setGroupInfo(res));
-    }
+    fetchGroupInfo(groupId, setGroupInfo);
   }, []);
 
   return (

@@ -1,4 +1,24 @@
 
+  const fetchGroupInfo = (groupId, setGroupInfo) => {
+    const token = sessionStorage.getItem("msgAppToken");
+    if (token) {
+      fetch(
+        `${
+          import.meta.env.VITE_FETCH_BASE_URL
+        }/group-actions/get-group-info/${groupId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          method: 'GET',
+        }
+      )
+      .then((res) => res.json())
+      .then((res) => setGroupInfo(res));
+    }
+  };
+
+
 const handleOptsModal = (e, setIsOptsModalOpen) => {
   e.preventDefault();
   setIsOptsModalOpen((prev) => !prev);
@@ -25,6 +45,7 @@ const handleNevermindBtn = (e, setIsOptsOpen, setIsConfirmLeaveOpen) => {
 
   }
 };
+
 
 const handleLeaveGroupBtn = (
   e,
@@ -99,6 +120,7 @@ const handleLeaveGroupBtn = (
   };
 
 export {
+  fetchGroupInfo,
   handleOptsModal,
   handleOpenConfirmModal,
   handleOpenConfirmDeleteModal,

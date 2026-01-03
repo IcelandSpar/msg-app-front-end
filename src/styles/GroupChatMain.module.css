@@ -9,8 +9,12 @@
   padding-bottom: 1rem;
 }
 
-.sidebarBtn {
+
+.sidebarBtnsCont {
   display: none;
+}
+
+.sidebarBtn {
   grid-row: 2 / 3;
   grid-column: 2 / 3;
   justify-self: end;
@@ -43,6 +47,14 @@
   grid-column: 1 / 4;
   align-self: stretch;
 }
+
+.optsAndChatSidebar {
+  height: 100%;
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+
+
 
 .memberOptsModalBackground {
   position: absolute;
@@ -289,8 +301,21 @@
     
   }
 
+  .sidebarBtnsCont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    max-width: 100vw;
+  }
+
+  .settingsAndChatSideImg {
+  transform: rotate(180deg);
+}
+
   .sidebarBtn {
-    display: block;
+
   }
 
   .groupChatMsgsCont {
@@ -298,6 +323,10 @@
   }
 
   .groupMembersCont {
+    display: none;
+  }
+
+  .optsAndChatSidebar {
     display: none;
   }
 
@@ -318,18 +347,21 @@
   }
 
 
+  .sidebarBtnsCont {
+    grid-column: 1 / 2;
+  }
 
 
   .navbarCont {
     grid-column: 1 / 2;
   }
 
-  .sidebarBtn {
+  /* .sidebarBtn {
     display: block;
     grid-column: 1/ 2;
     margin-right: 1rem;
 
-  }
+  } */
 
   .groupChatMsgsCont {
     grid-column: 1 / 2;

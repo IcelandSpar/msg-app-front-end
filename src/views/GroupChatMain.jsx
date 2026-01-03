@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router";
 import { socket } from "../socket.js";
+import { fetchGroupInfo } from "../utils/groupSettings.js";
 
 import Navbar from "./partials/Navbar.jsx";
 import MsgForm from "./partials/MsgForm.jsx";
@@ -14,6 +15,7 @@ import ValidationErrModal from "./partials/ValidationErrModal.jsx";
 
 import styles from "../styles/GroupChatMain.module.css";
 
+import viewSidebar from "../assets/view_sidebar.svg";
 import sidebarMenu from "../assets/sidebar_menu_icon.svg";
 
 const GroupChatMain = () => {
@@ -28,6 +30,7 @@ const GroupChatMain = () => {
   const [isCloseAnimToggle, setIsCloseAnimToggle] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isMemberOptsOpen, setIsMemberOptsOpen] = useState(null);
+  const [ groupInfo, setGroupInfo ] = useState(null);
 
   const { groupId } = useParams();
 
@@ -114,7 +117,6 @@ const GroupChatMain = () => {
       )
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
           if (res.promotedMember) {
             setGroupMembers({
               ...groupMembers,
@@ -189,7 +191,9 @@ const GroupChatMain = () => {
       }
     )
       .then((res) => res.json())
-      .then((res) => setIsAdmin(res.isAdmin))
+      .then((res) => {
+        setIsAdmin(res.isAdmin);
+      })
       .catch((err) => console.error(err));
   };
 
@@ -218,6 +222,7 @@ const GroupChatMain = () => {
           if(res.isMember) {
             fetchChatMsgs(token);
             fetchGroupMembers(token);
+            fetchGroupInfo(groupId, setGroupInfo);
             checkIfAdmin(token);
           } else {
             navigate('/channel/myhome');
@@ -293,17 +298,25 @@ const GroupChatMain = () => {
         <div className={styles.navbarCont}>
           <Navbar />
         </div>
-        <OptsAndChatSidebar/>
+        <aside className={styles.optsAndChatSidebar}>
+          <OptsAndChatSidebar/>
+        </aside>
         {!isMemberOptsOpen ? null : (
           <MemberOptionsModal handleMemberOptsModal={handleMemberOptsModal} handleRemoveMember={handleRemoveMember} isMemberOptsOpen={isMemberOptsOpen} handlePromoteMember={handlePromoteMember} profile={profile}/>
         )}
-        <button
-          onClick={handleGroupMemberSidebarBtn}
-          className={styles.sidebarBtn}
-          type="button"
-        >
-          <img src={sidebarMenu} alt="Sidebar" width={"25px"} height={"25px"} />
-        </button>
+        <div className={styles.sidebarBtnsCont}>
+          <button className={styles.sidebarBtn} type="button">
+            <img className={styles.settingsAndChatSideImg} src={viewSidebar} alt="Open Settings and Chat Sidebar" width={"25px"} height={"25px"}/>
+          </button>
+          {groupInfo ? <h2>{groupInfo.groupName}</h2> : null}
+          <button
+            onClick={handleGroupMemberSidebarBtn}
+            className={styles.sidebarBtn}
+            type="button"
+          >
+            <img src={sidebarMenu} alt="Members sidebar" width={"25px"} height={"25px"} />
+          </button>
+        </div>
         {!isMemberSidebarOpen ? null : (
           <div className={styles.groupMemberSidebarBackground}>
             <aside
