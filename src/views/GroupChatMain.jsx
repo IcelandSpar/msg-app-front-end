@@ -12,10 +12,12 @@ import GroupMembersList from "./partials/GroupMembersList.jsx";
 import OptsAndChatSidebar from "./partials/OptsAndChatSidebar.jsx";
 import MemberOptionsModal from "./partials/MemberOptionsModal.jsx";
 import ValidationErrModal from "./partials/ValidationErrModal.jsx";
+import GroupSettingsSidebarBtn from "./partials/GroupSettingsSidebarBtn.jsx";
+import GroupSettingsCollapsasbleSidebar from "./partials/GroupSettingsCollapsableSidebar.jsx";
+
 
 import styles from "../styles/GroupChatMain.module.css";
 
-import viewSidebar from "../assets/view_sidebar.svg";
 import sidebarMenu from "../assets/sidebar_menu_icon.svg";
 
 const GroupChatMain = () => {
@@ -27,6 +29,8 @@ const GroupChatMain = () => {
   const [isLoadingMembers, setIsLoadingMembers] = useState(true);
   const [msgFormErrors, setMsgFormErrors] = useState(null);
   const [isMemberSidebarOpen, setIsMemberSidebarOpen] = useState(false);
+  const [ isGroupSettingsSidebarOpen, setIsGroupSettingsSidebarOpen ] = useState(false);
+  const [ isGroupSidebarCloseAnimToggle, setIsGroupSidebarCloseAnimToggle ] = useState(false);
   const [isCloseAnimToggle, setIsCloseAnimToggle] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isMemberOptsOpen, setIsMemberOptsOpen] = useState(null);
@@ -299,15 +303,13 @@ const GroupChatMain = () => {
           <Navbar />
         </div>
         <aside className={styles.optsAndChatSidebar}>
-          <OptsAndChatSidebar/>
+          <OptsAndChatSidebar groupInfo={groupInfo} setGroupInfo={setGroupInfo}/>
         </aside>
         {!isMemberOptsOpen ? null : (
           <MemberOptionsModal handleMemberOptsModal={handleMemberOptsModal} handleRemoveMember={handleRemoveMember} isMemberOptsOpen={isMemberOptsOpen} handlePromoteMember={handlePromoteMember} profile={profile}/>
         )}
         <div className={styles.sidebarBtnsCont}>
-          <button className={styles.sidebarBtn} type="button">
-            <img className={styles.settingsAndChatSideImg} src={viewSidebar} alt="Open Settings and Chat Sidebar" width={"25px"} height={"25px"}/>
-          </button>
+          <GroupSettingsSidebarBtn isGroupSettingsSidebarOpen={isGroupSettingsSidebarOpen} setIsGroupSettingsSidebarOpen={setIsGroupSettingsSidebarOpen} setIsGroupSidebarCloseAnimToggle ={setIsGroupSidebarCloseAnimToggle}/>
           {groupInfo ? <h2>{groupInfo.groupName}</h2> : null}
           <button
             onClick={handleGroupMemberSidebarBtn}
@@ -349,6 +351,11 @@ const GroupChatMain = () => {
             </aside>
           </div>
         )}
+        {
+          !isGroupSettingsSidebarOpen ? null : (
+            <GroupSettingsCollapsasbleSidebar isGroupSidebarCloseAnimToggle={isGroupSidebarCloseAnimToggle} isGroupSettingsSidebarOpen={isGroupSettingsSidebarOpen} setIsGroupSettingsSidebarOpen={setIsGroupSettingsSidebarOpen} setIsGroupSidebarCloseAnimToggle ={setIsGroupSidebarCloseAnimToggle}/>
+          )
+        }
         {!msgFormErrors ? null : (
           <ValidationErrModal
             closeMsgHandler={handleCloseErrMsg}

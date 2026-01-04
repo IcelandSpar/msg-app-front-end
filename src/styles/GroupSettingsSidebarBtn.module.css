@@ -1,0 +1,14 @@
+.sidebarBtn {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+  justify-self: end;
+  margin: 1rem 0;
+  padding: none;
+}
+.sidebarBtn, .innerSidebarBtn {
+  cursor: pointer;
+
+  background-color: #708993;
+  padding: .5rem 1rem;
+  border-radius: 7px;
+}

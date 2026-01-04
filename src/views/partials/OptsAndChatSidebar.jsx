@@ -11,9 +11,8 @@ import optionsIcon from "../../assets/settings_icon.svg";
 import addChatIcon from "../../assets/add_chat_icon.svg";
 import addMemberIcon from "../../assets/add_friend_icon.svg";
 
-const OptsAndChatSidebar = () => {
+const OptsAndChatSidebar = ({ groupInfo, setGroupInfo }) => {
   const [isOptsModalOpen, setIsOptsModalOpen] = useState(false);
-  const [ groupInfo, setGroupInfo ]= useState(null);
   const [ isConfirmLeaveOpen, setIsConfirmLeaveOpen ] = useState(false);
   const [ isConfirmDeleteGroupModalOpen, setIsConfirmDeleteGroupModalOpen ] = useState(false);
 

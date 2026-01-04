@@ -2,13 +2,15 @@ import { useState } from "react";
 import { useContext } from "react";
 import he from "he";
 import UserContext from "../../UserContext.jsx";
-import { handleNevermindBtn, handleLeaveGroupBtn, handleOpenConfirmDeleteModal } from "../../utils/groupSettings.js";
-
+import {
+  handleNevermindBtn,
+  handleLeaveGroupBtn,
+  handleOpenConfirmDeleteModal,
+} from "../../utils/groupSettings.js";
 
 import OptionsMenu from "./OptionsMenu.jsx";
 import ConfirmLeaveGroupModal from "./ConfirmLeaveGroupModal.jsx";
 import ConfirmDeleteGroupModal from "./ConfirmDeleteGroupModal.jsx";
-
 
 import moreVertIcon from "../../assets/more_vert_icon.svg";
 
@@ -21,7 +23,8 @@ const GroupListItem = ({
 }) => {
   const [isOptsOpen, setIsOptsOpen] = useState(false);
   const [isConfirmLeaveOpen, setIsConfirmLeaveOpen] = useState(false);
-  const [isConfirmDeleteGroupModalOpen, setIsConfirmDeleteGroupModalOpen] = useState(false);
+  const [isConfirmDeleteGroupModalOpen, setIsConfirmDeleteGroupModalOpen] =
+    useState(false);
 
   const { profile } = useContext(UserContext);
 
@@ -29,8 +32,6 @@ const GroupListItem = ({
     e.preventDefault();
     setIsOptsOpen((prev) => !prev);
   };
-
-
 
   return (
     <li
@@ -59,13 +60,22 @@ const GroupListItem = ({
             <OptionsMenu
               setIsOptsOpen={setIsOptsOpen}
               setIsConfirmLeaveOpen={setIsConfirmLeaveOpen}
-              setIsConfirmDeleteGroupModalOpen={setIsConfirmDeleteGroupModalOpen}
+              setIsConfirmDeleteGroupModalOpen={
+                setIsConfirmDeleteGroupModalOpen
+              }
               creatorId={groupInfo.group.creatorId}
             />
           )}
         </div>
       )}
-      {!isConfirmDeleteGroupModalOpen ? null : <ConfirmDeleteGroupModal groupInfo={groupInfo} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} setIsConfirmDeleteGroupModalOpen={setIsConfirmDeleteGroupModalOpen} setMemberGroups={setMemberGroups}/>}
+      {!isConfirmDeleteGroupModalOpen ? null : (
+        <ConfirmDeleteGroupModal
+          groupInfo={groupInfo}
+          handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal}
+          setIsConfirmDeleteGroupModalOpen={setIsConfirmDeleteGroupModalOpen}
+          setMemberGroups={setMemberGroups}
+        />
+      )}
       {!isConfirmLeaveOpen ? null : (
         <ConfirmLeaveGroupModal
           handleNevermindBtn={handleNevermindBtn}
