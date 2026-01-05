@@ -5,10 +5,26 @@
   margin: 1rem 0;
   padding: none;
 }
-.sidebarBtn, .innerSidebarBtn {
+.sidebarBtn {
   cursor: pointer;
 
   background-color: #708993;
   padding: .5rem 1rem;
   border-radius: 7px;
+}
+
+.sidebarBtn {
+  align-self: flex-start;
+  border: none;
+  background-color: #708993;
+  padding: none;
+  border: 3px solid #708993;
+  transition: .5s border ease-out;
+}
+
+.sidebarBtn img {
+  transform: rotate(180deg);
+}
+.sidebarBtn:hover {
+  border: 3px solid rgb(136, 159, 168);
 }

@@ -24,9 +24,20 @@
   animation: .5s slideIn ease-out forwards;
 }
 
+.collapseSidebarBtnCont {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .toggleCloseSidebar {
   animation: .5s slideOut ease-out forwards;
 
+}
+
+.optionsBtnsCont {
+  display: flex;
+  justify-content: flex-start;
 }
 
 @media (max-width: 900px) {

@@ -50,8 +50,13 @@
 
 .optsAndChatSidebar {
   height: 100%;
+  width: 100%;
   grid-column: 1 / 2;
   grid-row: 2 / 3;
+  max-width: 250px;
+  margin: 0 0 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
 
@@ -297,7 +302,7 @@
 
 @media (max-width: 900px) {
   .groupChatMainCont {
-    grid-template-rows: 1fr 1fr 10fr 1fr;
+    grid-template-rows: 1fr 1fr 10fr .7fr;
     
   }
 

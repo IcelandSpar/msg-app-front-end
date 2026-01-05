@@ -10,8 +10,9 @@ import styles from "../../styles/OptsAndChatSidebar.module.css";
 import optionsIcon from "../../assets/settings_icon.svg";
 import addChatIcon from "../../assets/add_chat_icon.svg";
 import addMemberIcon from "../../assets/add_friend_icon.svg";
+import GroupImgAndTitle from "./GroupImgAndTitle.jsx";
 
-const OptsAndChatSidebar = ({ groupInfo, setGroupInfo }) => {
+const OptsAndChatSidebar = ({ includeGroupName = false, groupInfo, setGroupInfo }) => {
   const [isOptsModalOpen, setIsOptsModalOpen] = useState(false);
   const [ isConfirmLeaveOpen, setIsConfirmLeaveOpen ] = useState(false);
   const [ isConfirmDeleteGroupModalOpen, setIsConfirmDeleteGroupModalOpen ] = useState(false);
@@ -26,8 +27,8 @@ const OptsAndChatSidebar = ({ groupInfo, setGroupInfo }) => {
 
   return (
     <div className={styles.chatsAndOptsSidebar}>
-      { !groupInfo ? null : (
-        <h2>{groupInfo.groupName}</h2>
+      { !groupInfo || !includeGroupName ? null : (
+        <GroupImgAndTitle groupInfo={groupInfo} imgPixelSize={40}/>
       )}
       {!isOptsModalOpen ? null : (
         <GroupOptionsModal groupInfo={groupInfo} setIsOptsModalOpen={setIsOptsModalOpen} setGroupInfo={setGroupInfo}/>

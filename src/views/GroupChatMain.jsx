@@ -19,6 +19,7 @@ import GroupSettingsCollapsasbleSidebar from "./partials/GroupSettingsCollapsabl
 import styles from "../styles/GroupChatMain.module.css";
 
 import sidebarMenu from "../assets/sidebar_menu_icon.svg";
+import GroupImgAndTitle from "./partials/GroupImgAndTitle.jsx";
 
 const GroupChatMain = () => {
   const endOfMsg = useRef(null);
@@ -303,14 +304,14 @@ const GroupChatMain = () => {
           <Navbar />
         </div>
         <aside className={styles.optsAndChatSidebar}>
-          <OptsAndChatSidebar groupInfo={groupInfo} setGroupInfo={setGroupInfo}/>
+          <OptsAndChatSidebar includeGroupName={true} groupInfo={groupInfo} setGroupInfo={setGroupInfo}/>
         </aside>
         {!isMemberOptsOpen ? null : (
           <MemberOptionsModal handleMemberOptsModal={handleMemberOptsModal} handleRemoveMember={handleRemoveMember} isMemberOptsOpen={isMemberOptsOpen} handlePromoteMember={handlePromoteMember} profile={profile}/>
         )}
         <div className={styles.sidebarBtnsCont}>
           <GroupSettingsSidebarBtn isGroupSettingsSidebarOpen={isGroupSettingsSidebarOpen} setIsGroupSettingsSidebarOpen={setIsGroupSettingsSidebarOpen} setIsGroupSidebarCloseAnimToggle ={setIsGroupSidebarCloseAnimToggle}/>
-          {groupInfo ? <h2>{groupInfo.groupName}</h2> : null}
+          {groupInfo ? <GroupImgAndTitle groupInfo={groupInfo}/> : null}
           <button
             onClick={handleGroupMemberSidebarBtn}
             className={styles.sidebarBtn}
@@ -353,7 +354,7 @@ const GroupChatMain = () => {
         )}
         {
           !isGroupSettingsSidebarOpen ? null : (
-            <GroupSettingsCollapsasbleSidebar isGroupSidebarCloseAnimToggle={isGroupSidebarCloseAnimToggle} isGroupSettingsSidebarOpen={isGroupSettingsSidebarOpen} setIsGroupSettingsSidebarOpen={setIsGroupSettingsSidebarOpen} setIsGroupSidebarCloseAnimToggle ={setIsGroupSidebarCloseAnimToggle}/>
+            <GroupSettingsCollapsasbleSidebar groupInfo={groupInfo} setGroupInfo={setGroupInfo} isGroupSidebarCloseAnimToggle={isGroupSidebarCloseAnimToggle} isGroupSettingsSidebarOpen={isGroupSettingsSidebarOpen} setIsGroupSettingsSidebarOpen={setIsGroupSettingsSidebarOpen} setIsGroupSidebarCloseAnimToggle ={setIsGroupSidebarCloseAnimToggle}/>
           )
         }
         {!msgFormErrors ? null : (
