@@ -16,9 +16,12 @@
 .sidebarBtn {
   align-self: flex-start;
   border: none;
-  background-color: #708993;
+  /* background-color: #708993;
   padding: none;
-  border: 3px solid #708993;
+  border: 3px solid #708993; */
+  background-color: #6559a2;
+  padding: none;
+  border: 3px solid #beb8d5;
   transition: .5s border ease-out;
 }
 
@@ -26,5 +29,7 @@
   transform: rotate(180deg);
 }
 .sidebarBtn:hover {
-  border: 3px solid rgb(136, 159, 168);
+  /* border: 3px solid rgb(136, 159, 168); */
+
+  border: 3px solid #beb8d5;
 }

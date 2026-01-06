@@ -38,8 +38,32 @@
   transition: .5s border ease-out;
 }
 
+.sidebarBtn, .innerSidebarBtn {
+  cursor: pointer;
+
+  background-color: #6559a2;
+  padding: .5rem 1rem;
+  border-radius: 7px;
+}
+
+.sidebarBtn {
+  align-self: flex-start;
+  border: none;
+  background-color: #6559a2;
+  padding: none;
+  border: 3px solid #beb8d5;
+  transition: .5s border ease-out;
+}
+.sidebarBtn:hover {
+  /* border: 3px solid rgb(136, 159, 168); */
+      border: 3px solid #beb8d5;
+
+}
+
 .innerSidebarBtn:hover {
-  border: 3px solid rgb(136, 159, 168);
+  /* border: 3px solid rgb(136, 159, 168); */
+      border: 3px solid #beb8d5;
+
 }
 
 .navbarCont {

@@ -12,6 +12,9 @@ import ConfirmLeaveGroupModal from "./ConfirmLeaveGroupModal.jsx";
 import ConfirmDeleteGroupModal from "./ConfirmDeleteGroupModal.jsx";
 
 import styles from "../../styles/GroupOptionsModal.module.css";
+import editIcon from "../../assets/edit_icon.svg";
+import leaveIcon from "../../assets/leave_group_icon.svg";
+import deleteIcon from "../../assets/delete_icon.svg";
 
 const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen, setGroupInfo }) => {
   const [isConfirmLeaveOpen, setIsConfirmLeaveOpen] = useState(false);
@@ -70,7 +73,8 @@ const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen, setGroupInfo }) => {
         <ul className={styles.groupOptsUl}>
           <li className={styles.groupOptsLi}>
             <p>Edit group name?</p>
-            <button onClick={toggleEditNameInput} className={styles.groupOptsBtn}>
+            <button title="Edit Group" onClick={toggleEditNameInput} className={styles.groupOptsBtn}>
+              <img src={editIcon} alt="Edit" width={'24px'} height={'24px'}/>
               <p>{!isEditNameInputOpen ? "Edit" : "Close"}</p>
             </button>
             { !isEditNameInputOpen ? null : <EditGroupNameInput groupInfo={groupInfo} handleToggleInput={toggleEditNameInput} setGroupInfo={setGroupInfo}/> }
@@ -78,6 +82,7 @@ const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen, setGroupInfo }) => {
           <li className={styles.groupOptsLi}>
             <p>Leave {!groupInfo ? null : groupInfo.groupName}?</p>
             <button
+            title="Leave Group"
               onClick={(e) =>
                 handleOpenConfirmModal(
                   e,
@@ -87,12 +92,14 @@ const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen, setGroupInfo }) => {
               }
               className={styles.groupOptsBtn}
             >
+              <img src={leaveIcon} alt="leave" width={'24px'} height={'24px'}/>
               <p>Leave</p>
             </button>
           </li>
           <li className={styles.groupOptsLi}>
             <p>Delete {!groupInfo ? null : groupInfo.groupName}?</p>
-            <button onClick={(e) => handleOpenConfirmDeleteModal(e, setIsConfirmDeleteGroupModalOpen)} className={styles.deleteGroupBtn}>
+            <button title="Delete Group" onClick={(e) => handleOpenConfirmDeleteModal(e, setIsConfirmDeleteGroupModalOpen)} className={styles.deleteGroupBtn}>
+              <img src={deleteIcon} alt="delete" width={'24px'} height={'24px'}/>
               <p>Delete</p>
             </button>
           </li>
