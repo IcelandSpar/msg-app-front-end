@@ -14,10 +14,7 @@ const GroupSettingsCollapsasbleSidebar = ({
 }) => {
   const handleGroupOptionsSidebar = (e) => {
     e.preventDefault();
-    if (
-      isGroupSettingsSidebarOpen &&
-      Array.from(e.target.classList)[1] == "closeGroupSettingsSidebar"
-    ) {
+    if (isGroupSettingsSidebarOpen && Array.from(e.target.classList)[1] == 'closeGroupOptsSidebar') {
       setIsGroupSidebarCloseAnimToggle(true);
       setTimeout(() => {
         setIsGroupSettingsSidebarOpen(false);
@@ -31,7 +28,7 @@ const GroupSettingsCollapsasbleSidebar = ({
   return (
     <div
       onClick={handleGroupOptionsSidebar}
-      className={`${styles.groupSettingsSidebarBackground} closeGroupSettingsSidebar`}
+      className={`${styles.groupSettingsSidebarBackground} closeGroupOptsSidebar`}
     >
       <aside
         className={`${styles.groupSettingsSidebarCont} ${
@@ -41,7 +38,7 @@ const GroupSettingsCollapsasbleSidebar = ({
         }`}
       >
         <div className={styles.collapseSidebarBtnCont}>
-          <GroupImgAndTitle groupInfo={groupInfo}/>
+          <GroupImgAndTitle groupInfo={groupInfo} />
           <GroupSettingsSidebarBtn
             isGroupSettingsSidebarOpen={isGroupSettingsSidebarOpen}
             setIsGroupSettingsSidebarOpen={setIsGroupSettingsSidebarOpen}

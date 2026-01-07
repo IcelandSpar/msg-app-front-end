@@ -20,8 +20,8 @@
   padding: none;
   border: 3px solid #708993; */
   background-color: #6559a2;
+  border: 3px solid #978ec4;
   padding: none;
-  border: 3px solid #beb8d5;
   transition: .5s border ease-out;
 }
 
@@ -30,6 +30,5 @@
 }
 .sidebarBtn:hover {
   /* border: 3px solid rgb(136, 159, 168); */
-
   border: 3px solid #beb8d5;
 }

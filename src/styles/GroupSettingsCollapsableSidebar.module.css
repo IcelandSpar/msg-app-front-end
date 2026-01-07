@@ -32,7 +32,10 @@
 
 .toggleCloseSidebar {
   animation: .5s slideOut ease-out forwards;
+}
 
+.toggleOpenSidebar {
+  animation: .5s slideIn ease-out forwards;
 }
 
 .optionsBtnsCont {

@@ -45,7 +45,7 @@ const GroupChatMain = () => {
 
   const handleGroupMemberSidebarBtn = (e) => {
     e.preventDefault();
-    if (isMemberSidebarOpen) {
+    if (isMemberSidebarOpen && Array.from(e.target.classList)[1] == 'closeMemberSidebar') {
       setIsCloseAnimToggle(true);
       setTimeout(() => {
         setIsMemberSidebarOpen(false);
@@ -314,14 +314,14 @@ const GroupChatMain = () => {
           {groupInfo ? <GroupImgAndTitle groupInfo={groupInfo}/> : null}
           <button
             onClick={handleGroupMemberSidebarBtn}
-            className={styles.sidebarBtn}
+            className={`${styles.sidebarBtn} closeMemberSidebar`}
             type="button"
           >
             <img src={sidebarMenu} alt="Members sidebar" width={"25px"} height={"25px"} />
           </button>
         </div>
         {!isMemberSidebarOpen ? null : (
-          <div className={styles.groupMemberSidebarBackground}>
+          <div onClick={handleGroupMemberSidebarBtn} className={`${styles.groupMemberSidebarBackground} closeMemberSidebar`}>
             <aside
               className={`${styles.groupMemberListSidebar} ${
                 isCloseAnimToggle
@@ -331,10 +331,11 @@ const GroupChatMain = () => {
             >
               <button
                 onClick={handleGroupMemberSidebarBtn}
-                className={styles.innerSidebarBtn}
+                className={`${styles.innerSidebarBtn} closeMemberSidebar`}
                 type="button"
               >
                 <img
+                  className={`${styles.sidebarImg} closeMemberSidebar`}
                   src={sidebarMenu}
                   alt="Sidebar"
                   width={"25px"}

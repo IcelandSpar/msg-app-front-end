@@ -1,14 +1,14 @@
-import { useState } from "react";
-
 import styles from "../../styles/GroupSettingsSidebarBtn.module.css";
 import viewSidebar from "../../assets/view_sidebar.svg";
 
-
-const GroupSettingsSidebarBtn = ({ isGroupSettingsSidebarOpen, setIsGroupSettingsSidebarOpen, setIsGroupSidebarCloseAnimToggle }) => {
-
-    const handleGroupOptionsSidebar = (e) => {
-        e.preventDefault();
-    if (isGroupSettingsSidebarOpen) {
+const GroupSettingsSidebarBtn = ({
+  isGroupSettingsSidebarOpen,
+  setIsGroupSettingsSidebarOpen,
+  setIsGroupSidebarCloseAnimToggle,
+}) => {
+  const handleGroupOptionsSidebar = (e) => {
+    e.preventDefault();
+    if (isGroupSettingsSidebarOpen && Array.from(e.target.classList)[1] == 'closeGroupOptsSidebar') {
       setIsGroupSidebarCloseAnimToggle(true);
       setTimeout(() => {
         setIsGroupSettingsSidebarOpen(false);
@@ -20,9 +20,13 @@ const GroupSettingsSidebarBtn = ({ isGroupSettingsSidebarOpen, setIsGroupSetting
   };
 
   return (
-    <button onClick={handleGroupOptionsSidebar} className={styles.sidebarBtn} type="button">
+    <button
+      onClick={handleGroupOptionsSidebar}
+      className={`${styles.sidebarBtn} ${isGroupSettingsSidebarOpen ? 'closeGroupOptsSidebar' : null}`}
+      type="button"
+    >
       <img
-        className={styles.settingsAndChatSideImg}
+        className={`${styles.settingsAndChatSideImg} closeGroupOptsSidebar`}
         src={viewSidebar}
         alt="Open Settings and Chat Sidebar"
         width={"25px"}
