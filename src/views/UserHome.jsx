@@ -29,36 +29,51 @@ const UserHome = () => {
   const [isReqResModalOpen, setIsReqResModalOpen] = useState(null);
   const [isGroupSearchModalOpen, setIsGroupSearchModalOpen] = useState(false);
 
-  const [ isLoadingGroupList, setIsLoadingGroupList ] = useState(true);
-  const [ validationErrors, setValidationErrors ] = useState(null);
-  const [ isSidebarOpen, setIsSidebarOpen ] = useState(false);
-
+  const [isLoadingGroupList, setIsLoadingGroupList] = useState(true);
+  const [validationErrors, setValidationErrors] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isCloseAnimToggle, setIsCloseAnimToggle] = useState(false);
 
   const { profile, isLoggedIn } = useContext(UserContext);
 
   const navigate = useNavigate();
 
-  const handleHomeSidebar = (e) => {
+  const handleCloseSidebarBtn = (e) => {
     e.preventDefault();
-    setIsSidebarOpen((prev) => !prev);
-  };
+    if (
+      !isCloseAnimToggle &&
+      Array.from(e.target.classList)[1] == "closeHomeSidebar"
+    ) {
+      setIsCloseAnimToggle(true);
 
-  const handleCloseSidebar = (e) => {
-    e.preventDefault()
-    Array.from(e.target.classList)[1] == 'closeSidebar' ? setIsSidebarOpen(false) : null;
+      setTimeout(() => {
+        setIsSidebarOpen(false);
+      }, 500);
+    } else if (isCloseAnimToggle) {
+      setIsCloseAnimToggle(false);
+
+      setTimeout(() => {
+        setIsSidebarOpen(true);
+      }, 500);
+    }
   };
 
   const handleClickOnGroupLi = (e, groupId) => {
     e.preventDefault();
-    if((Array.from(e.target.classList)).find(element => element == 'navigateToGroupChat')) {
+    if (
+      Array.from(e.target.classList).find(
+        (element) => element == "navigateToGroupChat"
+      )
+    ) {
       navigate(`/channel/group/${groupId}`);
-
     }
   };
 
   const handleCloseValidationMsg = (e) => {
     e.preventDefault();
-    (Array.from(e.target.classList))[1] == 'closeValidationErrModal' ? setValidationErrors(null) : null;
+    Array.from(e.target.classList)[1] == "closeValidationErrModal"
+      ? setValidationErrors(null)
+      : null;
   };
 
   const handleCloseFriendReqModal = (e) => {
@@ -69,7 +84,9 @@ const UserHome = () => {
 
   const handleCreateGroupModal = (e) => {
     e.preventDefault();
-    (Array.from(e.target.classList))[1] == 'createGroupClose' ? setIsCreateGroupModalOpen(false) : setIsCreateGroupModalOpen(true);
+    Array.from(e.target.classList)[1] == "createGroupClose"
+      ? setIsCreateGroupModalOpen(false)
+      : setIsCreateGroupModalOpen(true);
   };
 
   const handleAddFriendBtn = (e) => {
@@ -84,9 +101,9 @@ const UserHome = () => {
 
   const handleCloseFriendModal = (e) => {
     e.preventDefault();
-    (Array.from(e.target.classList)[1] == 'friendReqModalBackground') ? setIsAddFriendModalOpen(false) : null
-
-    
+    Array.from(e.target.classList)[1] == "friendReqModalBackground"
+      ? setIsAddFriendModalOpen(false)
+      : null;
   };
 
   const handleFriendReqSubmit = (e, friendCodeInput) => {
@@ -107,9 +124,9 @@ const UserHome = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        if(res.errors) {
+        if (res.errors) {
           setValidationErrors(res.errors);
-        } else if(!res.errors) {
+        } else if (!res.errors) {
           setIsReqResModalOpen(res);
         }
       })
@@ -118,32 +135,32 @@ const UserHome = () => {
 
   useEffect(() => {
     const token = sessionStorage.getItem("msgAppToken");
-      setIsLoadingGroupList(true);
+    setIsLoadingGroupList(true);
 
     if (profile && token) {
       socket.connect();
-          fetch(
-      `${import.meta.env.VITE_FETCH_BASE_URL}/group-actions/get-member-groups`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        method: "GET",
-      }
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        if(res) {
-          setIsLoadingGroupList(false);
+      fetch(
+        `${
+          import.meta.env.VITE_FETCH_BASE_URL
+        }/group-actions/get-member-groups`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          method: "GET",
         }
-        setMemberGroups(res);
-      })
-      .catch((err) => console.error(err));
-
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          if (res) {
+            setIsLoadingGroupList(false);
+          }
+          setMemberGroups(res);
+        })
+        .catch((err) => console.error(err));
     } else {
-      setIsLoadingGroupList(false)
+      setIsLoadingGroupList(false);
     }
-
 
     return () => {
       socket.disconnect();
@@ -154,11 +171,27 @@ const UserHome = () => {
     <div className={styles.userHomePage}>
       <Navbar setFriendList={setFriendList} />
       <main className={styles.userHomeMain}>
-        {!isSidebarOpen ? null : <div onClick={handleCloseSidebar} className={`${styles.homeSidebarCont} closeSidebar`}>
-          <HomeSidebar profile={profile} setFriendList={setFriendList} friendList={friendList} setIsSidebarOpen={setIsSidebarOpen}/>
-        </div>}
+        {!isSidebarOpen ? null : (
+          <div
+            onClick={handleCloseSidebarBtn}
+            className={`${styles.homeSidebarCont} closeHomeSidebar`}
+          >
+            <HomeSidebar
+              profile={profile}
+              setFriendList={setFriendList}
+              friendList={friendList}
+              setIsSidebarOpen={setIsSidebarOpen}
+              isSidebarOpen={isSidebarOpen}
+              isCloseAnimToggle={isCloseAnimToggle}
+              handleCloseSidebarBtn={handleCloseSidebarBtn}
+            />
+          </div>
+        )}
         {!validationErrors ? null : (
-          <ValidationErrModal msgFormErrors={validationErrors} closeMsgHandler={handleCloseValidationMsg}/>
+          <ValidationErrModal
+            msgFormErrors={validationErrors}
+            closeMsgHandler={handleCloseValidationMsg}
+          />
         )}
         {isReqResModalOpen == null ? null : (
           <FriendRequestResultModal
@@ -173,7 +206,12 @@ const UserHome = () => {
           />
         )}
         {!isCreateGroupModalOpen ? null : (
-          <CreateGroupModal handleCreateGroupModal={handleCreateGroupModal} setValidationErrors={setValidationErrors} setMemberGroups={setMemberGroups} setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}/>
+          <CreateGroupModal
+            handleCreateGroupModal={handleCreateGroupModal}
+            setValidationErrors={setValidationErrors}
+            setMemberGroups={setMemberGroups}
+            setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
+          />
         )}
         {!isGroupSearchModalOpen ? null : (
           <SearchGroupModal
@@ -184,7 +222,13 @@ const UserHome = () => {
         )}
         {!isLoggedIn ? null : (
           <div className={styles.addFriendSearchGroupBtnsCont}>
-            <button className={styles.friendAsideBtn} onClick={handleHomeSidebar} type="button"><img src={sidebarBtnIcon} width={'25px'} height={'25px'}/></button>
+            <button
+              className={styles.friendAsideBtn}
+              onClick={handleCloseSidebarBtn}
+              type="button"
+            >
+              <img src={sidebarBtnIcon} width={"25px"} height={"25px"} />
+            </button>
 
             <button
               className={styles.addFriendBtn}
