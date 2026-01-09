@@ -15,6 +15,7 @@ import styles from "../../styles/GroupOptionsModal.module.css";
 import editIcon from "../../assets/edit_icon.svg";
 import leaveIcon from "../../assets/leave_group_icon.svg";
 import deleteIcon from "../../assets/delete_icon.svg";
+import GroupImgAndTitle from "./GroupImgAndTitle.jsx";
 
 const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen, setGroupInfo }) => {
   const [isConfirmLeaveOpen, setIsConfirmLeaveOpen] = useState(false);
@@ -67,9 +68,10 @@ const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen, setGroupInfo }) => {
         >
           X
         </button>
-        <h3 className={styles.settingsModalHeader}>
-          {!groupInfo ? null : groupInfo.groupName} settings
-        </h3>
+        <div className={styles.settingsModalHeader}>
+          {!groupInfo ? null : <GroupImgAndTitle groupInfo={groupInfo}/>} 
+          <p>Settings</p>
+        </div>
         <ul className={styles.groupOptsUl}>
           <li className={styles.groupOptsLi}>
             <p>Edit group name?</p>

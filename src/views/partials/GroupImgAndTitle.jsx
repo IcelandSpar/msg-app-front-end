@@ -1,6 +1,6 @@
 import styles from "../../styles/GroupImgAndTitle.module.css";
 
-const GroupImgAndTitle = ({ groupInfo, imgPixelSize = 50 }) => {
+const GroupImgAndTitle = ({ groupInfo, imgPixelSize = 50, fontSize = '1.5rem' }) => {
   return (
     <div className={styles.groupImgAndNameCont}>
       <img
@@ -9,7 +9,9 @@ const GroupImgAndTitle = ({ groupInfo, imgPixelSize = 50 }) => {
         width={`${imgPixelSize}px`}
         height={`${imgPixelSize}px`}
       />
-      <h2>{groupInfo.groupName}</h2>
+      <h3 style={{
+        fontSize: fontSize,
+      }}>{groupInfo.groupName}</h3>
     </div>
   );
 };
