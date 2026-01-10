@@ -58,7 +58,7 @@ const EditGroupNameInput = ({ groupInfo, handleToggleInput, setGroupInfo }) => {
   };
 
   return (
-    <div className={styles.editInputForm}>
+    <form className={styles.editInputForm}>
       {!validationErrs ? null :  <ValidationErrModal msgFormErrors={validationErrs} closeMsgHandler={handleCloseValidationErrModal}/>}
       <div className={styles.labelAndInputCont}>
         <label htmlFor="groupName">Group Name:</label>
@@ -75,11 +75,11 @@ const EditGroupNameInput = ({ groupInfo, handleToggleInput, setGroupInfo }) => {
       <button
         className={styles.updateBtn}
         onClick={handleSubmitGroupName}
-        type="button"
+        type="submit"
       >
         Update
       </button>
-    </div>
+    </form>
   );
 };
 

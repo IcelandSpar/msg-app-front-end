@@ -38,8 +38,9 @@ const UserHome = () => {
 
   const navigate = useNavigate();
 
-  const handleCloseSidebarBtn = (e) => {
+  const handleCloseSidebarBtn = (e, openSidebar = false) => {
     e.preventDefault();
+
     if (
       !isCloseAnimToggle &&
       Array.from(e.target.classList)[1] == "closeHomeSidebar"
@@ -49,7 +50,7 @@ const UserHome = () => {
       setTimeout(() => {
         setIsSidebarOpen(false);
       }, 500);
-    } else if (isCloseAnimToggle) {
+    } else {
       setIsCloseAnimToggle(false);
 
       setTimeout(() => {
@@ -224,7 +225,7 @@ const UserHome = () => {
           <div className={styles.addFriendSearchGroupBtnsCont}>
             <button
               className={styles.friendAsideBtn}
-              onClick={handleCloseSidebarBtn}
+              onClick={(e) => handleCloseSidebarBtn(e, true)}
               type="button"
             >
               <img src={sidebarBtnIcon} width={"25px"} height={"25px"} />
