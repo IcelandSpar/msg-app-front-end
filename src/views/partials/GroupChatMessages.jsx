@@ -38,6 +38,11 @@ const GroupChatMessages = ({ chatMsgs, endOfMsg }) => {
               <p>{formatDistance((msg.createdAt), new Date(), { addSuffix: true })}</p>
             </div>
             <p className={styles.chatMsgContent}>{he.decode(msg.messageContent)}</p>
+            {!msg.attatchedImagePath ? null : (
+              <div className={styles.msgImgCont}>
+                <img className={styles.msgImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${msg.attatchedImagePath}`} alt="image" />
+              </div>
+            )}
           </li>
         );
       })}

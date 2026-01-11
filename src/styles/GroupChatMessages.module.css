@@ -38,3 +38,24 @@
   white-space: pre-line;
   line-height: 1.5;
 }
+
+.msgImgCont {
+  display: flex;
+  justify-content: center;
+  width: min-content;
+  margin: 0 auto;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.msgImg {
+  height: 45vh;
+  object-fit: contain;
+
+}
+
+@media (min-width: 1000px) {
+  .msgImgCont {
+    margin: 0;
+  }
+}

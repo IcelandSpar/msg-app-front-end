@@ -98,6 +98,7 @@ const MsgForm = ({ setChatMsgs, endOfMsg, setMsgFormErrors }) => {
               imgPath: profile.profileImgFilePath,
               createdAt: new Date(),
             });
+            setFileInfo(null);
           }
         })
         .catch((err) => console.error(err));
