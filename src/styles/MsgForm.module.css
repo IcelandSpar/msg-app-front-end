@@ -19,21 +19,22 @@
 
 .userTypingCont {
   display: flex;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   align-items: center;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .characterLimitPara {
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 .characterLimitPara p {
   animation: 1s blink ease-out forwards;
-
 }
 
-.dotOne, .dotTwo, .dotThree {
+.dotOne,
+.dotTwo,
+.dotThree {
   background-color: white;
   width: 10px;
   height: 10px;
@@ -42,17 +43,14 @@
 
 .dotOne {
   animation: 1.5s shakeDots ease-out infinite;
-
 }
 
 .dotTwo {
-  animation: 1.5s shakeDots ease-out infinite .5s;
-
+  animation: 1.5s shakeDots ease-out infinite 0.5s;
 }
 
 .dotThree {
-  animation: 1.5s shakeDots ease-out infinite .8s;
-
+  animation: 1.5s shakeDots ease-out infinite 0.8s;
 }
 
 .userTypingAndMsgTextareaCont {
@@ -88,9 +86,9 @@
   color: white;
   top: 0;
   right: 0;
-  padding: .5rem .5rem;
+  padding: 0.5rem 0.5rem;
   border-radius: 0 15px 0 15px;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 .fadeOut {
@@ -103,6 +101,31 @@
   animation-fill-mode: forwards;
 }
 
+.formBtnsCont {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ImglabelTurnedBtn {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  cursor: pointer;
+  border-radius: 7px;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  background-color: #a1c2bd;
+  border: none;
+}
+
+.addImgIcon {
+  width: 25px;
+  height: 25px;
+
+}
+
+
 .msgFormSendBtn {
   background-color: #e7f2ef;
   color: black;
@@ -114,33 +137,33 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: .5s background-color ease-out;
+  transition: 0.5s background-color ease-out;
 }
 
 .sendMsgIcon {
-  transition: .5s filter ease-out;
+  transition: 0.5s filter ease-out;
 }
 
-.msgFormSendBtn:hover, .msgFormSendBtn:focus {
+.msgFormSendBtn:hover,
+.msgFormSendBtn:focus {
   background-color: #6559a2;
 }
 
-.msgFormSendBtn:hover .sendMsgIcon, .msgFormSendBtn:focus .sendMsgIcon {
+.msgFormSendBtn:hover .sendMsgIcon,
+.msgFormSendBtn:focus .sendMsgIcon {
   filter: grayscale(1) invert(1);
   animation: 7s shakePlane infinite 1s;
-
 }
 
 @keyframes shakeDots {
   from {
     transform: translateX(0) translateY(0);
-    opacity: .5;
+    opacity: 0.5;
   }
 
   50% {
     transform: translateX(3px) translateY(0);
     opacity: 1;
-
   }
 
   to {
@@ -156,12 +179,10 @@
 
   10% {
     transform: rotate(30deg);
-
   }
 
   20% {
     transform: rotate(0deg);
-
   }
 
   40% {
@@ -169,13 +190,11 @@
   }
 
   50% {
-    transform: translateX(45px) translateY(-45px) scale(.01);
-
+    transform: translateX(45px) translateY(-45px) scale(0.01);
   }
 
   60% {
     transform: translateX(0) translateY(0) scale(0);
-
   }
 
   70% {
@@ -183,10 +202,8 @@
   }
 
   75% {
-      transform: translateX(0) translateY(0) scale(1);
-
+    transform: translateX(0) translateY(0) scale(1);
   }
-
 }
 
 @keyframes blink {
@@ -195,22 +212,16 @@
   }
 
   25% {
-
   }
 
   50% {
     opacity: 1;
-
   }
 
   75% {
-
   }
-
-
 
   100% {
     opacity: 1;
-
   }
 }

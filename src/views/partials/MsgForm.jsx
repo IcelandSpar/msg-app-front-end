@@ -3,28 +3,34 @@ import { useParams } from "react-router";
 import { socket } from "../../socket";
 import he from "he";
 
-
 import CharacterCount from "./CharacterCount.jsx";
 import UserContext from "../../UserContext";
+import addImgIcon from "../../assets/add_photo.svg";
 
 import styles from "../../styles/MsgForm.module.css";
 import sendMsgIcon from "../../assets/send.png";
-
 const MsgForm = ({ setChatMsgs, endOfMsg, setMsgFormErrors }) => {
   const [typingUserObj, setTypingUserObj] = useState({
     typingUser: null,
     isUserTyping: false,
     groupId: null,
   });
+  const [fileInfo, setFileInfo] = useState(null);
   const [characterCount, setCharacterCount] = useState(0);
   const [isUserTyping, setIsUserTyping] = useState(false);
   const [characterLimitErr, setCharacterLimitErr] = useState(false);
   const messageInput = useRef(null);
   const wordLimitCont = useRef(null);
   const userTypingFadeTimeout = useRef(null);
+  const imgFile = useRef(null);
 
   const { groupId } = useParams();
   const { profile } = useContext(UserContext);
+
+  const handleFileChange = (e) => {
+    e.preventDefault();
+    setFileInfo(e.target.files[0]);
+  };
 
   const handleKeyUp = (e) => {
     e.preventDefault();
@@ -61,6 +67,7 @@ const MsgForm = ({ setChatMsgs, endOfMsg, setMsgFormErrors }) => {
       formData.append("messageContent", messageInput.current.value);
       formData.append("groupId", groupId);
       formData.append("authorId", profile.id);
+      formData.append("msgImg", fileInfo);
 
       fetch(`${import.meta.env.VITE_FETCH_BASE_URL}/chat/post-chat-msg`, {
         headers: {
@@ -131,6 +138,7 @@ const MsgForm = ({ setChatMsgs, endOfMsg, setMsgFormErrors }) => {
           <label className={styles.msgLabelHidden} htmlFor="message">
             Message:
           </label>
+          {!fileInfo ? null :  <span className={styles.fileNamePreview} title={fileInfo.name}>Image Selected: {fileInfo.name}</span>}
           {!typingUserObj || typingUserObj.isUserTyping == false ? null : (
             <div className={styles.userTypingCont}>
               <p>{he.decode(typingUserObj.typingUser)} is typing</p>
@@ -166,15 +174,21 @@ const MsgForm = ({ setChatMsgs, endOfMsg, setMsgFormErrors }) => {
                 isUserTyping={isUserTyping}
               />
             </div>
-            <button className={styles.msgFormSendBtn} type="submit">
-              <img
-                className={styles.sendMsgIcon}
-                src={sendMsgIcon}
-                alt="send message"
-                width={"25px"}
-                height={"25px"}
-              />
-            </button>
+            <div className={styles.formBtnsCont}>
+              <label className={styles.ImglabelTurnedBtn} htmlFor="msgImg">
+                <img className={styles.addImgIcon} src={addImgIcon} alt="add image" />
+              </label>
+              <input ref={imgFile} onChange={handleFileChange} className={styles.hideInput} type="file" id="msgImg" hidden/>
+              <button className={styles.msgFormSendBtn} type="submit">
+                <img
+                  className={styles.sendMsgIcon}
+                  src={sendMsgIcon}
+                  alt="send message"
+                  width={"25px"}
+                  height={"25px"}
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
