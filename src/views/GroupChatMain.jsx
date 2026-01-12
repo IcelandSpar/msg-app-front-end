@@ -277,6 +277,7 @@ const GroupChatMain = () => {
           {
             profileName: msgInfo.profileName,
             messageContent: msgInfo.messageContent,
+            attatchedImagePath: msgInfo.attatchedImagePath,
             imgPath: msgInfo.imgPath,
             createdAt: new Date(),
           },

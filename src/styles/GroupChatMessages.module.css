@@ -42,20 +42,19 @@
 .msgImgCont {
   display: flex;
   justify-content: center;
-  width: min-content;
-  margin: 0 auto;
   border-radius: 15px;
+  width: min-content;
   overflow: hidden;
 }
 
 .msgImg {
-  height: 45vh;
-  object-fit: contain;
-
+  /* height: 45vh; */
+  object-fit: scale-down;
+  max-width: 300px;
 }
 
-@media (min-width: 1000px) {
+@media (max-width: 900px) {
   .msgImgCont {
-    margin: 0;
+    margin: 0 auto;
   }
 }

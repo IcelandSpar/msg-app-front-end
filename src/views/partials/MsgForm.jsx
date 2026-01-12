@@ -86,6 +86,7 @@ const MsgForm = ({ setChatMsgs, endOfMsg, setMsgFormErrors }) => {
               {
                 profileName: profile.profileName,
                 messageContent: messageInput.current.value,
+                attatchedImagePath: res.postedMsg.attatchedImagePath,
                 imgPath: profile.profileImgFilePath,
                 createdAt: new Date(),
               },
@@ -96,6 +97,7 @@ const MsgForm = ({ setChatMsgs, endOfMsg, setMsgFormErrors }) => {
               messageContent: messageInput.current.value,
               profileName: profile.profileName,
               imgPath: profile.profileImgFilePath,
+              attatchedImagePath: res.postedMsg.attatchedImagePath,
               createdAt: new Date(),
             });
             setFileInfo(null);
