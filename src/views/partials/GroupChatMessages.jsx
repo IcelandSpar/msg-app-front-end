@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router";
 import { formatDistance } from "date-fns";
 import he from "he";
 
+import MessageImage from "./MessageImage.jsx";
 
 import styles from '../../styles/GroupChatMessages.module.css';
 
@@ -10,10 +11,12 @@ const GroupChatMessages = ({ chatMsgs, endOfMsg }) => {
 
   const navigate = useNavigate();
 
-    const handleClickOnUserProfile = (e, profileId) => {
+  const handleClickOnUserProfile = (e, profileId) => {
     e.preventDefault();
     navigate(`/profile/${profileId}`);
-  }
+  };
+
+
 
 
   return (
@@ -39,9 +42,7 @@ const GroupChatMessages = ({ chatMsgs, endOfMsg }) => {
             </div>
             <p className={styles.chatMsgContent}>{he.decode(msg.messageContent)}</p>
             {!msg.attatchedImagePath ? null : (
-              <div className={styles.msgImgCont}>
-                <img className={styles.msgImg} src={`${import.meta.env.VITE_FETCH_BASE_URL}/${msg.attatchedImagePath}`} alt="image" />
-              </div>
+              <MessageImage msg={msg}/>
             )}
           </li>
         );

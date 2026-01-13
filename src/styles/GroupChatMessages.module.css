@@ -38,23 +38,3 @@
   white-space: pre-line;
   line-height: 1.5;
 }
-
-.msgImgCont {
-  display: flex;
-  justify-content: center;
-  border-radius: 15px;
-  width: min-content;
-  overflow: hidden;
-}
-
-.msgImg {
-  /* height: 45vh; */
-  object-fit: scale-down;
-  max-width: 300px;
-}
-
-@media (max-width: 900px) {
-  .msgImgCont {
-    margin: 0 auto;
-  }
-}

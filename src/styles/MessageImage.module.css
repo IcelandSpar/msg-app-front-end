@@ -1,0 +1,75 @@
+.msgImgCont {
+  display: flex;
+  justify-content: center;
+  border-radius: 15px;
+  width: min-content;
+  overflow: hidden;
+}
+
+.msgImg {
+  /* height: 45vh; */
+  object-fit: scale-down;
+  max-width: 300px;
+  cursor: pointer;
+}
+
+
+.toggleZoomImgBackground {
+  position: relative;
+  animation: .5s zoomInBackground forwards;
+  padding: 1rem 0;
+  border-radius: 0;
+}
+
+.toggleZoomImg {
+  animation: .5s zoomInImg forwards;
+}
+
+.downloadImgLink {
+  position: relative;
+  z-index: 400;
+
+}
+
+.toggleInvisibleDownload {
+  display: none;
+}
+
+
+
+@keyframes zoomInBackground {
+  from {
+
+  }
+
+  to {
+    z-index: 300;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.445);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+}
+
+@keyframes zoomInImg {
+  from {
+
+  }
+
+  to {
+    position: relative;
+    top: 0;
+    left: 0;
+    max-height: 100%;
+    max-width: 70vw;
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 900px) {
+  .msgImgCont {
+    margin: 0 auto;
+  }
+}
