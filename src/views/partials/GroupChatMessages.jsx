@@ -15,10 +15,7 @@ const GroupChatMessages = ({ chatMsgs, endOfMsg }) => {
     e.preventDefault();
     navigate(`/profile/${profileId}`);
   };
-
-
-
-
+  
   return (
     <ul className={styles.chatMsgsUl}>
       {chatMsgs.map((msg, indx) => {

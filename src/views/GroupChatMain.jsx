@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router";
+import { useWithSound } from "../customHooks/useWithSound.jsx";
 import { socket } from "../socket.js";
 import { fetchGroupInfo } from "../utils/groupSettings.js";
 
@@ -20,9 +21,13 @@ import styles from "../styles/GroupChatMain.module.css";
 
 import sidebarMenu from "../assets/sidebar_menu_icon.svg";
 import GroupImgAndTitle from "./partials/GroupImgAndTitle.jsx";
+// import notificationSound from "../assets/notification_sound.mp3";
+import notificationSound4 from "../assets/notification_sound.mp3";
+
 
 const GroupChatMain = () => {
   const endOfMsg = useRef(null);
+  const { playSound } = useWithSound(notificationSound4);
 
   const [chatMsgs, setChatMsgs] = useState([]);
   const [groupMembers, setGroupMembers] = useState(null);
@@ -282,7 +287,9 @@ const GroupChatMain = () => {
             createdAt: new Date(),
           },
         ]);
+        playSound();
       });
+
     } catch (err) {
         console.error(err);
     }

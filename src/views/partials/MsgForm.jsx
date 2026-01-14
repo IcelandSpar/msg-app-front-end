@@ -97,7 +97,7 @@ const MsgForm = ({ setChatMsgs, endOfMsg, setMsgFormErrors }) => {
               messageContent: messageInput.current.value,
               profileName: profile.profileName,
               imgPath: profile.profileImgFilePath,
-              attatchedImagePath: res.postedMsg.attatchedImagePath,
+              attatchedImagePath: res.postedMsg.attatchedImagePath ? res.postedMsg.attatchedImagePath : null,
               createdAt: new Date(),
             });
             setFileInfo(null);
@@ -107,7 +107,7 @@ const MsgForm = ({ setChatMsgs, endOfMsg, setMsgFormErrors }) => {
       setTimeout(() => {
         endOfMsg.current?.scrollIntoView({ behavior: "smooth" });
         messageInput.current.value = "";
-      }, 1000);
+      }, 2000);
     }
   };
 
