@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { useParams } from "react-router";
 import { socket } from "../socket.js";
+import { useWithSound } from "../customHooks/useWithSound.jsx";
+
 
 import Navbar from "./partials/Navbar.jsx";
 import DirectMessages from "./partials/DirectMessages.jsx";
@@ -13,8 +15,10 @@ import MsgForm from "./partials/MsgForm.jsx";
 
 import styles from "../styles/DirectMessagePage.module.css";
 import sidebarMenu from "../assets/sidebar_menu_icon.svg";
+import notificationSound4 from "../assets/msg_notif_4.wav";
 
 const DirectMessagePage = () => {
+  const { playSound } = useWithSound(notificationSound4);
   const [directMessages, setDirectMessages] = useState(null);
   const [validationErrors, setValidationErrors] = useState(null);
   const [isLoadingMembers, setIsLoadingMembers] = useState(false);
@@ -75,6 +79,7 @@ const DirectMessagePage = () => {
             },
           ]);
         }
+        playSound();
       });
       socket.on("connected", (msg) => {
         console.log(msg);
@@ -99,7 +104,6 @@ const DirectMessagePage = () => {
           // if (res.success) {
           //   socket.connect();
           // }
-          console.log(res)
           setGroupMembers({
             success: true,
             adminRoleMembers: [],

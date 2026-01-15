@@ -5,10 +5,11 @@ import he from "he";
 
 import CharacterCount from "./CharacterCount.jsx";
 import UserContext from "../../UserContext";
-import addImgIcon from "../../assets/add_photo.svg";
 
 import styles from "../../styles/MsgForm.module.css";
 import sendMsgIcon from "../../assets/send.png";
+import addImgIcon from "../../assets/add_photo.svg";
+
 const MsgForm = ({ setChatMsgs, endOfMsg, setMsgFormErrors }) => {
   const [typingUserObj, setTypingUserObj] = useState({
     typingUser: null,
