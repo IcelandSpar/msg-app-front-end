@@ -85,6 +85,30 @@
   max-width: 70vw;
 }
 
+.formBtnsCont {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ImglabelTurnedBtn {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  cursor: pointer;
+  border-radius: 7px;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  background-color: #a1c2bd;
+  border: none;
+}
+
+.addImgIcon {
+  width: 25px;
+  height: 25px;
+
+}
+
 .msgFormSendBtn {
   background-color: #e7f2ef;
   color: black;
