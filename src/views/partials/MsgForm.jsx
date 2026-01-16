@@ -168,8 +168,8 @@ const MsgForm = ({ setChatMsgs, endOfMsg, setMsgFormErrors }) => {
                 name="message"
                 id="message"
                 placeholder="Type a message!"
-                rows={3}
-                cols={35}
+                rows={4}
+                cols={50}
                 maxLength={2000}
               ></textarea>
               <CharacterCount

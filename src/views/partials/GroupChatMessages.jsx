@@ -7,7 +7,7 @@ import MessageImage from "./MessageImage.jsx";
 
 import styles from '../../styles/GroupChatMessages.module.css';
 
-const GroupChatMessages = ({ chatMsgs, endOfMsg }) => {
+const GroupChatMessages = ({ chatMsgs, endOfMsg, msgScrollEl }) => {
 
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ const GroupChatMessages = ({ chatMsgs, endOfMsg }) => {
   };
   
   return (
-    <ul className={styles.chatMsgsUl}>
+    <ul ref={msgScrollEl} className={`${styles.chatMsgsUl} groupChatMsgsScrollableEl`}>
       {chatMsgs.map((msg, indx) => {
         return (
           <li className={styles.chatMsgsLi} key={indx}>

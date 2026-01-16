@@ -27,6 +27,7 @@ import notificationSound4 from "../assets/notification_sound.mp3";
 
 const GroupChatMain = () => {
   const endOfMsg = useRef(null);
+  const msgScrollEl = useRef(null);
   const { playSound } = useWithSound(notificationSound4);
 
   const [chatMsgs, setChatMsgs] = useState([]);
@@ -287,6 +288,9 @@ const GroupChatMain = () => {
             createdAt: new Date(),
           },
         ]);
+        setTimeout(() => {
+          endOfMsg.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+        }, 2500)
         playSound();
       });
 
@@ -375,7 +379,7 @@ const GroupChatMain = () => {
         <section className={styles.groupChatMsgsCont}>
           {!isLoadingMsgs ? null : <LoadingIcon />}
           {!chatMsgs ? null : (
-            <GroupChatMessages endOfMsg={endOfMsg} chatMsgs={chatMsgs} />
+            <GroupChatMessages endOfMsg={endOfMsg} chatMsgs={chatMsgs} msgScrollEl={msgScrollEl}/>
           )}
         </section>
         <aside className={styles.groupMembersCont}>
