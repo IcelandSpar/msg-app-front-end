@@ -6,6 +6,7 @@ import {
   handleNevermindBtn,
   handleLeaveGroupBtn,
 } from "../../utils/groupSettings.js";
+import { useWithSound } from "../../customHooks/useWithSound.jsx";
 
 import EditGroupNameInput from "./EditGroupNameInput.jsx";
 import ConfirmLeaveGroupModal from "./ConfirmLeaveGroupModal.jsx";
@@ -16,11 +17,17 @@ import editIcon from "../../assets/edit_icon.svg";
 import leaveIcon from "../../assets/leave_group_icon.svg";
 import deleteIcon from "../../assets/delete_icon.svg";
 import GroupImgAndTitle from "./GroupImgAndTitle.jsx";
+import volumeOffIcon from "../../assets/volume_off.svg";
+
+import sound1 from "../../assets/msg_notif_4.wav";
+import sound2 from "../../assets/notification_sound.mp3";
 
 const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen, setGroupInfo }) => {
+  const { playSound, playSound1, playSound2 } = useWithSound(sound1);
   const [isConfirmLeaveOpen, setIsConfirmLeaveOpen] = useState(false);
   const [ isConfirmDeleteGroupModalOpen, setIsConfirmDeleteGroupModalOpen ] = useState(false);
   const [ isEditNameInputOpen, setIsEditNameInputOpen ] = useState(false);
+
 
   const toggleEditNameInput = (e) => {
     e.preventDefault();
@@ -32,6 +39,15 @@ const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen, setGroupInfo }) => {
     if(Array.from(e.target.classList)[1] == 'closeOptsModal') {
       setIsOptsModalOpen((prev) => !prev);
     }
+  };
+
+  const handleClickMuteBtn = (e) => {
+    e.preventDefault();
+    localStorage.getItem("msgAppNotifSound") == "notif1" ? playSound1 : playSound2;
+  };
+
+  const handleChangeNotifOpt = (e) => {
+    localStorage.setItem("msgAppNotifSound", e.target.value);
   };
 
 
@@ -80,6 +96,20 @@ const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen, setGroupInfo }) => {
               <p>{!isEditNameInputOpen ? "Edit" : "Close"}</p>
             </button>
             { !isEditNameInputOpen ? null : <EditGroupNameInput groupInfo={groupInfo} handleToggleInput={toggleEditNameInput} setGroupInfo={setGroupInfo}/> }
+          </li>
+          <li className={styles.groupOptsLi}>
+            <p>Audio Settings</p>
+            <div></div>
+            <p>Mute {groupInfo.groupName}</p>
+            <button onClick={handleClickMuteBtn} type="button" className={styles.groupOptsBtn}>
+              <img src={volumeOffIcon} alt="mute" width={'24px'} height={'24px'}/>
+              <p>Mute</p>
+            </button>
+            <p>Notification Sound</p>
+            <select onChange={handleChangeNotifOpt} className={styles.notifSoundOptions}>
+              <option value="notif1">Sound 1</option>
+              <option value="notif2">Sound 2</option>
+            </select>
           </li>
           <li className={styles.groupOptsLi}>
             <p>Leave {!groupInfo ? null : groupInfo.groupName}?</p>

@@ -128,6 +128,16 @@
   cursor: pointer;
 }
 
+.notifSoundOptions {
+  color: white;
+  background-color: #a1c2bd;
+  border: 3px solid #a1c2bd;
+  padding: .5rem 1rem;
+  border-radius: 7px;
+  font-size: 1.1rem;
+  font-family: "Recursive", sans-serif;
+}
+
 
 
 @keyframes openModal {
