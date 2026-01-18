@@ -21,14 +21,14 @@ import styles from "../styles/GroupChatMain.module.css";
 
 import sidebarMenu from "../assets/sidebar_menu_icon.svg";
 import GroupImgAndTitle from "./partials/GroupImgAndTitle.jsx";
-// import notificationSound from "../assets/notification_sound.mp3";
+import notificationSound from "../assets/notification_sound.mp3";
 import notificationSound4 from "../assets/notification_sound.mp3";
 
 
 const GroupChatMain = () => {
   const endOfMsg = useRef(null);
   const msgScrollEl = useRef(null);
-  const { playSound } = useWithSound(notificationSound4);
+  const { playSound } = useWithSound(!localStorage.getItem("msgAppNotifSound") || localStorage.getItem("msgAppNotifSound") == "sound1" ? notificationSound : notificationSound4);
 
   const [chatMsgs, setChatMsgs] = useState([]);
   const [groupMembers, setGroupMembers] = useState(null);

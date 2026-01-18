@@ -11,16 +11,8 @@ export const useWithSound = (audioSource) => {
     soundRef.current.play();
   };
 
-  const playSound1 = () => {
-    sound1Asset.play();
-  };
-
-  const playSound2 = () => {
-    sound2Asset.play();
-  }
-
   const pauseSound = () => {
-    soundRef.current.play();
+    soundRef.current.pause();
   };
 
   useEffect(() => {
@@ -30,7 +22,5 @@ export const useWithSound = (audioSource) => {
   return {
     playSound,
     pauseSound,
-    playSound1,
-    playSound2,
   }
 };
