@@ -28,7 +28,7 @@ import notificationSound4 from "../assets/notification_sound.mp3";
 const GroupChatMain = () => {
   const endOfMsg = useRef(null);
   const msgScrollEl = useRef(null);
-  const { playSound } = useWithSound(!localStorage.getItem("msgAppNotifSound") || localStorage.getItem("msgAppNotifSound") == "sound1" ? notificationSound : notificationSound4);
+  const { playSound } = useWithSound(localStorage.getItem("msgAppNotifSound") == null || localStorage.getItem("msgAppNotifSound") == "sound1" ? notificationSound4 : notificationSound);
 
   const [chatMsgs, setChatMsgs] = useState([]);
   const [groupMembers, setGroupMembers] = useState(null);
@@ -316,7 +316,7 @@ const GroupChatMain = () => {
           <Navbar />
         </div>
         <aside className={styles.optsAndChatSidebar}>
-          <OptsAndChatSidebar includeGroupName={true} groupInfo={groupInfo} setGroupInfo={setGroupInfo}/>
+          <OptsAndChatSidebar includeGroupName={true} groupInfo={groupInfo} setGroupInfo={setGroupInfo} isAdmin={isAdmin}/>
         </aside>
         {!isMemberOptsOpen ? null : (
           <MemberOptionsModal handleMemberOptsModal={handleMemberOptsModal} handleRemoveMember={handleRemoveMember} isMemberOptsOpen={isMemberOptsOpen} handlePromoteMember={handlePromoteMember} profile={profile}/>
@@ -367,7 +367,7 @@ const GroupChatMain = () => {
         )}
         {
           !isGroupSettingsSidebarOpen ? null : (
-            <GroupSettingsCollapsasbleSidebar groupInfo={groupInfo} setGroupInfo={setGroupInfo} isGroupSidebarCloseAnimToggle={isGroupSidebarCloseAnimToggle} isGroupSettingsSidebarOpen={isGroupSettingsSidebarOpen} setIsGroupSettingsSidebarOpen={setIsGroupSettingsSidebarOpen} setIsGroupSidebarCloseAnimToggle ={setIsGroupSidebarCloseAnimToggle}/>
+            <GroupSettingsCollapsasbleSidebar groupInfo={groupInfo} setGroupInfo={setGroupInfo} isGroupSidebarCloseAnimToggle={isGroupSidebarCloseAnimToggle} isGroupSettingsSidebarOpen={isGroupSettingsSidebarOpen} setIsGroupSettingsSidebarOpen={setIsGroupSettingsSidebarOpen} setIsGroupSidebarCloseAnimToggle ={setIsGroupSidebarCloseAnimToggle} isAdmin={isAdmin}/>
           )
         }
         {!msgFormErrors ? null : (

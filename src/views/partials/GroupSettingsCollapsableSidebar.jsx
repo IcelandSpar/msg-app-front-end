@@ -11,6 +11,7 @@ const GroupSettingsCollapsasbleSidebar = ({
   isGroupSettingsSidebarOpen,
   setIsGroupSettingsSidebarOpen,
   setIsGroupSidebarCloseAnimToggle,
+  isAdmin={isAdmin}
 }) => {
   const handleGroupOptionsSidebar = (e) => {
     e.preventDefault();
@@ -49,6 +50,7 @@ const GroupSettingsCollapsasbleSidebar = ({
           <OptsAndChatSidebar
             groupInfo={groupInfo}
             setGroupInfo={setGroupInfo}
+            isAdmin={isAdmin}
           />
         </div>
       </aside>
