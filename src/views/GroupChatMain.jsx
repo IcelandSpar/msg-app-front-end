@@ -291,7 +291,8 @@ const GroupChatMain = () => {
         setTimeout(() => {
           endOfMsg.current?.scrollIntoView({ behavior: "smooth", block: "end" });
         }, 2500)
-        playSound();
+        localStorage.getItem("msgAppIsMuted") == "true" ?  null : playSound();
+        
       });
 
     } catch (err) {

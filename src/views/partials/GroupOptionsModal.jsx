@@ -29,9 +29,8 @@ const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen, setGroupInfo, isAdmin
   const [isConfirmDeleteGroupModalOpen, setIsConfirmDeleteGroupModalOpen] =
     useState(false);
   const [isEditNameInputOpen, setIsEditNameInputOpen] = useState(false);
-  const localNotifSettings = localStorage.getItem("msgAppNotifSettings")
   const [ userNotifSound, setUserNotifSound ] = useState((!localStorage.getItem("msgAppNotifSound") || localStorage.getItem("msgAppNotifSound") == "sound1") ? "sound1" : "sound2");
-  const [ isMuted, setIsMuted ] = useState(!localNotifSettings || localNotifSettings.isMuted == "true" ? true : false);
+  const [ isMuted, setIsMuted ] = useState(localStorage.getItem("msgAppIsMuted") == "true" ? true : false);
 
   const toggleEditNameInput = (e) => {
     e.preventDefault();
@@ -48,10 +47,7 @@ const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen, setGroupInfo, isAdmin
     e.preventDefault();
     setIsMuted((prev) => !isMuted);
 
-    localStorage.setItem("msgAppNotifSettings", {
-      ...localStorage.getItem("msgAppNotifSettings"),
-      isMuted: !isMuted,
-    });
+    localStorage.setItem("msgAppIsMuted", !isMuted);
   };
 
   const handleChangeNotifOpt = (e) => {
@@ -115,7 +111,7 @@ const GroupOptionModal = ({ groupInfo, setIsOptsModalOpen, setGroupInfo, isAdmin
                 width={"24px"}
                 height={"24px"}
               />
-              <p>Mute</p>
+              <p>{isMuted ? "Unmute" : "Mute"}</p>
             </button>
             <p>Test Sound</p>
             { userNotifSound == "sound1" ?  <SoundTestBtn styles={styles} sound={sound1}/> : <SoundTestBtn styles={styles} sound={sound2}/>}
