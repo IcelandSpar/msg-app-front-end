@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 
-import { handleOptsModal, fetchGroupInfo } from "../../utils/groupSettings.js";
+import { handleOptsModal, fetchGroupInfo, handleInviteModal } from "../../utils/groupSettings.js";
 
 import GroupOptionsModal from "./GroupOptionsModal.jsx";
 
@@ -12,7 +12,7 @@ import addChatIcon from "../../assets/add_chat_icon.svg";
 import addMemberIcon from "../../assets/add_friend_icon.svg";
 import GroupImgAndTitle from "./GroupImgAndTitle.jsx";
 
-const OptsAndChatSidebar = ({ includeGroupName = false, groupInfo, setGroupInfo, isAdmin }) => {
+const OptsAndChatSidebar = ({ includeGroupName = false, groupInfo, setGroupInfo, isAdmin, setIsInviteModalOpen }) => {
   const [isOptsModalOpen, setIsOptsModalOpen] = useState(false);
   const [ isConfirmLeaveOpen, setIsConfirmLeaveOpen ] = useState(false);
   const [ isConfirmDeleteGroupModalOpen, setIsConfirmDeleteGroupModalOpen ] = useState(false);
@@ -44,6 +44,7 @@ const OptsAndChatSidebar = ({ includeGroupName = false, groupInfo, setGroupInfo,
         </button>
         <button
           className={styles.addMemberBtn}
+          onClick={(e) => handleInviteModal(e, setIsInviteModalOpen)}
           type="button"
           title="Add Member to Group"
         >

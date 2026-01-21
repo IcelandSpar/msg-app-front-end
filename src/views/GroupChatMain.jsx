@@ -8,6 +8,7 @@ import Navbar from "./partials/Navbar.jsx";
 import MsgForm from "./partials/MsgForm.jsx";
 import UserContext from "../UserContext.jsx";
 import LoadingIcon from "./partials/LoadingIcon.jsx";
+import InviteModal from "./partials/InviteModal.jsx";
 import GroupChatMessages from "./partials/GroupChatMessages";
 import GroupMembersList from "./partials/GroupMembersList.jsx";
 import OptsAndChatSidebar from "./partials/OptsAndChatSidebar.jsx";
@@ -42,6 +43,7 @@ const GroupChatMain = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isMemberOptsOpen, setIsMemberOptsOpen] = useState(null);
   const [ groupInfo, setGroupInfo ] = useState(null);
+  const [ isInviteModalOpen, setIsInviteModalOpen ]  = useState(false);
 
   const { groupId } = useParams();
 
@@ -317,11 +319,12 @@ const GroupChatMain = () => {
           <Navbar />
         </div>
         <aside className={styles.optsAndChatSidebar}>
-          <OptsAndChatSidebar includeGroupName={true} groupInfo={groupInfo} setGroupInfo={setGroupInfo} isAdmin={isAdmin}/>
+          <OptsAndChatSidebar includeGroupName={true} groupInfo={groupInfo} setGroupInfo={setGroupInfo} isAdmin={isAdmin} setIsInviteModalOpen={setIsInviteModalOpen}/>
         </aside>
         {!isMemberOptsOpen ? null : (
           <MemberOptionsModal handleMemberOptsModal={handleMemberOptsModal} handleRemoveMember={handleRemoveMember} isMemberOptsOpen={isMemberOptsOpen} handlePromoteMember={handlePromoteMember} profile={profile}/>
         )}
+        {!isInviteModalOpen ? null : <InviteModal setIsInviteModalOpen={setIsInviteModalOpen}/>}
         <div className={styles.sidebarBtnsCont}>
           <GroupSettingsSidebarBtn isGroupSettingsSidebarOpen={isGroupSettingsSidebarOpen} setIsGroupSettingsSidebarOpen={setIsGroupSettingsSidebarOpen} setIsGroupSidebarCloseAnimToggle ={setIsGroupSidebarCloseAnimToggle}/>
           {groupInfo ? <GroupImgAndTitle groupInfo={groupInfo}/> : null}

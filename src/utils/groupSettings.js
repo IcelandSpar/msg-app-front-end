@@ -119,6 +119,12 @@ const handleLeaveGroupBtn = (
 
   };
 
+  const handleInviteModal = (e, setIsInviteModalOpen) => {
+    e.preventDefault();
+    setIsInviteModalOpen((prev) => !prev);
+
+  };
+
 export {
   fetchGroupInfo,
   handleOptsModal,
@@ -127,4 +133,5 @@ export {
   handleNevermindBtn,
   handleLeaveGroupBtn,
   handleDeleteGroup,
+  handleInviteModal,
 };

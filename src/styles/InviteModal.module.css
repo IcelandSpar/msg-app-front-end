@@ -1,0 +1,50 @@
+.inviteModalBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.555);
+  z-index: 400;
+}
+
+.inviteModal {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background-color: #708993;
+  border: 3px solid #a1c2bd;
+  max-width: 500px;
+  padding: 2rem 1rem;
+  border-radius: 15px;
+  max-height: 50vh;
+  overflow-y: auto;
+  scrollbar-color: #e7f2ef #708993;
+  animation: .3s openModal ease-out forwards; 
+}
+
+.exitInviteBtn {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background-color: transparent;
+  border: none;
+
+  font-family: "Recursive", sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+@keyframes openModal {
+  from {
+    opacity: 0;
+    transform: translateY(-100%) translateX(-50%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(-50%);
+  }
+}
+
