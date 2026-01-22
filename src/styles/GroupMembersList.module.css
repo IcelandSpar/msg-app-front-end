@@ -99,6 +99,17 @@
 
 }
 
+.memberOptsBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+  width: min-content;
+  height: min-content;
+  cursor: pointer;
+}
+
 @media (min-width: 1200px) {
   .groupMemberHeaders {
     text-align: start;
@@ -154,7 +165,6 @@
   .optionsBtn {
     grid-column: 3 / 4;
   }
-
 
 
   /* @media (max-width: 800px) {

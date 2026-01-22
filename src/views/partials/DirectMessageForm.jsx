@@ -174,7 +174,7 @@ const DirectMessageForm = ({
             </div>
           </div>
           <div className={styles.formBtnsCont}>
-            <label className={styles.ImglabelTurnedBtn} htmlFor="msgImg">
+            <label tabIndex={"0"} className={styles.ImglabelTurnedBtn} htmlFor="msgImg">
               <img
                 className={styles.addImgIcon}
                 src={addImgIcon}

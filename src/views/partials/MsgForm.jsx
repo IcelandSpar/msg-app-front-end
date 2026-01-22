@@ -179,7 +179,7 @@ const MsgForm = ({ setChatMsgs, endOfMsg, setMsgFormErrors }) => {
               />
             </div>
             <div className={styles.formBtnsCont}>
-              <label className={styles.ImglabelTurnedBtn} htmlFor="msgImg">
+              <label tabIndex={"0"} className={styles.ImglabelTurnedBtn} htmlFor="msgImg">
                 <img className={styles.addImgIcon} src={addImgIcon} alt="add image" />
               </label>
               <input ref={imgFile} onChange={handleFileChange} className={styles.hideInput} type="file" id="msgImg" hidden/>

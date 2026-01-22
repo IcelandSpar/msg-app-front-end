@@ -36,6 +36,23 @@
   cursor: pointer;
 }
 
+.inviteModal {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.labelAndInputCont {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.inviteModalHeader {
+  font-size: 1.4rem;
+}
+
 @keyframes openModal {
   from {
     opacity: 0;
