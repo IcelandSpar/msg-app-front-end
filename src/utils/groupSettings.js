@@ -125,6 +125,13 @@ const handleLeaveGroupBtn = (
 
   };
 
+  const handleCloseInviteModal = (e, setIsInviteModalOpen) => {
+    e.preventDefault();
+    if (Array.from(e.target.classList)[1] == 'closeGroupInviteModal') {
+      setIsInviteModalOpen((prev) => false);
+    }
+  };
+
 export {
   fetchGroupInfo,
   handleOptsModal,
@@ -134,4 +141,5 @@ export {
   handleLeaveGroupBtn,
   handleDeleteGroup,
   handleInviteModal,
+  handleCloseInviteModal,
 };
